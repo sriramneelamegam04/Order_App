@@ -1,0 +1,1220 @@
+{
+	"info": {
+		"_postman_id": "752206a1-4a28-4601-82c6-4e3a0f36d80e",
+		"name": "order_app",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "47150003",
+		"_collection_link": "https://security-explorer-66566915-7987225.postman.co/workspace/Sriram-Neelamegam's-Workspace~4bbbac3b-83b0-40bd-8e96-a3401c510945/collection/47150003-752206a1-4a28-4601-82c6-4e3a0f36d80e?action=share&source=collection_link&creator=47150003"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "request_otp.php",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"mobile\": 9360552619,\r\n  \"name\": \"Dheeran sriram\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/order_app/auth/request_otp.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"order_app",
+								"auth",
+								"request_otp.php"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "verify_otp.php",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"mobile\": \"9360552619\",\r\n  \"otp\": \"480670\",\r\n  \"name\": \"Dheeran sriram\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/order_app/auth/verify_otp.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"order_app",
+								"auth",
+								"verify_otp.php"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "business",
+			"item": [
+				{
+					"name": "vertical.php",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "353846c65b9ff5d7c32f71a421c4cc4924a677be8cc843bc9a755adf0fa9c031",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/order_app/business/verticals.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"order_app",
+								"business",
+								"verticals.php"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "template_fields.php",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "353846c65b9ff5d7c32f71a421c4cc4924a677be8cc843bc9a755adf0fa9c031",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"business_type_id\": 5\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/order_app/business/template_fields.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"order_app",
+								"business",
+								"template_fields.php"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "select.php",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "create.php",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "353846c65b9ff5d7c32f71a421c4cc4924a677be8cc843bc9a755adf0fa9c031",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Naturals\",\r\n  \"description\": \"Nature\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/order_app/business/create.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"order_app",
+								"business",
+								"create.php"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add_fields.php",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "353846c65b9ff5d7c32f71a421c4cc4924a677be8cc843bc9a755adf0fa9c031",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"business_type_id\": 11,\r\n  \"field_name\": \"Kg\",\r\n  \"field_type\": \"kg\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/order_app/business/add_fields.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"order_app",
+								"business",
+								"add_fields.php"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "subscription",
+			"item": [
+				{
+					"name": "create.php",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "0e757644f86a484f37424802304049fe23c92abbac6d9ad93c0ed01348e245b7",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"plan\": \"free\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/order_app/subscription/create.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"order_app",
+								"subscription",
+								"create.php"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "status.php",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "0e757644f86a484f37424802304049fe23c92abbac6d9ad93c0ed01348e245b7",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/order_app/subscription/status.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"order_app",
+								"subscription",
+								"status.php"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "upgrade.php",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "0e757644f86a484f37424802304049fe23c92abbac6d9ad93c0ed01348e245b7",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/order_app/subscription/upgrade.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"order_app",
+								"subscription",
+								"upgrade.php"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "verify.php",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "0e757644f86a484f37424802304049fe23c92abbac6d9ad93c0ed01348e245b7",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"razorpay_payment_id\": \"pay_Ku1hJX987654\",\r\n  \"razorpay_order_id\": \"order_Ku1gYH123456\",\r\n  \"razorpay_signature\": \"signature_here\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/order_app/subscription/verify.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"order_app",
+								"subscription",
+								"verify.php"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "products",
+			"item": [
+				{
+					"name": "add.php",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "b1e32829b11a3067f5bf224667f0e5366d8aafa57a591d332f77d8ffbab88a52",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Apple\",\r\n  \"price\": 250,\r\n  \"unit\": \"kg\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/order_app/products/add.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"order_app",
+								"products",
+								"add.php"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "list.php",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "b1e32829b11a3067f5bf224667f0e5366d8aafa57a591d332f77d8ffbab88a52",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/order_app/products/list.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"order_app",
+								"products",
+								"list.php"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "import_csv.php",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "b1e32829b11a3067f5bf224667f0e5366d8aafa57a591d332f77d8ffbab88a52",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/dheer/Downloads/fruits.csv"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost/order_app/products/import_csv.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"order_app",
+								"products",
+								"import_csv.php"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update.php",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "b1e32829b11a3067f5bf224667f0e5366d8aafa57a591d332f77d8ffbab88a52",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"product_id\": 10,\r\n  \"name\": \"Apple\",\r\n  \"price\": 300,\r\n  \"unit\": \"dozen\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/order_app/products/update.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"order_app",
+								"products",
+								"update.php"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete.php",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "b1e32829b11a3067f5bf224667f0e5366d8aafa57a591d332f77d8ffbab88a52",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"product_id\": 14\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/order_app/products/delete.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"order_app",
+								"products",
+								"delete.php"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "qr",
+			"item": [
+				{
+					"name": "generate.php",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "b1e32829b11a3067f5bf224667f0e5366d8aafa57a591d332f77d8ffbab88a52",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"table_no\": \"1\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/order_app/qr/generate.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"order_app",
+								"qr",
+								"generate.php"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "access.php",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "a8f78c478ed94b068c1a8c005b9c4df0cdab3c871e2d2faf015141065ccef89f",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"slug\": \"20af83c85b\",   // generate.php-le irundha QR slug\r\n  \"name\": \"Mullai Malar\",\r\n  \"mobile\": \"955623147\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/order_app/qr/access.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"order_app",
+								"qr",
+								"access.php"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete.php",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/order_app/qr/delete.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"order_app",
+								"qr",
+								"delete.php"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "list.php",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/order_app/qr/list.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"order_app",
+								"qr",
+								"list.php"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "cart",
+			"item": [
+				{
+					"name": "add.php",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"session_id\": \"sess_68d4e3851435a2.44236074\",\r\n  \"products\": [\r\n    { \"product_id\": 10, \"qty\": 3 },\r\n    { \"product_id\": 11, \"qty\": 3 },\r\n    { \"product_id\": 12, \"qty\": 5 }\r\n  ]\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/order_app/cart/add.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"order_app",
+								"cart",
+								"add.php"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get.php",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/order_app/cart/get.php?session_id=sess_68d4e3851435a2.44236074",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"order_app",
+								"cart",
+								"get.php"
+							],
+							"query": [
+								{
+									"key": "session_id",
+									"value": "sess_68d4e3851435a2.44236074"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update.php",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"session_id\": \"8mr2mm3he1d62mh3p5lqbmb3pj\",\r\n  \"product_id\": 1,\r\n  \"qty\": 5\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/order_app/cart/update.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"order_app",
+								"cart",
+								"update.php"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "remove.php",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"session_id\": \"8mr2mm3he1d62mh3p5lqbmb3pj\",\r\n  \"product_id\": 1\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/order_app/cart/remove.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"order_app",
+								"cart",
+								"remove.php"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "payments",
+			"item": [
+				{
+					"name": "set_credential.php",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "63d16fa3592f1a6c239fbe13b9d341443be3900bc82e09fa26660996b764b03d",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"key\": \"rzp_test_XXXXXXXXXXXXXXXX\",\r\n  \"secret\": \"XXXXXXXXXXXXXXXXXXXX\",\r\n  \"enabled\": 1\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/order_app/payments/set_credentials.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"order_app",
+								"payments",
+								"set_credentials.php"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get_credentials.php",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "63d16fa3592f1a6c239fbe13b9d341443be3900bc82e09fa26660996b764b03d",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/order_app/payments/get_credentials.php?user_id=2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"order_app",
+								"payments",
+								"get_credentials.php"
+							],
+							"query": [
+								{
+									"key": "user_id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "order",
+			"item": [
+				{
+					"name": "checkout.php",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"qr_slug\": \"20af83c85b\",\r\n  \"session_id\": \"sess_68d4e3851435a2.44236074\",\r\n  \"payment_method\": \"COD\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/order_app/order/checkout.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"order_app",
+								"order",
+								"checkout.php"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "razorpay_webhook.php",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Razorpay-Signature",
+								"value": "5c7d6b1234567890abcdef123456abcdef",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost/order_app/order/razorpay_webhook.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"order_app",
+								"order",
+								"razorpay_webhook.php"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "details.php",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/order_app/order/details.php?id=33",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"order_app",
+								"order",
+								"details.php"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "33"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "list.php",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "15c0594fbe8f925878b3685d950db7896a1608adb5b2d5d883d6ab48a2da49ab",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "search → search by customer name or mobile\r\n\r\nstatus → order status (pending, completed, etc.)\r\n\r\npage → page number (default 1)\r\n\r\nlimit → items per page (default 10, max 50)",
+							"options": {
+								"raw": {
+									"language": "text"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/order_app/order/list.php?search=sriram",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"order_app",
+								"order",
+								"list.php"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "sriram"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update_status.php",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "15c0594fbe8f925878b3685d950db7896a1608adb5b2d5d883d6ab48a2da49ab",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"order_id\": 33,\r\n  \"status\": \"paid\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/order_app/order/update_status.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"order_app",
+								"order",
+								"update_status.php"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "payments_options.php",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/order_app/order/payments_options.php?qr_slug=1d645e7b8e",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"order_app",
+								"order",
+								"payments_options.php"
+							],
+							"query": [
+								{
+									"key": "qr_slug",
+									"value": "1d645e7b8e"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "dashboard",
+			"item": [
+				{
+					"name": "admin.php",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost/order_app/dashboard/admin.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"order_app",
+								"dashboard",
+								"admin.php"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "users.php",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "b1e32829b11a3067f5bf224667f0e5366d8aafa57a591d332f77d8ffbab88a52",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/order_app/dashboard/user.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"order_app",
+								"dashboard",
+								"user.php"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
