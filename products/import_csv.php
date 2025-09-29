@@ -41,9 +41,9 @@ if (!in_array($fileInfo['type'], $allowedTypes)) {
     exit;
 }
 
-if ($fileInfo['size'] > 2 * 1024 * 1024) { // 2MB limit
+if ($fileInfo['size'] > 5 * 1024 * 1024) { // 5MB limit
     http_response_code(400);
-    echo json_encode(["success" => false, "msg" => "File too large (max 2MB)"]);
+    echo json_encode(["success" => false, "msg" => "File too large (max 5MB)"]);
     exit;
 }
 
@@ -74,18 +74,21 @@ if (($handle = fopen($file, "r")) !== FALSE) {
 
     $header = array_map('strtolower', $header);
 
-    // ✅ Required headers check
+    // Required headers
     $requiredHeaders = ['name', 'price', 'unit'];
     $missingHeaders = array_diff($requiredHeaders, $header);
-
     if (!empty($missingHeaders)) {
         http_response_code(400);
         echo json_encode(["success" => false, "msg" => "Missing columns: " . implode(", ", $missingHeaders)]);
         exit;
     }
 
-    $inserted = 0;
-    $skipped = 0;
+    // Optional headers
+    $hasCategory    = in_array('category_name', $header);
+    $hasSubcategory = in_array('subcategory_name', $header);
+
+    $inserted   = 0;
+    $skipped    = 0;
     $duplicates = 0;
 
     while (($row = fgetcsv($handle)) !== FALSE) {
@@ -97,33 +100,90 @@ if (($handle = fopen($file, "r")) !== FALSE) {
             continue;
         }
 
-        // --- Normalize / lowercase ---
+        // --- Normalize ---
         $name  = strtolower(trim($data['name']));
-        $price = trim($data['price']); // keep numeric as-is
+        $price = trim($data['price']);
         $unit  = strtolower(trim($data['unit']));
+        $category_name    = $hasCategory ? strtolower(trim($data['category_name'])) : null;
+        $subcategory_name = $hasSubcategory ? strtolower(trim($data['subcategory_name'])) : null;
 
-        // --- Type validation ---
         if (!is_numeric($price)) {
             $skipped++;
             continue;
         }
 
-        // --- Duplicate check ---
-        $check = $conn->prepare("SELECT product_id FROM products WHERE user_id=? AND business_type_id=? AND name=? LIMIT 1");
-        $check->bind_param("iis", $user_id, $business_type_id, $name);
-        $check->execute();
-        $result = $check->get_result();
-        $exists = $result->num_rows > 0;
-        $check->close();
+        // --- Resolve or create category ---
+        $category_id = null;
+        if ($category_name) {
+            $stmt = $conn->prepare("SELECT category_id FROM categories WHERE user_id=? AND business_type_id=? AND LOWER(name)=?");
+            $stmt->bind_param("iis", $user_id, $business_type_id, $category_name);
+            $stmt->execute();
+            $res = $stmt->get_result()->fetch_assoc();
+            $stmt->close();
 
-        if ($exists) {
+            if ($res) {
+                $category_id = $res['category_id'];
+            } else {
+                $stmt = $conn->prepare("INSERT INTO categories (user_id, business_type_id, name) VALUES (?, ?, ?)");
+                $stmt->bind_param("iis", $user_id, $business_type_id, $category_name);
+                $stmt->execute();
+                $category_id = $stmt->insert_id;
+                $stmt->close();
+            }
+        }
+
+        // --- Resolve or create subcategory ---
+        $subcategory_id = null;
+        if ($subcategory_name && $category_id) {
+            $stmt = $conn->prepare("SELECT subcategory_id FROM subcategories WHERE category_id=? AND LOWER(name)=?");
+            $stmt->bind_param("is", $category_id, $subcategory_name);
+            $stmt->execute();
+            $res = $stmt->get_result()->fetch_assoc();
+            $stmt->close();
+
+            if ($res) {
+                $subcategory_id = $res['subcategory_id'];
+            } else {
+                $stmt = $conn->prepare("INSERT INTO subcategories (category_id, name) VALUES (?, ?)");
+                $stmt->bind_param("is", $category_id, $subcategory_name);
+                $stmt->execute();
+                $subcategory_id = $stmt->insert_id;
+                $stmt->close();
+            }
+        }
+
+        // --- Duplicate check ---
+        $dup_query = "SELECT product_id FROM products WHERE user_id=? AND business_type_id=? AND LOWER(name)=?";
+        $params = [$user_id, $business_type_id, $name];
+        $types = "iis";
+
+        if ($category_id) {
+            $dup_query .= " AND category_id=?";
+            $types .= "i";
+            $params[] = $category_id;
+        }
+
+        if ($subcategory_id) {
+            $dup_query .= " AND subcategory_id=?";
+            $types .= "i";
+            $params[] = $subcategory_id;
+        }
+
+        $stmt = $conn->prepare($dup_query);
+        $stmt->bind_param($types, ...$params);
+        $stmt->execute();
+        $res = $stmt->get_result()->fetch_assoc();
+        $stmt->close();
+
+        if ($res) {
             $duplicates++;
             continue;
         }
 
-        $stmt = $conn->prepare("INSERT INTO products (user_id, business_type_id, name, price, unit, created_at) 
-                                VALUES (?, ?, ?, ?, ?, NOW())");
-        $stmt->bind_param("iisss", $user_id, $business_type_id, $name, $price, $unit);
+        // --- Insert product ---
+        $stmt = $conn->prepare("INSERT INTO products (user_id, business_type_id, name, price, unit, created_at, category_id, subcategory_id) 
+                                VALUES (?, ?, ?, ?, ?, NOW(), ?, ?)");
+        $stmt->bind_param("iisssii", $user_id, $business_type_id, $name, $price, $unit, $category_id, $subcategory_id);
         if ($stmt->execute()) {
             $inserted++;
         } else {
@@ -131,12 +191,14 @@ if (($handle = fopen($file, "r")) !== FALSE) {
         }
         $stmt->close();
     }
+
     fclose($handle);
 
     echo json_encode([
         "success" => true,
         "msg" => "$inserted products imported successfully, $duplicates duplicates skipped, $skipped rows skipped"
     ]);
+
 } else {
     http_response_code(500);
     echo json_encode(["success" => false, "msg" => "Unable to open file"]);

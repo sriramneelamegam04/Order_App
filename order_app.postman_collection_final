@@ -396,7 +396,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "b1e32829b11a3067f5bf224667f0e5366d8aafa57a591d332f77d8ffbab88a52",
+									"value": "29d74222d1d06130a6fdca10db31056021675784c6405e615aaa76ef400923e2",
 									"type": "string"
 								}
 							]
@@ -405,7 +405,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"name\": \"Apple\",\r\n  \"price\": 250,\r\n  \"unit\": \"kg\"\r\n}\r\n",
+							"raw": "{\r\n  \"name\": \"Veg Hakka Noodles\",\r\n  \"price\": 120,\r\n  \"unit\": \"plate\",\r\n  \"category_name\": \"chinese\",\r\n  \"subcategory_name\": \"noodles\"\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -438,7 +438,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "b1e32829b11a3067f5bf224667f0e5366d8aafa57a591d332f77d8ffbab88a52",
+									"value": "29d74222d1d06130a6fdca10db31056021675784c6405e615aaa76ef400923e2",
 									"type": "string"
 								}
 							]
@@ -477,7 +477,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "b1e32829b11a3067f5bf224667f0e5366d8aafa57a591d332f77d8ffbab88a52",
+									"value": "29d74222d1d06130a6fdca10db31056021675784c6405e615aaa76ef400923e2",
 									"type": "string"
 								}
 							]
@@ -490,7 +490,7 @@
 								{
 									"key": "file",
 									"type": "file",
-									"src": "/C:/Users/dheer/Downloads/fruits.csv"
+									"src": "/C:/Users/dheer/Downloads/import.csv"
 								}
 							]
 						},
@@ -517,7 +517,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "b1e32829b11a3067f5bf224667f0e5366d8aafa57a591d332f77d8ffbab88a52",
+									"value": "29d74222d1d06130a6fdca10db31056021675784c6405e615aaa76ef400923e2",
 									"type": "string"
 								}
 							]
@@ -526,7 +526,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"product_id\": 10,\r\n  \"name\": \"Apple\",\r\n  \"price\": 300,\r\n  \"unit\": \"dozen\"\r\n}\r\n",
+							"raw": "{\r\n  \"product_id\": 39,\r\n  \"name\": \"Veg Hakka \",\r\n  \"price\": 130.00,\r\n  \"unit\": \"plate\",\r\n  \"category_name\": \"Main Course\",\r\n  \"subcategory_name\": \"Noodles\"\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1209,6 +1209,295 @@
 								"order_app",
 								"dashboard",
 								"user.php"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "categories",
+			"item": [
+				{
+					"name": "categories.php",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "29d74222d1d06130a6fdca10db31056021675784c6405e615aaa76ef400923e2",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Chinese\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/order_app/categories/categories.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"order_app",
+								"categories",
+								"categories.php"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "categories_list.php",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "29d74222d1d06130a6fdca10db31056021675784c6405e615aaa76ef400923e2",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost/order_app/categories/categories_list.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"order_app",
+								"categories",
+								"categories_list.php"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "sub_categories.php",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "29d74222d1d06130a6fdca10db31056021675784c6405e615aaa76ef400923e2",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"category_id\": 8,\r\n  \"name\": \"Noodles\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/order_app/categories/sub_categories.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"order_app",
+								"categories",
+								"sub_categories.php"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "sub_categories_list.php",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "29d74222d1d06130a6fdca10db31056021675784c6405e615aaa76ef400923e2",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/order_app/categories/sub_categories_list.php?category_name=chinese&search=noodles",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"order_app",
+								"categories",
+								"sub_categories_list.php"
+							],
+							"query": [
+								{
+									"key": "category_name",
+									"value": "chinese"
+								},
+								{
+									"key": "search",
+									"value": "noodles"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete.php",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "29d74222d1d06130a6fdca10db31056021675784c6405e615aaa76ef400923e2",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"category_id\": 5\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/order_app/categories/delete.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"order_app",
+								"categories",
+								"delete.php"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "categories_update.php",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "29d74222d1d06130a6fdca10db31056021675784c6405e615aaa76ef400923e2",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"category_id\": 10,\r\n    \"name\": \"Main Course\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/order_app/categories/categories_update.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"order_app",
+								"categories",
+								"categories_update.php"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "sub_cat_update.php",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "29d74222d1d06130a6fdca10db31056021675784c6405e615aaa76ef400923e2",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"subcategory_id\": 10,\r\n    \"name\": \"Noodles\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/order_app/categories/sub_cat_update.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"order_app",
+								"categories",
+								"sub_cat_update.php"
 							]
 						}
 					},

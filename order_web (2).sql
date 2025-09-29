@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 25, 2025 at 09:14 AM
+-- Generation Time: Sep 29, 2025 at 09:36 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -90,7 +90,8 @@ INSERT INTO `carts` (`cart_id`, `session_id`, `user_id`, `created_at`) VALUES
 (17, 'sess_68d381156f88d2.92534977', 0, '2025-09-24 10:57:01'),
 (18, 'sess_68d38195233004.83736067', 0, '2025-09-24 10:59:09'),
 (19, 'sess_68d384bf9925e4.98870884', 0, '2025-09-24 11:12:56'),
-(20, 'sess_68d4e3851435a2.44236074', 0, '2025-09-25 12:18:06');
+(20, 'sess_68d4e3851435a2.44236074', 0, '2025-09-25 12:18:06'),
+(21, 'sess_68d6381512c421.83012927', 0, '2025-09-26 12:23:15');
 
 -- --------------------------------------------------------
 
@@ -118,6 +119,35 @@ INSERT INTO `cart_items` (`cart_item_id`, `cart_id`, `product_id`, `qty`, `subto
 (9, 2, 1, 3.00, 150.00),
 (10, 2, 2, 3.00, 180.00),
 (11, 2, 3, 3.00, 60.00);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `categories`
+--
+
+CREATE TABLE `categories` (
+  `category_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `business_type_id` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `created_at` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `categories`
+--
+
+INSERT INTO `categories` (`category_id`, `user_id`, `business_type_id`, `name`, `created_at`) VALUES
+(1, 4, 5, 'north indian', '2025-09-29 10:36:58'),
+(2, 4, 5, 'italian', '2025-09-29 10:40:29'),
+(3, 4, 5, 'fast food', '2025-09-29 10:58:26'),
+(4, 4, 5, 'beverages', '2025-09-29 10:58:26'),
+(6, 4, 5, 'hyderabadi', '2025-09-29 10:58:26'),
+(7, 4, 5, 'desserts', '2025-09-29 10:58:26'),
+(8, 4, 5, 'chinese', '2025-09-29 12:20:27'),
+(9, 4, 5, 'main course', '2025-09-29 12:38:12'),
+(10, 4, 5, 'main course', '2025-09-29 12:44:26');
 
 -- --------------------------------------------------------
 
@@ -178,7 +208,8 @@ INSERT INTO `orders` (`order_id`, `user_id`, `qr_id`, `customer_name`, `customer
 (32, 2, 4, 'Sriram', '9360552619', 'pending', 430.00, 'UPI', 'order_68d381af1d8e3', NULL, '2025-09-24 10:58:53'),
 (33, 2, 4, 'Sriram', '9360552619', 'paid', 430.00, 'UPI', 'order_68d384f391107', NULL, '2025-09-24 11:12:23'),
 (34, 4, 5, 'Mullai Malar', '955623147', 'pending', 0.00, 'COD', NULL, NULL, '2025-09-25 12:03:56'),
-(35, 4, 5, 'mullai malar', '955623147', 'pending', 1680.00, 'COD', NULL, NULL, '2025-09-25 12:09:01');
+(35, 4, 5, 'mullai malar', '955623147', 'pending', 1680.00, 'COD', NULL, NULL, '2025-09-25 12:09:01'),
+(36, 5, 6, 'mullai malar', '955623147', 'pending', 1890.00, 'COD', NULL, NULL, '2025-09-26 12:22:05');
 
 -- --------------------------------------------------------
 
@@ -255,7 +286,10 @@ INSERT INTO `order_items` (`item_id`, `order_id`, `product_id`, `qty`, `subtotal
 (54, 33, 3, 5.00, 100.00),
 (55, 35, 10, 3.00, 900.00),
 (56, 35, 11, 3.00, 180.00),
-(57, 35, 12, 5.00, 600.00);
+(57, 35, 12, 5.00, 600.00),
+(58, 36, 23, 3.00, 900.00),
+(59, 36, 24, 3.00, 540.00),
+(60, 36, 25, 5.00, 450.00);
 
 -- --------------------------------------------------------
 
@@ -289,7 +323,10 @@ INSERT INTO `otps` (`id`, `mobile`, `otp_hash`, `expires_at`, `created_at`) VALU
 (11, '9360556666', '$2y$10$uYPzOad9azjsryvwnczYSOEU188S5xfZ2kfgBJi9Vl56GXN1.FWqG', '2025-09-24 16:22:04', '2025-09-24 16:17:04'),
 (12, '9360556662', '$2y$10$FE6MdhOMvYjb46dQAfMzmu1yaraemKnrIvw6Vja54NipvIT9wzhsq', '2025-09-24 16:29:06', '2025-09-24 16:24:06'),
 (13, '9360556662', '$2y$10$wRjrdTEetwHYoimrEMqPje1Emn4Y1Y281KI/XnVnpso6iZobiIMVe', '2025-09-25 10:58:00', '2025-09-25 10:53:00'),
-(14, '9360556662', '$2y$10$QmYzfQcDDZ/qAScmqmWNvuhR10wLJKcl9bCm4PlYfdzr520I/HA1i', '2025-09-25 11:11:18', '2025-09-25 11:06:18');
+(14, '9360556662', '$2y$10$QmYzfQcDDZ/qAScmqmWNvuhR10wLJKcl9bCm4PlYfdzr520I/HA1i', '2025-09-25 11:11:18', '2025-09-25 11:06:18'),
+(15, '9360556662', '$2y$10$sdG1ZkN2.Y7wTsEDP0nqHOKmx5Gg3GfScekQXuZgg9a4TWKCJ3LYK', '2025-09-26 12:18:30', '2025-09-26 12:13:30'),
+(16, '9360556622', '$2y$10$uLjb8Gt77GH/At./z6Ok3.sUJgjRj3jMnId6OY9rtnyo9FUg65yJa', '2025-09-26 12:18:47', '2025-09-26 12:13:47'),
+(17, '9360556662', '$2y$10$vhiwDqSD5ucII7AQHZWq0u25yweuzfop/OBztkE.kdAcylWsQBoG.', '2025-09-29 10:40:15', '2025-09-29 10:35:15');
 
 -- --------------------------------------------------------
 
@@ -328,31 +365,60 @@ CREATE TABLE `products` (
   `name` varchar(150) NOT NULL,
   `price` decimal(10,2) NOT NULL,
   `unit` varchar(50) NOT NULL,
-  `created_at` datetime DEFAULT current_timestamp()
+  `created_at` datetime DEFAULT current_timestamp(),
+  `category_id` int(11) DEFAULT NULL,
+  `subcategory_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`product_id`, `user_id`, `business_type_id`, `name`, `price`, `unit`, `created_at`) VALUES
-(1, 2, 1, 'Dosa', 50.00, 'Plate', '2025-09-19 15:52:33'),
-(2, 2, 1, 'Masala Dosa', 60.00, 'Plate', '2025-09-19 15:56:55'),
-(3, 2, 1, 'Idly', 20.00, 'Plate', '2025-09-19 16:21:08'),
-(4, 2, 1, 'Poori', 40.00, 'Plate', '2025-09-19 16:21:08'),
-(5, 2, 1, 'Pongal', 50.00, 'Plate', '2025-09-19 16:21:08'),
-(6, 2, 1, 'Vada', 10.00, 'Plate', '2025-09-19 16:21:08'),
-(7, 2, 1, 'Rava Dosa', 40.00, 'Plate', '2025-09-19 16:21:08'),
-(8, 2, 1, 'Podi Idly', 80.00, 'Plate', '2025-09-19 16:21:08'),
-(10, 4, 5, 'apple', 300.00, 'dozen', '2025-09-25 11:09:18'),
-(11, 4, 5, 'banana', 60.00, 'dozen', '2025-09-25 11:16:11'),
-(12, 4, 5, 'orange', 120.00, 'kg', '2025-09-25 11:16:11'),
-(13, 4, 5, 'mango', 300.00, 'kg', '2025-09-25 11:16:11'),
-(15, 4, 5, 'pineapple', 90.00, 'pcs', '2025-09-25 11:16:11'),
-(16, 4, 5, 'watermelon', 40.00, 'kg', '2025-09-25 11:16:11'),
-(17, 4, 5, 'papaya', 70.00, 'kg', '2025-09-25 11:16:11'),
-(18, 4, 5, 'strawberry', 450.00, 'kg', '2025-09-25 11:16:11'),
-(19, 4, 5, 'guava', 110.00, 'kg', '2025-09-25 11:16:11');
+INSERT INTO `products` (`product_id`, `user_id`, `business_type_id`, `name`, `price`, `unit`, `created_at`, `category_id`, `subcategory_id`) VALUES
+(1, 2, 1, 'Dosa', 50.00, 'Plate', '2025-09-19 15:52:33', NULL, NULL),
+(2, 2, 1, 'Masala Dosa', 60.00, 'Plate', '2025-09-19 15:56:55', NULL, NULL),
+(3, 2, 1, 'Idly', 20.00, 'Plate', '2025-09-19 16:21:08', NULL, NULL),
+(4, 2, 1, 'Poori', 40.00, 'Plate', '2025-09-19 16:21:08', NULL, NULL),
+(5, 2, 1, 'Pongal', 50.00, 'Plate', '2025-09-19 16:21:08', NULL, NULL),
+(6, 2, 1, 'Vada', 10.00, 'Plate', '2025-09-19 16:21:08', NULL, NULL),
+(7, 2, 1, 'Rava Dosa', 40.00, 'Plate', '2025-09-19 16:21:08', NULL, NULL),
+(8, 2, 1, 'Podi Idly', 80.00, 'Plate', '2025-09-19 16:21:08', NULL, NULL),
+(10, 4, 5, 'apple', 300.00, 'dozen', '2025-09-25 11:09:18', NULL, NULL),
+(11, 4, 5, 'banana', 60.00, 'dozen', '2025-09-25 11:16:11', NULL, NULL),
+(12, 4, 5, 'mushroom pizza', 180.00, 'plate', '2025-09-25 11:16:11', 2, 2),
+(13, 4, 5, 'mango', 300.00, 'kg', '2025-09-25 11:16:11', NULL, NULL),
+(15, 4, 5, 'pineapple', 90.00, 'pcs', '2025-09-25 11:16:11', NULL, NULL),
+(16, 4, 5, 'watermelon', 40.00, 'kg', '2025-09-25 11:16:11', NULL, NULL),
+(17, 4, 5, 'papaya', 70.00, 'kg', '2025-09-25 11:16:11', NULL, NULL),
+(18, 4, 5, 'strawberry', 450.00, 'kg', '2025-09-25 11:16:11', NULL, NULL),
+(19, 4, 5, 'guava', 110.00, 'kg', '2025-09-25 11:16:11', NULL, NULL),
+(20, 5, 5, 'apple', 250.00, 'kg', '2025-09-26 12:18:55', NULL, NULL),
+(21, 5, 5, 'banana', 60.00, 'dozen', '2025-09-26 12:19:39', NULL, NULL),
+(22, 5, 5, 'orange', 120.00, 'kg', '2025-09-26 12:19:39', NULL, NULL),
+(23, 5, 5, 'mango', 300.00, 'kg', '2025-09-26 12:19:39', NULL, NULL),
+(24, 5, 5, 'grapes', 180.00, 'kg', '2025-09-26 12:19:39', NULL, NULL),
+(25, 5, 5, 'pineapple', 90.00, 'pcs', '2025-09-26 12:19:39', NULL, NULL),
+(26, 5, 5, 'watermelon', 40.00, 'kg', '2025-09-26 12:19:39', NULL, NULL),
+(27, 5, 5, 'papaya', 70.00, 'kg', '2025-09-26 12:19:39', NULL, NULL),
+(28, 5, 5, 'strawberry', 450.00, 'kg', '2025-09-26 12:19:39', NULL, NULL),
+(29, 5, 5, 'guava', 110.00, 'kg', '2025-09-26 12:19:39', NULL, NULL),
+(30, 4, 5, 'butter naan', 50.00, 'plate', '2025-09-29 10:36:58', 1, 1),
+(31, 4, 5, 'paneer butter masala', 180.00, 'plate', '2025-09-29 10:58:26', 1, 3),
+(32, 4, 5, 'veg burger', 120.00, 'piece', '2025-09-29 10:58:26', 3, 4),
+(33, 4, 5, 'cold coffee', 100.00, 'glass', '2025-09-29 10:58:26', 4, 5),
+(34, 4, 5, 'masala dosa', 80.00, 'plate', '2025-09-29 10:58:26', NULL, NULL),
+(35, 4, 5, 'chicken biryani', 250.00, 'plate', '2025-09-29 10:58:26', 6, 7),
+(36, 4, 5, 'french fries', 90.00, 'plate', '2025-09-29 10:58:26', 3, 8),
+(37, 4, 5, 'green tea', 60.00, 'cup', '2025-09-29 10:58:26', 4, 9),
+(38, 4, 5, 'ice cream', 70.00, 'cup', '2025-09-29 10:58:26', 7, 10),
+(39, 4, 5, 'veg hakka', 130.00, 'plate', '2025-09-29 12:25:37', 9, 12),
+(40, 4, 5, 'veg hakka noodles', 120.00, 'plate', '2025-09-29 12:28:12', NULL, NULL),
+(41, 4, 5, 'veg hakka noodles', 120.00, 'plate', '2025-09-29 12:30:27', 8, 11),
+(42, 4, 5, 'veg hakka noodles', 120.00, 'plate', '2025-09-29 12:44:26', 9, 12),
+(43, 4, 5, 'paneer butter masala', 250.00, 'plate', '2025-09-29 12:44:26', 9, 13),
+(44, 4, 5, 'chicken biryani', 200.00, 'plate', '2025-09-29 12:44:26', 9, 14),
+(45, 4, 5, 'chocolate cake', 150.00, 'slice', '2025-09-29 12:44:26', 7, 15),
+(46, 4, 5, 'veg spring roll', 50.00, 'pcs', '2025-09-29 12:44:26', 10, 16);
 
 -- --------------------------------------------------------
 
@@ -378,7 +444,8 @@ INSERT INTO `qr_codes` (`qr_id`, `user_id`, `business_type_id`, `qr_slug`, `tabl
 (2, 2, 1, 'ccf195eb5f', '2', '2025-09-20 13:28:02'),
 (3, 2, 1, '07c542a226', '2', '2025-09-20 13:29:13'),
 (4, 2, 1, '1d645e7b8e', '2', '2025-09-20 13:32:52'),
-(5, 4, 5, '20af83c85b', '1', '2025-09-25 12:01:32');
+(5, 4, 5, '20af83c85b', '1', '2025-09-25 12:01:32'),
+(6, 5, 5, 'a26821067c', '1', '2025-09-26 12:20:36');
 
 -- --------------------------------------------------------
 
@@ -421,7 +488,43 @@ INSERT INTO `sessions` (`id`, `user_id`, `token`, `last_activity`) VALUES
 (9, 3, '06e89694236625e50d417db463c8e3b0e59b8ef954fa924e1ba0e82e0d4a6fe5', '2025-09-24 16:23:28'),
 (10, 4, '0e757644f86a484f37424802304049fe23c92abbac6d9ad93c0ed01348e245b7', '2025-09-24 16:41:05'),
 (11, 4, 'baea1c383c3c2976547e579241923a7ddf6ed4f94ee1333adf7a80e0c58bb5d9', '2025-09-25 10:55:35'),
-(12, 4, 'b1e32829b11a3067f5bf224667f0e5366d8aafa57a591d332f77d8ffbab88a52', '2025-09-25 12:40:54');
+(12, 4, 'b1e32829b11a3067f5bf224667f0e5366d8aafa57a591d332f77d8ffbab88a52', '2025-09-25 12:40:54'),
+(13, 5, '47d9bb16b80effcf9cfe29443d22eae981ad660ca8d0184289d4f16930974ccc', '2025-09-26 12:20:36'),
+(14, 4, '29d74222d1d06130a6fdca10db31056021675784c6405e615aaa76ef400923e2', '2025-09-29 13:05:38');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `subcategories`
+--
+
+CREATE TABLE `subcategories` (
+  `subcategory_id` int(11) NOT NULL,
+  `category_id` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `created_at` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `subcategories`
+--
+
+INSERT INTO `subcategories` (`subcategory_id`, `category_id`, `name`, `created_at`) VALUES
+(1, 1, 'breads', '2025-09-29 10:36:58'),
+(2, 2, 'pizza', '2025-09-29 10:40:29'),
+(3, 1, 'curries', '2025-09-29 10:58:26'),
+(4, 3, 'burgers', '2025-09-29 10:58:26'),
+(5, 4, 'coffee', '2025-09-29 10:58:26'),
+(7, 6, 'biryani', '2025-09-29 10:58:26'),
+(8, 3, 'snacks', '2025-09-29 10:58:26'),
+(9, 4, 'tea', '2025-09-29 10:58:26'),
+(10, 7, 'noodles', '2025-09-29 10:58:26'),
+(11, 8, 'noodles', '2025-09-29 12:23:18'),
+(12, 9, 'noodles', '2025-09-29 12:38:12'),
+(13, 9, 'curries', '2025-09-29 12:44:26'),
+(14, 9, 'rice', '2025-09-29 12:44:26'),
+(15, 7, 'cakes', '2025-09-29 12:44:26'),
+(16, 10, 'snacks', '2025-09-29 12:44:26');
 
 -- --------------------------------------------------------
 
@@ -446,7 +549,8 @@ INSERT INTO `subscriptions` (`sub_id`, `user_id`, `plan`, `start_date`, `end_dat
 (1, 2, 'free', '2025-09-19', '2025-09-26', 'active'),
 (2, 1, 'free', '2025-09-24', '2025-10-01', 'active'),
 (3, 3, 'free', '2025-09-24', '2025-10-01', 'active'),
-(4, 4, 'free', '2025-09-24', '2025-10-01', 'active');
+(4, 4, 'free', '2025-09-24', '2025-10-01', 'active'),
+(5, 5, 'free', '2025-09-26', '2025-10-03', 'active');
 
 -- --------------------------------------------------------
 
@@ -503,7 +607,8 @@ INSERT INTO `template_fields` (`field_id`, `business_type_id`, `field_name`, `fi
 (35, 9, 'Dozen', 'number'),
 (36, 10, 'Trainer Name', 'text'),
 (37, 11, 'gram', 'gram'),
-(38, 11, 'kg', 'kg');
+(38, 11, 'kg', 'kg'),
+(39, 5, 'dozen', '');
 
 -- --------------------------------------------------------
 
@@ -527,7 +632,8 @@ INSERT INTO `users` (`user_id`, `mobile`, `name`, `created_at`, `selected_templa
 (1, '9360552619', 'dheeran sriram', '2025-09-18 16:20:04', 5),
 (2, '9876543210', 'Arun Kumar', '2025-09-19 12:25:51', 1),
 (3, '9360556666', 'thulasi', '2025-09-24 16:17:41', 5),
-(4, '9360556662', 'thulasi1', '2025-09-24 16:24:35', 5);
+(4, '9360556662', 'thulasi1', '2025-09-24 16:24:35', 5),
+(5, '9360556622', 'karthick', '2025-09-26 12:14:18', 5);
 
 -- --------------------------------------------------------
 
@@ -567,6 +673,14 @@ ALTER TABLE `cart_items`
   ADD KEY `product_id` (`product_id`);
 
 --
+-- Indexes for table `categories`
+--
+ALTER TABLE `categories`
+  ADD PRIMARY KEY (`category_id`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `business_type_id` (`business_type_id`);
+
+--
 -- Indexes for table `orders`
 --
 ALTER TABLE `orders`
@@ -600,7 +714,9 @@ ALTER TABLE `payment_credentials`
 ALTER TABLE `products`
   ADD PRIMARY KEY (`product_id`),
   ADD KEY `user_id` (`user_id`),
-  ADD KEY `business_type_id` (`business_type_id`);
+  ADD KEY `business_type_id` (`business_type_id`),
+  ADD KEY `fk_products_category` (`category_id`),
+  ADD KEY `fk_products_subcategory` (`subcategory_id`);
 
 --
 -- Indexes for table `qr_codes`
@@ -624,6 +740,13 @@ ALTER TABLE `qr_scans`
 ALTER TABLE `sessions`
   ADD PRIMARY KEY (`id`),
   ADD KEY `user_id` (`user_id`);
+
+--
+-- Indexes for table `subcategories`
+--
+ALTER TABLE `subcategories`
+  ADD PRIMARY KEY (`subcategory_id`),
+  ADD KEY `category_id` (`category_id`);
 
 --
 -- Indexes for table `subscriptions`
@@ -666,31 +789,37 @@ ALTER TABLE `business_types`
 -- AUTO_INCREMENT for table `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `cart_items`
 --
 ALTER TABLE `cart_items`
-  MODIFY `cart_item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
+  MODIFY `cart_item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
+
+--
+-- AUTO_INCREMENT for table `categories`
+--
+ALTER TABLE `categories`
+  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `order_items`
 --
 ALTER TABLE `order_items`
-  MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
+  MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 
 --
 -- AUTO_INCREMENT for table `otps`
 --
 ALTER TABLE `otps`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `payment_credentials`
@@ -702,13 +831,13 @@ ALTER TABLE `payment_credentials`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- AUTO_INCREMENT for table `qr_codes`
 --
 ALTER TABLE `qr_codes`
-  MODIFY `qr_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `qr_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `qr_scans`
@@ -720,25 +849,31 @@ ALTER TABLE `qr_scans`
 -- AUTO_INCREMENT for table `sessions`
 --
 ALTER TABLE `sessions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
+-- AUTO_INCREMENT for table `subcategories`
+--
+ALTER TABLE `subcategories`
+  MODIFY `subcategory_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `subscriptions`
 --
 ALTER TABLE `subscriptions`
-  MODIFY `sub_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `sub_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `template_fields`
 --
 ALTER TABLE `template_fields`
-  MODIFY `field_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `field_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `webhook_logs`
@@ -756,6 +891,13 @@ ALTER TABLE `webhook_logs`
 ALTER TABLE `cart_items`
   ADD CONSTRAINT `cart_items_ibfk_1` FOREIGN KEY (`cart_id`) REFERENCES `carts` (`cart_id`) ON DELETE CASCADE,
   ADD CONSTRAINT `cart_items_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `categories`
+--
+ALTER TABLE `categories`
+  ADD CONSTRAINT `categories_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`),
+  ADD CONSTRAINT `categories_ibfk_2` FOREIGN KEY (`business_type_id`) REFERENCES `business_types` (`business_type_id`);
 
 --
 -- Constraints for table `orders`
@@ -780,6 +922,8 @@ ALTER TABLE `payment_credentials`
 -- Constraints for table `products`
 --
 ALTER TABLE `products`
+  ADD CONSTRAINT `fk_products_category` FOREIGN KEY (`category_id`) REFERENCES `categories` (`category_id`) ON DELETE SET NULL,
+  ADD CONSTRAINT `fk_products_subcategory` FOREIGN KEY (`subcategory_id`) REFERENCES `subcategories` (`subcategory_id`) ON DELETE SET NULL,
   ADD CONSTRAINT `products_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`),
   ADD CONSTRAINT `products_ibfk_2` FOREIGN KEY (`business_type_id`) REFERENCES `business_types` (`business_type_id`);
 
@@ -801,6 +945,12 @@ ALTER TABLE `qr_scans`
 --
 ALTER TABLE `sessions`
   ADD CONSTRAINT `sessions_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `subcategories`
+--
+ALTER TABLE `subcategories`
+  ADD CONSTRAINT `subcategories_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `categories` (`category_id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `subscriptions`
