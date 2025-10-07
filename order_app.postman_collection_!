@@ -157,8 +157,39 @@
 				{
 					"name": "select.php",
 					"request": {
-						"method": "GET",
-						"header": []
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "ad4c78e257519e29204d94974677a79755515f166b73b2ab1f529686bf334599",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"business_type_id\": 5\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/order_app/business/select.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"order_app",
+								"business",
+								"select.php"
+							]
+						}
 					},
 					"response": []
 				},
@@ -396,7 +427,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "29d74222d1d06130a6fdca10db31056021675784c6405e615aaa76ef400923e2",
+									"value": "ad4c78e257519e29204d94974677a79755515f166b73b2ab1f529686bf334599",
 									"type": "string"
 								}
 							]
@@ -404,13 +435,39 @@
 						"method": "POST",
 						"header": [],
 						"body": {
-							"mode": "raw",
-							"raw": "{\r\n  \"name\": \"Veg Hakka Noodles\",\r\n  \"price\": 120,\r\n  \"unit\": \"plate\",\r\n  \"category_name\": \"chinese\",\r\n  \"subcategory_name\": \"noodles\"\r\n}\r\n",
-							"options": {
-								"raw": {
-									"language": "json"
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Mango Shake",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "60",
+									"type": "text"
+								},
+								{
+									"key": "unit",
+									"value": "piece",
+									"type": "text"
+								},
+								{
+									"key": "category_name",
+									"value": "beverages",
+									"type": "text"
+								},
+								{
+									"key": "subcategory_name",
+									"value": "milkshakes",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/dheer/OneDrive/Pictures/Screenshots/Screenshot 2025-08-27 104222.png"
 								}
-							}
+							]
 						},
 						"url": {
 							"raw": "http://localhost/order_app/products/add.php",
@@ -477,7 +534,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "29d74222d1d06130a6fdca10db31056021675784c6405e615aaa76ef400923e2",
+									"value": "ad4c78e257519e29204d94974677a79755515f166b73b2ab1f529686bf334599",
 									"type": "string"
 								}
 							]
@@ -490,7 +547,7 @@
 								{
 									"key": "file",
 									"type": "file",
-									"src": "/C:/Users/dheer/Downloads/import.csv"
+									"src": "/C:/Users/dheer/Downloads/Menu .csv.csv"
 								}
 							]
 						},
@@ -1098,42 +1155,9 @@
 				},
 				{
 					"name": "payments_options.php",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
-						"auth": {
-							"type": "noauth"
-						},
 						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost/order_app/order/payments_options.php?qr_slug=1d645e7b8e",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"path": [
-								"order_app",
-								"order",
-								"payments_options.php"
-							],
-							"query": [
-								{
-									"key": "qr_slug",
-									"value": "1d645e7b8e"
-								}
-							]
-						}
+						"header": []
 					},
 					"response": []
 				}

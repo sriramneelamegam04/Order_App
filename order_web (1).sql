@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 29, 2025 at 09:36 AM
+-- Generation Time: Oct 07, 2025 at 09:23 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -147,7 +147,25 @@ INSERT INTO `categories` (`category_id`, `user_id`, `business_type_id`, `name`, 
 (7, 4, 5, 'desserts', '2025-09-29 10:58:26'),
 (8, 4, 5, 'chinese', '2025-09-29 12:20:27'),
 (9, 4, 5, 'main course', '2025-09-29 12:38:12'),
-(10, 4, 5, 'main course', '2025-09-29 12:44:26');
+(10, 4, 5, 'main course', '2025-09-29 12:44:26'),
+(11, 1, 5, 'chinese', '2025-10-07 10:27:56'),
+(12, 1, 5, 'starters', '2025-10-07 10:33:08'),
+(13, 2, 1, 'chinese', '2025-10-07 10:37:26'),
+(14, 2, 1, 'starters', '2025-10-07 10:37:26'),
+(15, 2, 1, 'north indian', '2025-10-07 11:27:30'),
+(16, 2, 1, 'italian', '2025-10-07 11:27:30'),
+(17, 2, 1, 'fast food', '2025-10-07 11:27:30'),
+(18, 2, 1, 'beverages', '2025-10-07 11:27:30'),
+(19, 2, 1, 'south indian', '2025-10-07 11:27:30'),
+(20, 2, 1, 'hyderabadi', '2025-10-07 11:27:30'),
+(21, 2, 1, 'desserts', '2025-10-07 11:27:30'),
+(22, 6, 5, 'north indian', '2025-10-07 11:43:31'),
+(23, 6, 5, 'italian', '2025-10-07 11:43:31'),
+(24, 6, 5, 'fast food', '2025-10-07 11:43:31'),
+(25, 6, 5, 'beverages', '2025-10-07 11:43:31'),
+(26, 6, 5, 'south indian', '2025-10-07 11:43:31'),
+(27, 6, 5, 'hyderabadi', '2025-10-07 11:43:31'),
+(28, 6, 5, 'desserts', '2025-10-07 11:43:31');
 
 -- --------------------------------------------------------
 
@@ -209,7 +227,8 @@ INSERT INTO `orders` (`order_id`, `user_id`, `qr_id`, `customer_name`, `customer
 (33, 2, 4, 'Sriram', '9360552619', 'paid', 430.00, 'UPI', 'order_68d384f391107', NULL, '2025-09-24 11:12:23'),
 (34, 4, 5, 'Mullai Malar', '955623147', 'pending', 0.00, 'COD', NULL, NULL, '2025-09-25 12:03:56'),
 (35, 4, 5, 'mullai malar', '955623147', 'pending', 1680.00, 'COD', NULL, NULL, '2025-09-25 12:09:01'),
-(36, 5, 6, 'mullai malar', '955623147', 'pending', 1890.00, 'COD', NULL, NULL, '2025-09-26 12:22:05');
+(36, 5, 6, 'mullai malar', '955623147', 'pending', 1890.00, 'COD', NULL, NULL, '2025-09-26 12:22:05'),
+(37, 5, 6, 'mullai malar', '955623147', 'pending', 0.00, 'COD', NULL, NULL, '2025-09-30 12:09:03');
 
 -- --------------------------------------------------------
 
@@ -326,7 +345,11 @@ INSERT INTO `otps` (`id`, `mobile`, `otp_hash`, `expires_at`, `created_at`) VALU
 (14, '9360556662', '$2y$10$QmYzfQcDDZ/qAScmqmWNvuhR10wLJKcl9bCm4PlYfdzr520I/HA1i', '2025-09-25 11:11:18', '2025-09-25 11:06:18'),
 (15, '9360556662', '$2y$10$sdG1ZkN2.Y7wTsEDP0nqHOKmx5Gg3GfScekQXuZgg9a4TWKCJ3LYK', '2025-09-26 12:18:30', '2025-09-26 12:13:30'),
 (16, '9360556622', '$2y$10$uLjb8Gt77GH/At./z6Ok3.sUJgjRj3jMnId6OY9rtnyo9FUg65yJa', '2025-09-26 12:18:47', '2025-09-26 12:13:47'),
-(17, '9360556662', '$2y$10$vhiwDqSD5ucII7AQHZWq0u25yweuzfop/OBztkE.kdAcylWsQBoG.', '2025-09-29 10:40:15', '2025-09-29 10:35:15');
+(17, '9360556662', '$2y$10$vhiwDqSD5ucII7AQHZWq0u25yweuzfop/OBztkE.kdAcylWsQBoG.', '2025-09-29 10:40:15', '2025-09-29 10:35:15'),
+(18, '9360556662', '$2y$10$hsQ6aTn4KyG.FqFDDd2wkuWQC.Vr1XxmSLf6YCedQD9gCiaxFVB1W', '2025-09-30 12:08:54', '2025-09-30 12:03:54'),
+(19, '9360552619', '$2y$10$yN1RQIrdKsiu.PPyZh./aeXnMAg0Q.ioJxWAm0eKwihKEMr6Ir9ti', '2025-10-07 10:31:47', '2025-10-07 10:26:47'),
+(20, '9876543210', '$2y$10$DHXWiAqtUucwuLZmjlhXaeyIpt660T7W8HsfjYkv1bnDsNGINXUVC', '2025-10-07 10:41:18', '2025-10-07 10:36:18'),
+(21, '9003673183', '$2y$10$wnC2TgkYekwnt9Yi15JpCe4GaflNDW//risBGCSgHcesuPQZne8HC', '2025-10-07 11:39:06', '2025-10-07 11:34:06');
 
 -- --------------------------------------------------------
 
@@ -365,60 +388,103 @@ CREATE TABLE `products` (
   `name` varchar(150) NOT NULL,
   `price` decimal(10,2) NOT NULL,
   `unit` varchar(50) NOT NULL,
+  `image` varchar(255) DEFAULT NULL,
   `created_at` datetime DEFAULT current_timestamp(),
   `category_id` int(11) DEFAULT NULL,
-  `subcategory_id` int(11) DEFAULT NULL
+  `subcategory_id` int(11) DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`product_id`, `user_id`, `business_type_id`, `name`, `price`, `unit`, `created_at`, `category_id`, `subcategory_id`) VALUES
-(1, 2, 1, 'Dosa', 50.00, 'Plate', '2025-09-19 15:52:33', NULL, NULL),
-(2, 2, 1, 'Masala Dosa', 60.00, 'Plate', '2025-09-19 15:56:55', NULL, NULL),
-(3, 2, 1, 'Idly', 20.00, 'Plate', '2025-09-19 16:21:08', NULL, NULL),
-(4, 2, 1, 'Poori', 40.00, 'Plate', '2025-09-19 16:21:08', NULL, NULL),
-(5, 2, 1, 'Pongal', 50.00, 'Plate', '2025-09-19 16:21:08', NULL, NULL),
-(6, 2, 1, 'Vada', 10.00, 'Plate', '2025-09-19 16:21:08', NULL, NULL),
-(7, 2, 1, 'Rava Dosa', 40.00, 'Plate', '2025-09-19 16:21:08', NULL, NULL),
-(8, 2, 1, 'Podi Idly', 80.00, 'Plate', '2025-09-19 16:21:08', NULL, NULL),
-(10, 4, 5, 'apple', 300.00, 'dozen', '2025-09-25 11:09:18', NULL, NULL),
-(11, 4, 5, 'banana', 60.00, 'dozen', '2025-09-25 11:16:11', NULL, NULL),
-(12, 4, 5, 'mushroom pizza', 180.00, 'plate', '2025-09-25 11:16:11', 2, 2),
-(13, 4, 5, 'mango', 300.00, 'kg', '2025-09-25 11:16:11', NULL, NULL),
-(15, 4, 5, 'pineapple', 90.00, 'pcs', '2025-09-25 11:16:11', NULL, NULL),
-(16, 4, 5, 'watermelon', 40.00, 'kg', '2025-09-25 11:16:11', NULL, NULL),
-(17, 4, 5, 'papaya', 70.00, 'kg', '2025-09-25 11:16:11', NULL, NULL),
-(18, 4, 5, 'strawberry', 450.00, 'kg', '2025-09-25 11:16:11', NULL, NULL),
-(19, 4, 5, 'guava', 110.00, 'kg', '2025-09-25 11:16:11', NULL, NULL),
-(20, 5, 5, 'apple', 250.00, 'kg', '2025-09-26 12:18:55', NULL, NULL),
-(21, 5, 5, 'banana', 60.00, 'dozen', '2025-09-26 12:19:39', NULL, NULL),
-(22, 5, 5, 'orange', 120.00, 'kg', '2025-09-26 12:19:39', NULL, NULL),
-(23, 5, 5, 'mango', 300.00, 'kg', '2025-09-26 12:19:39', NULL, NULL),
-(24, 5, 5, 'grapes', 180.00, 'kg', '2025-09-26 12:19:39', NULL, NULL),
-(25, 5, 5, 'pineapple', 90.00, 'pcs', '2025-09-26 12:19:39', NULL, NULL),
-(26, 5, 5, 'watermelon', 40.00, 'kg', '2025-09-26 12:19:39', NULL, NULL),
-(27, 5, 5, 'papaya', 70.00, 'kg', '2025-09-26 12:19:39', NULL, NULL),
-(28, 5, 5, 'strawberry', 450.00, 'kg', '2025-09-26 12:19:39', NULL, NULL),
-(29, 5, 5, 'guava', 110.00, 'kg', '2025-09-26 12:19:39', NULL, NULL),
-(30, 4, 5, 'butter naan', 50.00, 'plate', '2025-09-29 10:36:58', 1, 1),
-(31, 4, 5, 'paneer butter masala', 180.00, 'plate', '2025-09-29 10:58:26', 1, 3),
-(32, 4, 5, 'veg burger', 120.00, 'piece', '2025-09-29 10:58:26', 3, 4),
-(33, 4, 5, 'cold coffee', 100.00, 'glass', '2025-09-29 10:58:26', 4, 5),
-(34, 4, 5, 'masala dosa', 80.00, 'plate', '2025-09-29 10:58:26', NULL, NULL),
-(35, 4, 5, 'chicken biryani', 250.00, 'plate', '2025-09-29 10:58:26', 6, 7),
-(36, 4, 5, 'french fries', 90.00, 'plate', '2025-09-29 10:58:26', 3, 8),
-(37, 4, 5, 'green tea', 60.00, 'cup', '2025-09-29 10:58:26', 4, 9),
-(38, 4, 5, 'ice cream', 70.00, 'cup', '2025-09-29 10:58:26', 7, 10),
-(39, 4, 5, 'veg hakka', 130.00, 'plate', '2025-09-29 12:25:37', 9, 12),
-(40, 4, 5, 'veg hakka noodles', 120.00, 'plate', '2025-09-29 12:28:12', NULL, NULL),
-(41, 4, 5, 'veg hakka noodles', 120.00, 'plate', '2025-09-29 12:30:27', 8, 11),
-(42, 4, 5, 'veg hakka noodles', 120.00, 'plate', '2025-09-29 12:44:26', 9, 12),
-(43, 4, 5, 'paneer butter masala', 250.00, 'plate', '2025-09-29 12:44:26', 9, 13),
-(44, 4, 5, 'chicken biryani', 200.00, 'plate', '2025-09-29 12:44:26', 9, 14),
-(45, 4, 5, 'chocolate cake', 150.00, 'slice', '2025-09-29 12:44:26', 7, 15),
-(46, 4, 5, 'veg spring roll', 50.00, 'pcs', '2025-09-29 12:44:26', 10, 16);
+INSERT INTO `products` (`product_id`, `user_id`, `business_type_id`, `name`, `price`, `unit`, `image`, `created_at`, `category_id`, `subcategory_id`, `updated_at`) VALUES
+(1, 2, 1, 'Dosa', 50.00, 'Plate', NULL, '2025-09-19 15:52:33', NULL, NULL, NULL),
+(2, 2, 1, 'Masala Dosa', 60.00, 'Plate', NULL, '2025-09-19 15:56:55', NULL, NULL, NULL),
+(3, 2, 1, 'Idly', 20.00, 'Plate', NULL, '2025-09-19 16:21:08', NULL, NULL, NULL),
+(4, 2, 1, 'Poori', 40.00, 'Plate', NULL, '2025-09-19 16:21:08', NULL, NULL, NULL),
+(5, 2, 1, 'Pongal', 50.00, 'Plate', NULL, '2025-09-19 16:21:08', NULL, NULL, NULL),
+(6, 2, 1, 'Vada', 10.00, 'Plate', NULL, '2025-09-19 16:21:08', NULL, NULL, NULL),
+(7, 2, 1, 'Rava Dosa', 40.00, 'Plate', NULL, '2025-09-19 16:21:08', NULL, NULL, NULL),
+(8, 2, 1, 'Podi Idly', 80.00, 'Plate', NULL, '2025-09-19 16:21:08', NULL, NULL, NULL),
+(10, 4, 5, 'apple', 300.00, 'dozen', NULL, '2025-09-25 11:09:18', NULL, NULL, NULL),
+(11, 4, 5, 'banana', 60.00, 'dozen', NULL, '2025-09-25 11:16:11', NULL, NULL, NULL),
+(12, 4, 5, 'mushroom pizza', 180.00, 'plate', NULL, '2025-09-25 11:16:11', 2, 2, NULL),
+(13, 4, 5, 'mango', 300.00, 'kg', NULL, '2025-09-25 11:16:11', NULL, NULL, NULL),
+(15, 4, 5, 'pineapple', 90.00, 'pcs', NULL, '2025-09-25 11:16:11', NULL, NULL, NULL),
+(16, 4, 5, 'watermelon', 40.00, 'kg', NULL, '2025-09-25 11:16:11', NULL, NULL, NULL),
+(17, 4, 5, 'papaya', 70.00, 'kg', NULL, '2025-09-25 11:16:11', NULL, NULL, NULL),
+(18, 4, 5, 'strawberry', 450.00, 'kg', NULL, '2025-09-25 11:16:11', NULL, NULL, NULL),
+(19, 4, 5, 'guava', 110.00, 'kg', NULL, '2025-09-25 11:16:11', NULL, NULL, NULL),
+(20, 5, 5, 'apple', 250.00, 'kg', NULL, '2025-09-26 12:18:55', NULL, NULL, NULL),
+(21, 5, 5, 'banana', 60.00, 'dozen', NULL, '2025-09-26 12:19:39', NULL, NULL, NULL),
+(22, 5, 5, 'orange', 120.00, 'kg', NULL, '2025-09-26 12:19:39', NULL, NULL, NULL),
+(23, 5, 5, 'mango', 300.00, 'kg', NULL, '2025-09-26 12:19:39', NULL, NULL, NULL),
+(24, 5, 5, 'grapes', 180.00, 'kg', NULL, '2025-09-26 12:19:39', NULL, NULL, NULL),
+(25, 5, 5, 'pineapple', 90.00, 'pcs', NULL, '2025-09-26 12:19:39', NULL, NULL, NULL),
+(26, 5, 5, 'watermelon', 40.00, 'kg', NULL, '2025-09-26 12:19:39', NULL, NULL, NULL),
+(27, 5, 5, 'papaya', 70.00, 'kg', NULL, '2025-09-26 12:19:39', NULL, NULL, NULL),
+(28, 5, 5, 'strawberry', 450.00, 'kg', NULL, '2025-09-26 12:19:39', NULL, NULL, NULL),
+(29, 5, 5, 'guava', 110.00, 'kg', NULL, '2025-09-26 12:19:39', NULL, NULL, NULL),
+(30, 4, 5, 'butter naan', 50.00, 'plate', NULL, '2025-09-29 10:36:58', 1, 1, NULL),
+(31, 4, 5, 'paneer butter masala', 180.00, 'plate', NULL, '2025-09-29 10:58:26', 1, 3, NULL),
+(32, 4, 5, 'veg burger', 120.00, 'piece', NULL, '2025-09-29 10:58:26', 3, 4, NULL),
+(33, 4, 5, 'cold coffee', 100.00, 'glass', NULL, '2025-09-29 10:58:26', 4, 5, NULL),
+(34, 4, 5, 'masala dosa', 80.00, 'plate', NULL, '2025-09-29 10:58:26', NULL, NULL, NULL),
+(35, 4, 5, 'chicken biryani', 250.00, 'plate', NULL, '2025-09-29 10:58:26', 6, 7, NULL),
+(36, 4, 5, 'french fries', 90.00, 'plate', NULL, '2025-09-29 10:58:26', 3, 8, NULL),
+(37, 4, 5, 'green tea', 60.00, 'cup', NULL, '2025-09-29 10:58:26', 4, 9, NULL),
+(38, 4, 5, 'ice cream', 70.00, 'cup', NULL, '2025-09-29 10:58:26', 7, 10, NULL),
+(39, 4, 5, 'veg hakka', 130.00, 'plate', NULL, '2025-09-29 12:25:37', 9, 12, NULL),
+(40, 4, 5, 'veg hakka noodles', 120.00, 'plate', NULL, '2025-09-29 12:28:12', NULL, NULL, NULL),
+(41, 4, 5, 'veg hakka noodles', 120.00, 'plate', NULL, '2025-09-29 12:30:27', 8, 11, NULL),
+(42, 4, 5, 'veg hakka noodles', 120.00, 'plate', NULL, '2025-09-29 12:44:26', 9, 12, NULL),
+(43, 4, 5, 'paneer butter masala', 250.00, 'plate', NULL, '2025-09-29 12:44:26', 9, 13, NULL),
+(44, 4, 5, 'chicken biryani', 200.00, 'plate', NULL, '2025-09-29 12:44:26', 9, 14, NULL),
+(45, 4, 5, 'chocolate cake', 150.00, 'slice', NULL, '2025-09-29 12:44:26', 7, 15, NULL),
+(46, 4, 5, 'veg spring roll', 50.00, 'pcs', NULL, '2025-09-29 12:44:26', 10, 16, NULL),
+(47, 1, 5, 'veg fried rice', 120.00, 'plate', NULL, '2025-10-07 10:33:08', 11, 17, NULL),
+(48, 1, 5, 'paneer tikka', 150.00, 'plate', NULL, '2025-10-07 10:33:08', 12, 18, NULL),
+(49, 2, 1, 'veg fried rice', 120.00, 'plate', NULL, '2025-10-07 10:37:26', 13, 19, NULL),
+(50, 2, 1, 'paneer tikka', 150.00, 'plate', NULL, '2025-10-07 10:37:26', 14, 20, NULL),
+(51, 2, 1, 'veg fried chicken rice', 120.00, 'plate', NULL, '2025-10-07 10:47:48', 13, 19, NULL),
+(52, 2, 1, 'paneer tikka aathan aama', 150.00, 'plate', NULL, '2025-10-07 10:47:48', 14, 20, NULL),
+(53, 2, 1, 'veg fried chicken rice 222', 120.00, 'plate', NULL, '2025-10-07 10:53:13', 13, 19, NULL),
+(54, 2, 1, 'paneer tikka aathan aama222', 150.00, 'plate', NULL, '2025-10-07 10:53:13', 14, 20, NULL),
+(55, 2, 1, 'veg fried chicken rice 222222222', 120.00, 'plate', NULL, '2025-10-07 11:00:21', 13, 19, NULL),
+(56, 2, 1, 'paneer tikka aathan aama22222222', 150.00, 'plate', NULL, '2025-10-07 11:00:21', 14, 20, NULL),
+(57, 2, 1, 'veg fried chicken rice 2', 120.00, 'plate', 'products/uploads/2025-10-07/prod_68e4a9685bb18.png', '2025-10-07 11:17:20', 13, 19, NULL),
+(58, 2, 1, 'paneer tikka aathan aam', 150.00, 'plate', 'products/uploads/2025-10-07/prod_68e4a96862868.png', '2025-10-07 11:17:20', 14, 20, NULL),
+(59, 2, 1, 'veg fried chicken rice 21', 120.00, 'plate', 'products/uploads/2025-10-07/prod_68e4ab268d90c.png', '2025-10-07 11:24:46', 13, 19, NULL),
+(60, 2, 1, 'paneer tikka aathan aam 1', 150.00, 'plate', 'products/uploads/2025-10-07/prod_68e4ab268ef9d.png', '2025-10-07 11:24:46', 14, 20, NULL),
+(61, 2, 1, 'butter naan1', 50.00, 'plate', 'products/uploads/2025-10-07/prod_68e4abcac8709.png', '2025-10-07 11:27:30', 15, 21, NULL),
+(62, 2, 1, 'paneer butter masala1', 180.00, 'plate', 'products/uploads/2025-10-07/prod_68e4abcaca320.png', '2025-10-07 11:27:30', 15, 22, NULL),
+(63, 2, 1, 'mushroom pizza1', 200.00, 'plate', 'products/uploads/2025-10-07/prod_68e4abcad0d56.png', '2025-10-07 11:27:30', 16, 23, NULL),
+(64, 2, 1, 'veg burger1', 120.00, 'piece', NULL, '2025-10-07 11:27:30', 17, 24, NULL),
+(65, 2, 1, 'cold coffee', 100.00, 'glass', NULL, '2025-10-07 11:27:30', 18, 25, NULL),
+(66, 2, 1, 'masala dosa', 80.00, 'plate', NULL, '2025-10-07 11:27:30', 19, 26, NULL),
+(67, 2, 1, 'chicken biryani', 250.00, 'plate', NULL, '2025-10-07 11:27:30', 20, 27, NULL),
+(68, 2, 1, 'french fries', 90.00, 'plate', NULL, '2025-10-07 11:27:30', 17, 28, NULL),
+(69, 2, 1, 'green tea', 60.00, 'cup', NULL, '2025-10-07 11:27:30', 18, 29, NULL),
+(70, 2, 1, 'ice cream', 70.00, 'cup', NULL, '2025-10-07 11:27:30', 21, 30, NULL),
+(71, 6, 5, 'butter naan1', 50.00, 'piece', 'products/uploads/2025-10-07/prod_68e4af8bdd9e9.png', '2025-10-07 11:43:31', 22, 31, NULL),
+(72, 6, 5, 'paneer butter masala1', 180.00, 'piece', 'products/uploads/2025-10-07/prod_68e4af8bdf132.png', '2025-10-07 11:43:31', 22, 32, NULL),
+(73, 6, 5, 'mushroom pizza1', 200.00, 'piece', 'products/uploads/2025-10-07/prod_68e4af8be0d9f.png', '2025-10-07 11:43:31', 23, 33, NULL),
+(74, 6, 5, 'veg burger1', 120.00, 'piece', NULL, '2025-10-07 11:43:31', 24, 34, NULL),
+(75, 6, 5, 'cold coffee', 100.00, 'piece', NULL, '2025-10-07 11:43:31', 25, 35, NULL),
+(76, 6, 5, 'masala dosa', 80.00, 'piece', NULL, '2025-10-07 11:43:31', 26, 36, NULL),
+(77, 6, 5, 'chicken biryani', 250.00, 'piece', NULL, '2025-10-07 11:43:31', 27, 37, NULL),
+(78, 6, 5, 'french fries', 90.00, 'piece', NULL, '2025-10-07 11:43:31', 24, 38, NULL),
+(79, 6, 5, 'green tea', 60.00, 'piece', NULL, '2025-10-07 11:43:31', 25, 39, NULL),
+(80, 6, 5, 'ice cream', 70.00, 'piece', NULL, '2025-10-07 11:43:31', 28, 40, NULL),
+(81, 6, 5, 'butter naan12', 50.00, 'piece', 'products/uploads/2025-10-07/prod_68e4b179b3e5c.png', '2025-10-07 11:51:45', 22, 31, NULL),
+(82, 6, 5, 'paneer butter masala12', 180.00, 'piece', 'products/uploads/2025-10-07/prod_68e4b179b59e5.png', '2025-10-07 11:51:45', 22, 32, NULL),
+(83, 6, 5, 'mushroom pizza12', 200.00, 'piece', 'products/uploads/2025-10-07/prod_68e4b179b7265.png', '2025-10-07 11:51:45', 23, 33, NULL),
+(84, 6, 5, 'butter naan123', 50.00, 'piece', 'products/uploads/2025-10-07/prod_68e4b41117324.png', '2025-10-07 12:02:49', 22, 31, NULL),
+(85, 6, 5, 'paneer butter masala123', 180.00, 'piece', 'products/uploads/2025-10-07/prod_68e4b4111ae38.png', '2025-10-07 12:02:49', 22, 32, NULL),
+(86, 6, 5, 'mushroom pizza123', 200.00, 'piece', 'products/uploads/2025-10-07/prod_68e4b4111d6ca.png', '2025-10-07 12:02:49', 23, 33, NULL),
+(87, 6, 5, 'veg hakka noodles', 120.00, 'piece', NULL, '2025-10-07 12:05:17', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -445,7 +511,8 @@ INSERT INTO `qr_codes` (`qr_id`, `user_id`, `business_type_id`, `qr_slug`, `tabl
 (3, 2, 1, '07c542a226', '2', '2025-09-20 13:29:13'),
 (4, 2, 1, '1d645e7b8e', '2', '2025-09-20 13:32:52'),
 (5, 4, 5, '20af83c85b', '1', '2025-09-25 12:01:32'),
-(6, 5, 5, 'a26821067c', '1', '2025-09-26 12:20:36');
+(6, 5, 5, 'a26821067c', '1', '2025-09-26 12:20:36'),
+(7, 4, 5, 'c9292df746', '2', '2025-09-30 12:04:23');
 
 -- --------------------------------------------------------
 
@@ -484,13 +551,16 @@ INSERT INTO `sessions` (`id`, `user_id`, `token`, `last_activity`) VALUES
 (5, 2, 'a8f78c478ed94b068c1a8c005b9c4df0cdab3c871e2d2faf015141065ccef89f', '2025-09-23 12:10:25'),
 (6, 2, '63d16fa3592f1a6c239fbe13b9d341443be3900bc82e09fa26660996b764b03d', '2025-09-23 16:18:25'),
 (7, 2, '15c0594fbe8f925878b3685d950db7896a1608adb5b2d5d883d6ab48a2da49ab', '2025-09-24 12:49:19'),
-(8, 1, '353846c65b9ff5d7c32f71a421c4cc4924a677be8cc843bc9a755adf0fa9c031', '2025-09-24 16:15:41'),
 (9, 3, '06e89694236625e50d417db463c8e3b0e59b8ef954fa924e1ba0e82e0d4a6fe5', '2025-09-24 16:23:28'),
 (10, 4, '0e757644f86a484f37424802304049fe23c92abbac6d9ad93c0ed01348e245b7', '2025-09-24 16:41:05'),
 (11, 4, 'baea1c383c3c2976547e579241923a7ddf6ed4f94ee1333adf7a80e0c58bb5d9', '2025-09-25 10:55:35'),
 (12, 4, 'b1e32829b11a3067f5bf224667f0e5366d8aafa57a591d332f77d8ffbab88a52', '2025-09-25 12:40:54'),
 (13, 5, '47d9bb16b80effcf9cfe29443d22eae981ad660ca8d0184289d4f16930974ccc', '2025-09-26 12:20:36'),
-(14, 4, '29d74222d1d06130a6fdca10db31056021675784c6405e615aaa76ef400923e2', '2025-09-29 13:05:38');
+(14, 4, '29d74222d1d06130a6fdca10db31056021675784c6405e615aaa76ef400923e2', '2025-09-29 13:05:38'),
+(15, 4, 'd3242e4ebf51b6526abab41ec42fd7e96e1a36fb32ef72e410b5c1d6cfbb827e', '2025-09-30 12:04:23'),
+(16, 1, 'c43f7c68fd19efd1f2104bd43d9f3bc9d9bb81fe90be582b08dbb8e5cb15f3d8', '2025-10-07 10:33:08'),
+(17, 2, 'c891ed4d7309078e0dc30c1d93d8c1b44f215c4e91cdfae2b54bdb69e6f203dd', '2025-10-07 11:42:06'),
+(18, 6, 'ad4c78e257519e29204d94974677a79755515f166b73b2ab1f529686bf334599', '2025-10-07 12:50:54');
 
 -- --------------------------------------------------------
 
@@ -524,7 +594,31 @@ INSERT INTO `subcategories` (`subcategory_id`, `category_id`, `name`, `created_a
 (13, 9, 'curries', '2025-09-29 12:44:26'),
 (14, 9, 'rice', '2025-09-29 12:44:26'),
 (15, 7, 'cakes', '2025-09-29 12:44:26'),
-(16, 10, 'snacks', '2025-09-29 12:44:26');
+(16, 10, 'snacks', '2025-09-29 12:44:26'),
+(17, 11, 'veg', '2025-10-07 10:27:56'),
+(18, 12, 'veg', '2025-10-07 10:33:08'),
+(19, 13, 'veg', '2025-10-07 10:37:26'),
+(20, 14, 'veg', '2025-10-07 10:37:26'),
+(21, 15, 'breads', '2025-10-07 11:27:30'),
+(22, 15, 'curries', '2025-10-07 11:27:30'),
+(23, 16, 'pizza', '2025-10-07 11:27:30'),
+(24, 17, 'burgers', '2025-10-07 11:27:30'),
+(25, 18, 'coffee', '2025-10-07 11:27:30'),
+(26, 19, 'dosa', '2025-10-07 11:27:30'),
+(27, 20, 'biryani', '2025-10-07 11:27:30'),
+(28, 17, 'snacks', '2025-10-07 11:27:30'),
+(29, 18, 'tea', '2025-10-07 11:27:30'),
+(30, 21, 'ice creams', '2025-10-07 11:27:30'),
+(31, 22, 'breads', '2025-10-07 11:43:31'),
+(32, 22, 'curries', '2025-10-07 11:43:31'),
+(33, 23, 'pizza', '2025-10-07 11:43:31'),
+(34, 24, 'burgers', '2025-10-07 11:43:31'),
+(35, 25, 'coffee', '2025-10-07 11:43:31'),
+(36, 26, 'dosa', '2025-10-07 11:43:31'),
+(37, 27, 'biryani', '2025-10-07 11:43:31'),
+(38, 24, 'snacks', '2025-10-07 11:43:31'),
+(39, 25, 'tea', '2025-10-07 11:43:31'),
+(40, 28, 'ice creams', '2025-10-07 11:43:31');
 
 -- --------------------------------------------------------
 
@@ -550,7 +644,8 @@ INSERT INTO `subscriptions` (`sub_id`, `user_id`, `plan`, `start_date`, `end_dat
 (2, 1, 'free', '2025-09-24', '2025-10-01', 'active'),
 (3, 3, 'free', '2025-09-24', '2025-10-01', 'active'),
 (4, 4, 'free', '2025-09-24', '2025-10-01', 'active'),
-(5, 5, 'free', '2025-09-26', '2025-10-03', 'active');
+(5, 5, 'free', '2025-09-26', '2025-10-03', 'active'),
+(6, 6, 'free', '2025-10-07', '2025-10-14', 'active');
 
 -- --------------------------------------------------------
 
@@ -630,10 +725,11 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`user_id`, `mobile`, `name`, `created_at`, `selected_template_id`) VALUES
 (1, '9360552619', 'dheeran sriram', '2025-09-18 16:20:04', 5),
-(2, '9876543210', 'Arun Kumar', '2025-09-19 12:25:51', 1),
+(2, '9876543210', 'arun kumar', '2025-09-19 12:25:51', 1),
 (3, '9360556666', 'thulasi', '2025-09-24 16:17:41', 5),
 (4, '9360556662', 'thulasi1', '2025-09-24 16:24:35', 5),
-(5, '9360556622', 'karthick', '2025-09-26 12:14:18', 5);
+(5, '9360556622', 'karthick', '2025-09-26 12:14:18', 5),
+(6, '9003673183', 'neelamegam', '2025-10-07 11:34:48', 5);
 
 -- --------------------------------------------------------
 
@@ -801,13 +897,13 @@ ALTER TABLE `cart_items`
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT for table `order_items`
@@ -819,7 +915,7 @@ ALTER TABLE `order_items`
 -- AUTO_INCREMENT for table `otps`
 --
 ALTER TABLE `otps`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `payment_credentials`
@@ -831,13 +927,13 @@ ALTER TABLE `payment_credentials`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=88;
 
 --
 -- AUTO_INCREMENT for table `qr_codes`
 --
 ALTER TABLE `qr_codes`
-  MODIFY `qr_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `qr_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `qr_scans`
@@ -849,19 +945,19 @@ ALTER TABLE `qr_scans`
 -- AUTO_INCREMENT for table `sessions`
 --
 ALTER TABLE `sessions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `subcategories`
 --
 ALTER TABLE `subcategories`
-  MODIFY `subcategory_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `subcategory_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT for table `subscriptions`
 --
 ALTER TABLE `subscriptions`
-  MODIFY `sub_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `sub_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `template_fields`
@@ -873,7 +969,7 @@ ALTER TABLE `template_fields`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `webhook_logs`
