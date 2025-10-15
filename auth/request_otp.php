@@ -1,4 +1,4 @@
-<?php
+<?php 
 require __DIR__ . '/../config/db.php';
 
 header("Content-Type: application/json");
@@ -32,7 +32,6 @@ $mobile = trim($input['mobile'] ?? '');
 $name = trim($input['name'] ?? '');
 
 // --- VALIDATION ---
-
 if (!$mobile) {
     http_response_code(400);
     echo json_encode([
@@ -86,12 +85,12 @@ if ($count >= 3) {
 $otp = random_int(100000, 999999);
 $hashedOtp = password_hash((string)$otp, PASSWORD_DEFAULT);
 
-// --- STORE OTP ---
+// --- STORE OTP WITH NAME ---
 $stmt = $conn->prepare("
-    INSERT INTO otps (mobile, otp_hash, expires_at, created_at)
-    VALUES (?, ?, DATE_ADD(NOW(), INTERVAL 5 MINUTE), NOW())
+    INSERT INTO otps (mobile, name, otp_hash, expires_at, created_at)
+    VALUES (?, ?, ?, DATE_ADD(NOW(), INTERVAL 5 MINUTE), NOW())
 ");
-$stmt->bind_param('ss', $mobile, $hashedOtp);
+$stmt->bind_param('sss', $mobile, $name, $hashedOtp);
 $stmt->execute();
 $stmt->close();
 

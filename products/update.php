@@ -71,10 +71,11 @@ if (isset($_POST['product_id'])) {
     $name = strtolower(trim($_POST['name'] ?? ""));
     $unit = strtolower(trim($_POST['unit'] ?? ""));
     $price = isset($_POST['price']) ? (float)$_POST['price'] : 0;
+    $description = trim($_POST['description'] ?? null);
     $category_name = isset($_POST['category_name']) ? strtolower(trim($_POST['category_name'])) : null;
     $subcategory_name = isset($_POST['subcategory_name']) ? strtolower(trim($_POST['subcategory_name'])) : null;
     $new_image = $_FILES['image'] ?? null;
-    $image_value = $_POST['image'] ?? null; // for URL or local path
+    $image_value = $_POST['image'] ?? null;
 } else {
     $input = json_decode(file_get_contents("php://input"), true);
     if (
@@ -89,6 +90,7 @@ if (isset($_POST['product_id'])) {
     $name = strtolower(trim($input['name']));
     $unit = strtolower(trim($input['unit']));
     $price = (float)$input['price'];
+    $description = trim($input['description'] ?? null);
     $category_name = isset($input['category_name']) ? strtolower(trim($input['category_name'])) : null;
     $subcategory_name = isset($input['subcategory_name']) ? strtolower(trim($input['subcategory_name'])) : null;
     $new_image = null;
@@ -173,14 +175,13 @@ if ($res) {
     exit;
 }
 
-// --- Image handling (FormData / URL / Local Path) ---
-$image_path = $product['image']; // default to old image
+// --- Image handling ---
+$image_path = $product['image']; // keep old image
 $dateFolder = date('Y-m-d');
 $upload_dir = __DIR__ . "/../products/uploads/$dateFolder/";
 if (!is_dir($upload_dir)) mkdir($upload_dir, 0777, true);
 
 if ($new_image && $new_image['error'] === UPLOAD_ERR_OK) {
-    // Case 1: File upload
     $ext = strtolower(pathinfo($new_image['name'], PATHINFO_EXTENSION));
     if (!in_array($ext, ['jpg', 'jpeg', 'png', 'webp'])) {
         http_response_code(400);
@@ -191,51 +192,54 @@ if ($new_image && $new_image['error'] === UPLOAD_ERR_OK) {
     $target_path = $upload_dir . $new_name;
 
     if (move_uploaded_file($new_image['tmp_name'], $target_path)) {
-        if ($image_path && file_exists(__DIR__ . '/../' . $image_path)) {
-            unlink(__DIR__ . '/../' . $image_path);
-        }
+        if ($image_path && file_exists(__DIR__ . '/../' . $image_path)) unlink(__DIR__ . '/../' . $image_path);
         $image_path = "products/uploads/$dateFolder/" . $new_name;
     }
 } elseif (!empty($image_value)) {
-    // Case 2: URL or local path
     $ext = strtolower(pathinfo($image_value, PATHINFO_EXTENSION));
     if (in_array($ext, ['jpg', 'jpeg', 'png', 'webp'])) {
         $new_name = uniqid("prod_") . "." . $ext;
         $target_path = $upload_dir . $new_name;
 
         if (filter_var($image_value, FILTER_VALIDATE_URL)) {
-            // Download from URL
             $img_data = @file_get_contents($image_value);
-            if ($img_data !== false) {
+            if ($img_data !== false && strlen($img_data) > 500) {
                 file_put_contents($target_path, $img_data);
-                if ($image_path && file_exists(__DIR__ . '/../' . $image_path)) {
-                    unlink(__DIR__ . '/../' . $image_path);
-                }
+                if ($image_path && file_exists(__DIR__ . '/../' . $image_path)) unlink(__DIR__ . '/../' . $image_path);
                 $image_path = "products/uploads/$dateFolder/" . $new_name;
+            } else {
+                http_response_code(400);
+                echo json_encode(["success" => false, "msg" => "Invalid or missing image URL"]);
+                exit;
             }
         } else {
-            // Local path
             $local_path = __DIR__ . "/../products/source_images/" . basename($image_value);
             if (!file_exists($local_path)) $local_path = $image_value;
             if (file_exists($local_path)) {
                 if (@copy($local_path, $target_path)) {
-                    if ($image_path && file_exists(__DIR__ . '/../' . $image_path)) {
-                        unlink(__DIR__ . '/../' . $image_path);
-                    }
+                    if ($image_path && file_exists(__DIR__ . '/../' . $image_path)) unlink(__DIR__ . '/../' . $image_path);
                     $image_path = "products/uploads/$dateFolder/" . $new_name;
+                } else {
+                    http_response_code(400);
+                    echo json_encode(["success" => false, "msg" => "Failed to copy local image"]);
+                    exit;
                 }
+            } else {
+                http_response_code(400);
+                echo json_encode(["success" => false, "msg" => "Local image not found"]);
+                exit;
             }
         }
     }
 }
 
-// --- Update product ---
+// --- Update product (with description) ---
 $stmt = $conn->prepare("
     UPDATE products
-    SET name=?, price=?, unit=?, category_id=?, subcategory_id=?, image=?, updated_at=NOW()
+    SET name=?, price=?, unit=?, category_id=?, subcategory_id=?, image=?, description=?, updated_at=NOW()
     WHERE product_id=? AND user_id=? AND business_type_id=?
 ");
-$stmt->bind_param("sdsiissii", $name, $price, $unit, $category_id, $subcategory_id, $image_path, $product_id, $user_id, $business_type_id);
+$stmt->bind_param("sdsiisssii", $name, $price, $unit, $category_id, $subcategory_id, $image_path, $description, $product_id, $user_id, $business_type_id);
 
 if ($stmt->execute()) {
     echo json_encode([
@@ -246,6 +250,7 @@ if ($stmt->execute()) {
             "name" => $name,
             "price" => number_format($price, 2),
             "unit" => $unit,
+            "description" => $description,
             "image" => $image_path,
             "category_id" => $category_id,
             "subcategory_id" => $subcategory_id,

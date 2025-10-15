@@ -1,13 +1,14 @@
 <?php
 header("Content-Type: application/json");
 header("Access-Control-Allow-Origin: http://localhost:3000");
-header("Access-Control-Allow-Methods: POST, PATCH , GET, OPTIONS");
+header("Access-Control-Allow-Methods: POST, PATCH, GET, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
 
 if ($_SERVER['REQUEST_METHOD'] === "OPTIONS") {
     http_response_code(200);
     exit;
 }
+
 require '../config/db.php';
 
 // --- Method validation ---
@@ -17,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] !== "POST") {
     exit;
 }
 
-// get input data
+// --- Input data ---
 $data = json_decode(file_get_contents("php://input"), true);
 $slug   = $data['slug']   ?? null;
 $name   = isset($data['name']) ? strtolower(trim($data['name'])) : null;
@@ -28,9 +29,10 @@ if (!$slug || !$name || !$mobile) {
     exit;
 }
 
-// validate QR
+// --- Validate QR ---
 $stmt = $conn->prepare("
-    SELECT q.qr_id, q.table_no, q.business_type_id, u.name as owner_name, b.name as business_type
+    SELECT q.qr_id, q.table_no, q.business_type_id, q.user_id,
+           u.name AS owner_name, b.name AS business_type
     FROM qr_codes q
     JOIN users u ON q.user_id = u.user_id
     JOIN business_types b ON q.business_type_id = b.business_type_id
@@ -46,37 +48,48 @@ if ($res->num_rows == 0) {
 }
 
 $qr = $res->fetch_assoc();
+$stmt->close();
 
-// generate unique session_id for cart
+// --- Generate unique session_id for cart ---
 $session_id = uniqid('sess_', true);
 
-// QR image URL
+// --- QR image URL ---
 $qr_image_url = "http://your-domain.com/qr_images/" . $slug . ".png";
 
-// create pending order
+// --- Create pending order ---
 $stmt2 = $conn->prepare("
     INSERT INTO orders (user_id, qr_id, customer_name, customer_mobile, status, total) 
-    VALUES ((SELECT user_id FROM qr_codes WHERE qr_id = ?), ?, ?, ?, 'pending', 0)
+    VALUES (?, ?, ?, ?, 'pending', 0)
 ");
-$stmt2->bind_param("iiss", $qr['qr_id'], $qr['qr_id'], $name, $mobile);
+$stmt2->bind_param("iiss", $qr['user_id'], $qr['qr_id'], $name, $mobile);
 $stmt2->execute();
 $order_id = $stmt2->insert_id;
+$stmt2->close();
 
-// fetch menu
+// --- Fetch only ACTIVE products ---
+// ✅ Added image and description fields
 $stmt3 = $conn->prepare("
-    SELECT product_id, name, price, unit 
+    SELECT product_id, name, price, unit, image, description
     FROM products 
-    WHERE business_type_id = ?
+    WHERE business_type_id = ? 
+      AND user_id = ? 
+      AND is_active = 1
 ");
-$stmt3->bind_param("i", $qr['business_type_id']);
+$stmt3->bind_param("ii", $qr['business_type_id'], $qr['user_id']);
 $stmt3->execute();
 $res3 = $stmt3->get_result();
+
 $products = [];
 while ($row = $res3->fetch_assoc()) {
+    // ✅ Add full image URL if stored path is relative
+    if (!empty($row['image'])) {
+        $row['image'] = "http://your-domain.com/uploads/products/" . $row['image'];
+    }
     $products[] = $row;
 }
+$stmt3->close();
 
-// return response with unique session_id
+// --- Return response ---
 echo json_encode([
     "success" => true,
     "session_id" => $session_id,
@@ -95,3 +108,4 @@ echo json_encode([
     ],
     "menu" => $products
 ]);
+?>

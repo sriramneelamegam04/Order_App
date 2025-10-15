@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] !== "GET") {
     exit;
 }
 
-$stmt = $conn->prepare("SELECT qr_id, qr_slug, table_no, created_at 
+$stmt = $conn->prepare("SELECT qr_id, qr_slug, table_no, qr_image_url, created_at ,
                         FROM qr_codes 
                         WHERE user_id=?");
 $stmt->bind_param("i", $user_id);

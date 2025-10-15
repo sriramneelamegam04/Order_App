@@ -52,7 +52,6 @@ $business_type_id = $res['selected_template_id'] ?? null;
 $sub_status = $res['status'] ?? 'expired';
 $sub_end = $res['end_date'] ?? null;
 
-// --- Expire automatically if end_date < today ---
 if ($sub_end && strtotime($sub_end) < strtotime(date('Y-m-d'))) {
     $sub_status = 'expired';
     $conn->query("UPDATE subscriptions SET status='expired' WHERE user_id=$user_id");
@@ -107,7 +106,7 @@ if (($handle = fopen($file, "r")) !== FALSE) {
     }
 
     $header = array_map('strtolower', $header);
-    $requiredHeaders = ['name', 'price', 'unit'];
+    $requiredHeaders = ['name', 'price', 'field']; // 'field' = unit
     $missingHeaders = array_diff($requiredHeaders, $header);
     if (!empty($missingHeaders)) {
         http_response_code(400);
@@ -118,21 +117,23 @@ if (($handle = fopen($file, "r")) !== FALSE) {
     $hasCategory    = in_array('category', $header) || in_array('category_name', $header);
     $hasSubcategory = in_array('subcategory', $header) || in_array('subcategory_name', $header);
     $hasImage       = in_array('image', $header);
+    $hasDescription = in_array('description', $header);
 
     $inserted = $skipped = $duplicates = 0;
 
     while (($row = fgetcsv($handle)) !== FALSE) {
         $data = array_combine($header, $row);
 
-        if (!isset($data['name'], $data['price'], $data['unit']) ||
-            $data['name'] === "" || $data['price'] === "" || $data['unit'] === "") {
+        if (!isset($data['name'], $data['price'], $data['field']) ||
+            $data['name'] === "" || $data['price'] === "" || $data['field'] === "") {
             $skipped++;
             continue;
         }
 
         $name  = strtolower(trim($data['name']));
         $price = trim($data['price']);
-        $unit  = strtolower(trim($data['unit']));
+        $unit  = strtolower(trim($data['field']));
+        $description = $hasDescription ? trim($data['description']) : null;
         $category_name    = $hasCategory ? strtolower(trim($data['category'] ?? $data['category_name'] ?? '')) : null;
         $subcategory_name = $hasSubcategory ? strtolower(trim($data['subcategory'] ?? $data['subcategory_name'] ?? '')) : null;
         $image_value      = $hasImage ? trim($data['image']) : null;
@@ -140,6 +141,23 @@ if (($handle = fopen($file, "r")) !== FALSE) {
         if (!is_numeric($price)) {
             $skipped++;
             continue;
+        }
+
+        // --- Resolve Unit (auto-create if missing) ---
+        $stmt = $conn->prepare("SELECT field_id FROM template_fields WHERE LOWER(field_name)=? AND business_type_id=?");
+        $stmt->bind_param("si", $unit, $business_type_id);
+        $stmt->execute();
+        $resfield = $stmt->get_result()->fetch_assoc();
+        $stmt->close();
+
+        if ($resfield) {
+            $field_id = $resfield['field_id'];
+        } else {
+            $stmt = $conn->prepare("INSERT INTO template_fields (business_type_id, field_name) VALUES (?, ?)");
+            $stmt->bind_param("is", $business_type_id, $unit);
+            $stmt->execute();
+            $field_id = $stmt->insert_id;
+            $stmt->close();
         }
 
         // --- Resolve Category ---
@@ -194,36 +212,58 @@ if (($handle = fopen($file, "r")) !== FALSE) {
         $stmt->close();
         if ($res) { $duplicates++; continue; }
 
-        // --- Image Handling (supports local + URL) ---
+        // --- Image Handling (strict: throw error if image invalid) ---
         $image_path = null;
         if ($image_value) {
-            $new_name = uniqid("prod_") . "." . pathinfo($image_value, PATHINFO_EXTENSION);
+            $image_ext = pathinfo(parse_url($image_value, PHP_URL_PATH), PATHINFO_EXTENSION);
+            if (!$image_ext) $image_ext = 'jpg';
+            $new_name = uniqid("prod_") . "." . $image_ext;
             $target_path = $upload_dir . $new_name;
 
+            $image_downloaded = false;
+
             if (filter_var($image_value, FILTER_VALIDATE_URL)) {
-                // Download image from URL
-                $image_data = @file_get_contents($image_value);
-                if ($image_data !== false) {
+                // Try remote image download
+                $context = stream_context_create([
+                    'http' => [
+                        'timeout' => 10,
+                        'header' => "User-Agent: Mozilla/5.0\r\n"
+                    ]
+                ]);
+                $image_data = @file_get_contents($image_value, false, $context);
+
+                if ($image_data !== false && strlen($image_data) > 500) { // ensure not empty
                     file_put_contents($target_path, $image_data);
                     $image_path = "products/uploads/$dateFolder/" . $new_name;
+                    $image_downloaded = true;
                 }
             } else {
-                // Local path or filename
+                // Try local image copy
                 $local_path = __DIR__ . "/../products/source_images/" . basename($image_value);
                 if (!file_exists($local_path)) $local_path = $image_value;
-                if (file_exists($local_path)) {
-                    if (@copy($local_path, $target_path)) {
-                        $image_path = "products/uploads/$dateFolder/" . $new_name;
-                    }
+                if (file_exists($local_path) && @copy($local_path, $target_path)) {
+                    $image_path = "products/uploads/$dateFolder/" . $new_name;
+                    $image_downloaded = true;
                 }
+            }
+
+            // --- If failed, return error immediately ---
+            if (!$image_downloaded) {
+                http_response_code(400);
+                echo json_encode([
+                    "success" => false,
+                    "msg" => "Image missing or invalid for product: {$name} ({$image_value})"
+                ]);
+                exit;
             }
         }
 
         // --- Insert Product ---
         $stmt = $conn->prepare("INSERT INTO products 
-            (user_id, business_type_id, name, price, unit, image, created_at, category_id, subcategory_id)
-            VALUES (?, ?, ?, ?, ?, ?, NOW(), ?, ?)");
-        $stmt->bind_param("iisdssii", $user_id, $business_type_id, $name, $price, $unit, $image_path, $category_id, $subcategory_id);
+            (user_id, business_type_id, name, price, unit, image, description, created_at, category_id, subcategory_id)
+            VALUES (?, ?, ?, ?, ?, ?, ?, NOW(), ?, ?)");
+        $stmt->bind_param("iisdsssii", $user_id, $business_type_id, $name, $price, $unit, $image_path, $description, $category_id, $subcategory_id);
+
         if ($stmt->execute()) $inserted++;
         else {
             $skipped++;

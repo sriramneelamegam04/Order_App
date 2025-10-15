@@ -17,7 +17,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"mobile\": 9360552619,\r\n  \"name\": \"Dheeran sriram\"\r\n}\r\n",
+							"raw": "{\r\n  \"mobile\": 9876543210,\r\n  \"name\": \"Arun Kumar\"\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -63,6 +63,46 @@
 								"order_app",
 								"auth",
 								"verify_otp.php"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "upload_photo.php",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "6fc86da846d13eb4d58c40155fabe57fdf3ac570e41e5d259d9dec7226b115a4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "photo",
+									"type": "file",
+									"src": "/C:/Users/dheer/OneDrive/Pictures/Screenshots/Screenshot 2024-10-09 210518.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost/order_app/auth/upload_photo.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"order_app",
+								"auth",
+								"upload_photo.php"
 							]
 						}
 					},
@@ -427,7 +467,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "ad4c78e257519e29204d94974677a79755515f166b73b2ab1f529686bf334599",
+									"value": "1fc4a0c4b5c771742d6e1cd62cf34000c31caed00d0d918b3672e2ef96668144",
 									"type": "string"
 								}
 							]
@@ -439,7 +479,7 @@
 							"formdata": [
 								{
 									"key": "name",
-									"value": "Mango Shake",
+									"value": "turmeric",
 									"type": "text"
 								},
 								{
@@ -449,7 +489,7 @@
 								},
 								{
 									"key": "unit",
-									"value": "piece",
+									"value": "kg",
 									"type": "text"
 								},
 								{
@@ -465,7 +505,12 @@
 								{
 									"key": "image",
 									"type": "file",
-									"src": "/C:/Users/dheer/OneDrive/Pictures/Screenshots/Screenshot 2025-08-27 104222.png"
+									"src": "/C:/Users/dheer/Downloads/1759993871116.jpg"
+								},
+								{
+									"key": "description",
+									"value": "podaaa aandavaney namma pakkam",
+									"type": "text"
 								}
 							]
 						},
@@ -534,7 +579,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "ad4c78e257519e29204d94974677a79755515f166b73b2ab1f529686bf334599",
+									"value": "1fc4a0c4b5c771742d6e1cd62cf34000c31caed00d0d918b3672e2ef96668144",
 									"type": "string"
 								}
 							]
@@ -547,7 +592,7 @@
 								{
 									"key": "file",
 									"type": "file",
-									"src": "/C:/Users/dheer/Downloads/Menu .csv.csv"
+									"src": "/C:/Users/dheer/Downloads/products_import.csv"
 								}
 							]
 						},
@@ -643,6 +688,45 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "toggle.php",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "70ae77441920544ff22ac474fb73e4ec2f9ea0843ba4d047559478cf59175c7b",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"product_id\": 8,\r\n  \"is_active\": 0\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/order_app/products/toggle.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"order_app",
+								"products",
+								"toggle.php"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -705,7 +789,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"slug\": \"20af83c85b\",   // generate.php-le irundha QR slug\r\n  \"name\": \"Mullai Malar\",\r\n  \"mobile\": \"955623147\"\r\n}\r\n",
+							"raw": "{\r\n  \"slug\": \"1d645e7b8e\",   // generate.php-le irundha QR slug\r\n  \"name\": \"Mullai Malar\",\r\n  \"mobile\": \"955623147\"\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"

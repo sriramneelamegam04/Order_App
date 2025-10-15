@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 07, 2025 at 09:23 AM
+-- Generation Time: Oct 10, 2025 at 01:08 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -165,7 +165,10 @@ INSERT INTO `categories` (`category_id`, `user_id`, `business_type_id`, `name`, 
 (25, 6, 5, 'beverages', '2025-10-07 11:43:31'),
 (26, 6, 5, 'south indian', '2025-10-07 11:43:31'),
 (27, 6, 5, 'hyderabadi', '2025-10-07 11:43:31'),
-(28, 6, 5, 'desserts', '2025-10-07 11:43:31');
+(28, 6, 5, 'desserts', '2025-10-07 11:43:31'),
+(29, 6, 5, 'fruits', '2025-10-10 12:32:45'),
+(30, 6, 5, 'dairy', '2025-10-10 12:57:23'),
+(31, 6, 5, 'vegetables', '2025-10-10 12:57:25');
 
 -- --------------------------------------------------------
 
@@ -228,7 +231,10 @@ INSERT INTO `orders` (`order_id`, `user_id`, `qr_id`, `customer_name`, `customer
 (34, 4, 5, 'Mullai Malar', '955623147', 'pending', 0.00, 'COD', NULL, NULL, '2025-09-25 12:03:56'),
 (35, 4, 5, 'mullai malar', '955623147', 'pending', 1680.00, 'COD', NULL, NULL, '2025-09-25 12:09:01'),
 (36, 5, 6, 'mullai malar', '955623147', 'pending', 1890.00, 'COD', NULL, NULL, '2025-09-26 12:22:05'),
-(37, 5, 6, 'mullai malar', '955623147', 'pending', 0.00, 'COD', NULL, NULL, '2025-09-30 12:09:03');
+(37, 5, 6, 'mullai malar', '955623147', 'pending', 0.00, 'COD', NULL, NULL, '2025-09-30 12:09:03'),
+(38, 2, 4, 'mullai malar', '955623147', 'pending', 0.00, 'COD', NULL, NULL, '2025-10-10 11:56:08'),
+(39, 2, 4, 'mullai malar', '955623147', 'pending', 0.00, 'COD', NULL, NULL, '2025-10-10 11:56:52'),
+(40, 2, 4, 'mullai malar', '955623147', 'pending', 0.00, 'COD', NULL, NULL, '2025-10-10 13:15:24');
 
 -- --------------------------------------------------------
 
@@ -318,6 +324,7 @@ INSERT INTO `order_items` (`item_id`, `order_id`, `product_id`, `qty`, `subtotal
 
 CREATE TABLE `otps` (
   `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
   `mobile` varchar(15) NOT NULL,
   `otp_hash` varchar(255) NOT NULL,
   `expires_at` datetime NOT NULL,
@@ -328,28 +335,35 @@ CREATE TABLE `otps` (
 -- Dumping data for table `otps`
 --
 
-INSERT INTO `otps` (`id`, `mobile`, `otp_hash`, `expires_at`, `created_at`) VALUES
-(1, '9876543210', '$2y$10$5jjnkWstPO6//pGRap0fEe5wJDXI5N0zHN808EW0C1MYs.vQDuqqe', '2025-09-18 16:13:24', '2025-09-18 16:08:24'),
-(2, '9360552619', '$2y$10$9tBSiSNctSOr3XI3dJPlreEKqVc85HVL8SJ0N.t0Zkdi5M5qbUeqi', '2025-09-18 16:16:48', '2025-09-18 16:11:48'),
-(3, '9360552619', '$2y$10$kbN.KSgtcCGUJcOEYVb3nOqsTNGkhy0mkPNeWFxa1c4Ns8fSPqZJW', '2025-09-18 16:24:26', '2025-09-18 16:19:26'),
-(4, '9876543210', '$2y$10$1gLniBccnQUlk5QHOyBTQus2QLxa8E8fi7A.ZGE6GYZvaWMvNes.u', '2025-09-19 12:30:11', '2025-09-19 12:25:11'),
-(5, '9876543210', '$2y$10$UzUigErdFUc5PDNBRL.1k.vBnDW1XB31RryOEzcWeLdoVsGw4Cz5q', '2025-09-19 15:56:17', '2025-09-19 15:51:17'),
-(6, '9876543210', '$2y$10$x8Ra/llCEb4dDijzT1Haqec0UxnhicRTYIOumSylr6ybKXFOgka8W', '2025-09-20 12:55:23', '2025-09-20 12:50:23'),
-(7, '9876543210', '$2y$10$KGo5.SMZ8PQXGLTSbzptyOKk.aLkUWxelewz6SjkSSVcHFvO1TcmS', '2025-09-23 12:15:08', '2025-09-23 12:10:08'),
-(8, '9876543210', '$2y$10$w.WxwgABWgjb1LaAS3qHIuka1JZOaxfTtQoFeKRLFXIsjdsu.Pt.C', '2025-09-23 15:52:26', '2025-09-23 15:47:26'),
-(9, '9876543210', '$2y$10$CripamI2H2hA53wpSbIjuOJ05SkqzfvuuXPPwfKZTESZsjESJyYO.', '2025-09-24 10:21:46', '2025-09-24 10:16:46'),
-(10, '9360552619', '$2y$10$GjjuYeaZ0iDxtEeTshUiLuMJuhK//Jn7lIgbUdF8hw.DrPZelEw7K', '2025-09-24 15:42:48', '2025-09-24 15:37:48'),
-(11, '9360556666', '$2y$10$uYPzOad9azjsryvwnczYSOEU188S5xfZ2kfgBJi9Vl56GXN1.FWqG', '2025-09-24 16:22:04', '2025-09-24 16:17:04'),
-(12, '9360556662', '$2y$10$FE6MdhOMvYjb46dQAfMzmu1yaraemKnrIvw6Vja54NipvIT9wzhsq', '2025-09-24 16:29:06', '2025-09-24 16:24:06'),
-(13, '9360556662', '$2y$10$wRjrdTEetwHYoimrEMqPje1Emn4Y1Y281KI/XnVnpso6iZobiIMVe', '2025-09-25 10:58:00', '2025-09-25 10:53:00'),
-(14, '9360556662', '$2y$10$QmYzfQcDDZ/qAScmqmWNvuhR10wLJKcl9bCm4PlYfdzr520I/HA1i', '2025-09-25 11:11:18', '2025-09-25 11:06:18'),
-(15, '9360556662', '$2y$10$sdG1ZkN2.Y7wTsEDP0nqHOKmx5Gg3GfScekQXuZgg9a4TWKCJ3LYK', '2025-09-26 12:18:30', '2025-09-26 12:13:30'),
-(16, '9360556622', '$2y$10$uLjb8Gt77GH/At./z6Ok3.sUJgjRj3jMnId6OY9rtnyo9FUg65yJa', '2025-09-26 12:18:47', '2025-09-26 12:13:47'),
-(17, '9360556662', '$2y$10$vhiwDqSD5ucII7AQHZWq0u25yweuzfop/OBztkE.kdAcylWsQBoG.', '2025-09-29 10:40:15', '2025-09-29 10:35:15'),
-(18, '9360556662', '$2y$10$hsQ6aTn4KyG.FqFDDd2wkuWQC.Vr1XxmSLf6YCedQD9gCiaxFVB1W', '2025-09-30 12:08:54', '2025-09-30 12:03:54'),
-(19, '9360552619', '$2y$10$yN1RQIrdKsiu.PPyZh./aeXnMAg0Q.ioJxWAm0eKwihKEMr6Ir9ti', '2025-10-07 10:31:47', '2025-10-07 10:26:47'),
-(20, '9876543210', '$2y$10$DHXWiAqtUucwuLZmjlhXaeyIpt660T7W8HsfjYkv1bnDsNGINXUVC', '2025-10-07 10:41:18', '2025-10-07 10:36:18'),
-(21, '9003673183', '$2y$10$wnC2TgkYekwnt9Yi15JpCe4GaflNDW//risBGCSgHcesuPQZne8HC', '2025-10-07 11:39:06', '2025-10-07 11:34:06');
+INSERT INTO `otps` (`id`, `name`, `mobile`, `otp_hash`, `expires_at`, `created_at`) VALUES
+(1, '', '9876543210', '$2y$10$5jjnkWstPO6//pGRap0fEe5wJDXI5N0zHN808EW0C1MYs.vQDuqqe', '2025-09-18 16:13:24', '2025-09-18 16:08:24'),
+(2, '', '9360552619', '$2y$10$9tBSiSNctSOr3XI3dJPlreEKqVc85HVL8SJ0N.t0Zkdi5M5qbUeqi', '2025-09-18 16:16:48', '2025-09-18 16:11:48'),
+(3, '', '9360552619', '$2y$10$kbN.KSgtcCGUJcOEYVb3nOqsTNGkhy0mkPNeWFxa1c4Ns8fSPqZJW', '2025-09-18 16:24:26', '2025-09-18 16:19:26'),
+(4, '', '9876543210', '$2y$10$1gLniBccnQUlk5QHOyBTQus2QLxa8E8fi7A.ZGE6GYZvaWMvNes.u', '2025-09-19 12:30:11', '2025-09-19 12:25:11'),
+(5, '', '9876543210', '$2y$10$UzUigErdFUc5PDNBRL.1k.vBnDW1XB31RryOEzcWeLdoVsGw4Cz5q', '2025-09-19 15:56:17', '2025-09-19 15:51:17'),
+(6, '', '9876543210', '$2y$10$x8Ra/llCEb4dDijzT1Haqec0UxnhicRTYIOumSylr6ybKXFOgka8W', '2025-09-20 12:55:23', '2025-09-20 12:50:23'),
+(7, '', '9876543210', '$2y$10$KGo5.SMZ8PQXGLTSbzptyOKk.aLkUWxelewz6SjkSSVcHFvO1TcmS', '2025-09-23 12:15:08', '2025-09-23 12:10:08'),
+(8, '', '9876543210', '$2y$10$w.WxwgABWgjb1LaAS3qHIuka1JZOaxfTtQoFeKRLFXIsjdsu.Pt.C', '2025-09-23 15:52:26', '2025-09-23 15:47:26'),
+(9, '', '9876543210', '$2y$10$CripamI2H2hA53wpSbIjuOJ05SkqzfvuuXPPwfKZTESZsjESJyYO.', '2025-09-24 10:21:46', '2025-09-24 10:16:46'),
+(10, '', '9360552619', '$2y$10$GjjuYeaZ0iDxtEeTshUiLuMJuhK//Jn7lIgbUdF8hw.DrPZelEw7K', '2025-09-24 15:42:48', '2025-09-24 15:37:48'),
+(11, '', '9360556666', '$2y$10$uYPzOad9azjsryvwnczYSOEU188S5xfZ2kfgBJi9Vl56GXN1.FWqG', '2025-09-24 16:22:04', '2025-09-24 16:17:04'),
+(12, '', '9360556662', '$2y$10$FE6MdhOMvYjb46dQAfMzmu1yaraemKnrIvw6Vja54NipvIT9wzhsq', '2025-09-24 16:29:06', '2025-09-24 16:24:06'),
+(13, '', '9360556662', '$2y$10$wRjrdTEetwHYoimrEMqPje1Emn4Y1Y281KI/XnVnpso6iZobiIMVe', '2025-09-25 10:58:00', '2025-09-25 10:53:00'),
+(14, '', '9360556662', '$2y$10$QmYzfQcDDZ/qAScmqmWNvuhR10wLJKcl9bCm4PlYfdzr520I/HA1i', '2025-09-25 11:11:18', '2025-09-25 11:06:18'),
+(15, '', '9360556662', '$2y$10$sdG1ZkN2.Y7wTsEDP0nqHOKmx5Gg3GfScekQXuZgg9a4TWKCJ3LYK', '2025-09-26 12:18:30', '2025-09-26 12:13:30'),
+(16, '', '9360556622', '$2y$10$uLjb8Gt77GH/At./z6Ok3.sUJgjRj3jMnId6OY9rtnyo9FUg65yJa', '2025-09-26 12:18:47', '2025-09-26 12:13:47'),
+(17, '', '9360556662', '$2y$10$vhiwDqSD5ucII7AQHZWq0u25yweuzfop/OBztkE.kdAcylWsQBoG.', '2025-09-29 10:40:15', '2025-09-29 10:35:15'),
+(18, '', '9360556662', '$2y$10$hsQ6aTn4KyG.FqFDDd2wkuWQC.Vr1XxmSLf6YCedQD9gCiaxFVB1W', '2025-09-30 12:08:54', '2025-09-30 12:03:54'),
+(19, '', '9360552619', '$2y$10$yN1RQIrdKsiu.PPyZh./aeXnMAg0Q.ioJxWAm0eKwihKEMr6Ir9ti', '2025-10-07 10:31:47', '2025-10-07 10:26:47'),
+(20, '', '9876543210', '$2y$10$DHXWiAqtUucwuLZmjlhXaeyIpt660T7W8HsfjYkv1bnDsNGINXUVC', '2025-10-07 10:41:18', '2025-10-07 10:36:18'),
+(21, '', '9003673183', '$2y$10$wnC2TgkYekwnt9Yi15JpCe4GaflNDW//risBGCSgHcesuPQZne8HC', '2025-10-07 11:39:06', '2025-10-07 11:34:06'),
+(22, '', '9876543210', '$2y$10$W21nbsTRUhGOBA.chfwxe.PqIRnM/EccJ.0iuP65lJkUexaTvR6Hu', '2025-10-10 11:58:38', '2025-10-10 11:53:38'),
+(23, '', '9003673183', '$2y$10$hpH2hVK/rjRBC0JJ6bCsPuqPvBKoprAJLFO4EsWMTI6wf7i5jUQ9u', '2025-10-10 12:19:22', '2025-10-10 12:14:22'),
+(24, '', '9003673183', '$2y$10$p1EHF1lxo5jnaw4epr3Cr.6aw/kp7OwvXx4ONW2Cq3Zal.NkYZInC', '2025-10-10 15:40:16', '2025-10-10 15:35:16'),
+(25, '', '9003675555', '$2y$10$UZJWzuT0UckTkh2nUOueSeOV1RJkD02dukUotih37OfAM/rY.ufGa', '2025-10-10 15:49:13', '2025-10-10 15:44:13'),
+(26, '', '9003675556', '$2y$10$K2IHNmxqRXDrJ9FRufLueOF7VrOkJYxckJFY6k71OVYw0p1ObJGOK', '2025-10-10 15:55:49', '2025-10-10 15:50:49'),
+(27, 'Guna', '9003675557', '$2y$10$fkdcJq2Mf8QyGyPJJ4ktX.FQ4GmtcT2tpuCe.xK9LvrGKTBiqkd0i', '2025-10-10 15:59:31', '2025-10-10 15:54:31'),
+(28, 'Guna', '9003675557', '$2y$10$iBNilTFdftPGoQHVicuBVegkqyEhxurPYR6FF.UoKidxj6BSek3wi', '2025-10-10 16:22:45', '2025-10-10 16:17:45');
 
 -- --------------------------------------------------------
 
@@ -389,102 +403,111 @@ CREATE TABLE `products` (
   `price` decimal(10,2) NOT NULL,
   `unit` varchar(50) NOT NULL,
   `image` varchar(255) DEFAULT NULL,
+  `description` text DEFAULT NULL,
   `created_at` datetime DEFAULT current_timestamp(),
   `category_id` int(11) DEFAULT NULL,
   `subcategory_id` int(11) DEFAULT NULL,
-  `updated_at` datetime DEFAULT NULL ON UPDATE current_timestamp()
+  `updated_at` datetime DEFAULT NULL ON UPDATE current_timestamp(),
+  `is_active` tinyint(1) DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`product_id`, `user_id`, `business_type_id`, `name`, `price`, `unit`, `image`, `created_at`, `category_id`, `subcategory_id`, `updated_at`) VALUES
-(1, 2, 1, 'Dosa', 50.00, 'Plate', NULL, '2025-09-19 15:52:33', NULL, NULL, NULL),
-(2, 2, 1, 'Masala Dosa', 60.00, 'Plate', NULL, '2025-09-19 15:56:55', NULL, NULL, NULL),
-(3, 2, 1, 'Idly', 20.00, 'Plate', NULL, '2025-09-19 16:21:08', NULL, NULL, NULL),
-(4, 2, 1, 'Poori', 40.00, 'Plate', NULL, '2025-09-19 16:21:08', NULL, NULL, NULL),
-(5, 2, 1, 'Pongal', 50.00, 'Plate', NULL, '2025-09-19 16:21:08', NULL, NULL, NULL),
-(6, 2, 1, 'Vada', 10.00, 'Plate', NULL, '2025-09-19 16:21:08', NULL, NULL, NULL),
-(7, 2, 1, 'Rava Dosa', 40.00, 'Plate', NULL, '2025-09-19 16:21:08', NULL, NULL, NULL),
-(8, 2, 1, 'Podi Idly', 80.00, 'Plate', NULL, '2025-09-19 16:21:08', NULL, NULL, NULL),
-(10, 4, 5, 'apple', 300.00, 'dozen', NULL, '2025-09-25 11:09:18', NULL, NULL, NULL),
-(11, 4, 5, 'banana', 60.00, 'dozen', NULL, '2025-09-25 11:16:11', NULL, NULL, NULL),
-(12, 4, 5, 'mushroom pizza', 180.00, 'plate', NULL, '2025-09-25 11:16:11', 2, 2, NULL),
-(13, 4, 5, 'mango', 300.00, 'kg', NULL, '2025-09-25 11:16:11', NULL, NULL, NULL),
-(15, 4, 5, 'pineapple', 90.00, 'pcs', NULL, '2025-09-25 11:16:11', NULL, NULL, NULL),
-(16, 4, 5, 'watermelon', 40.00, 'kg', NULL, '2025-09-25 11:16:11', NULL, NULL, NULL),
-(17, 4, 5, 'papaya', 70.00, 'kg', NULL, '2025-09-25 11:16:11', NULL, NULL, NULL),
-(18, 4, 5, 'strawberry', 450.00, 'kg', NULL, '2025-09-25 11:16:11', NULL, NULL, NULL),
-(19, 4, 5, 'guava', 110.00, 'kg', NULL, '2025-09-25 11:16:11', NULL, NULL, NULL),
-(20, 5, 5, 'apple', 250.00, 'kg', NULL, '2025-09-26 12:18:55', NULL, NULL, NULL),
-(21, 5, 5, 'banana', 60.00, 'dozen', NULL, '2025-09-26 12:19:39', NULL, NULL, NULL),
-(22, 5, 5, 'orange', 120.00, 'kg', NULL, '2025-09-26 12:19:39', NULL, NULL, NULL),
-(23, 5, 5, 'mango', 300.00, 'kg', NULL, '2025-09-26 12:19:39', NULL, NULL, NULL),
-(24, 5, 5, 'grapes', 180.00, 'kg', NULL, '2025-09-26 12:19:39', NULL, NULL, NULL),
-(25, 5, 5, 'pineapple', 90.00, 'pcs', NULL, '2025-09-26 12:19:39', NULL, NULL, NULL),
-(26, 5, 5, 'watermelon', 40.00, 'kg', NULL, '2025-09-26 12:19:39', NULL, NULL, NULL),
-(27, 5, 5, 'papaya', 70.00, 'kg', NULL, '2025-09-26 12:19:39', NULL, NULL, NULL),
-(28, 5, 5, 'strawberry', 450.00, 'kg', NULL, '2025-09-26 12:19:39', NULL, NULL, NULL),
-(29, 5, 5, 'guava', 110.00, 'kg', NULL, '2025-09-26 12:19:39', NULL, NULL, NULL),
-(30, 4, 5, 'butter naan', 50.00, 'plate', NULL, '2025-09-29 10:36:58', 1, 1, NULL),
-(31, 4, 5, 'paneer butter masala', 180.00, 'plate', NULL, '2025-09-29 10:58:26', 1, 3, NULL),
-(32, 4, 5, 'veg burger', 120.00, 'piece', NULL, '2025-09-29 10:58:26', 3, 4, NULL),
-(33, 4, 5, 'cold coffee', 100.00, 'glass', NULL, '2025-09-29 10:58:26', 4, 5, NULL),
-(34, 4, 5, 'masala dosa', 80.00, 'plate', NULL, '2025-09-29 10:58:26', NULL, NULL, NULL),
-(35, 4, 5, 'chicken biryani', 250.00, 'plate', NULL, '2025-09-29 10:58:26', 6, 7, NULL),
-(36, 4, 5, 'french fries', 90.00, 'plate', NULL, '2025-09-29 10:58:26', 3, 8, NULL),
-(37, 4, 5, 'green tea', 60.00, 'cup', NULL, '2025-09-29 10:58:26', 4, 9, NULL),
-(38, 4, 5, 'ice cream', 70.00, 'cup', NULL, '2025-09-29 10:58:26', 7, 10, NULL),
-(39, 4, 5, 'veg hakka', 130.00, 'plate', NULL, '2025-09-29 12:25:37', 9, 12, NULL),
-(40, 4, 5, 'veg hakka noodles', 120.00, 'plate', NULL, '2025-09-29 12:28:12', NULL, NULL, NULL),
-(41, 4, 5, 'veg hakka noodles', 120.00, 'plate', NULL, '2025-09-29 12:30:27', 8, 11, NULL),
-(42, 4, 5, 'veg hakka noodles', 120.00, 'plate', NULL, '2025-09-29 12:44:26', 9, 12, NULL),
-(43, 4, 5, 'paneer butter masala', 250.00, 'plate', NULL, '2025-09-29 12:44:26', 9, 13, NULL),
-(44, 4, 5, 'chicken biryani', 200.00, 'plate', NULL, '2025-09-29 12:44:26', 9, 14, NULL),
-(45, 4, 5, 'chocolate cake', 150.00, 'slice', NULL, '2025-09-29 12:44:26', 7, 15, NULL),
-(46, 4, 5, 'veg spring roll', 50.00, 'pcs', NULL, '2025-09-29 12:44:26', 10, 16, NULL),
-(47, 1, 5, 'veg fried rice', 120.00, 'plate', NULL, '2025-10-07 10:33:08', 11, 17, NULL),
-(48, 1, 5, 'paneer tikka', 150.00, 'plate', NULL, '2025-10-07 10:33:08', 12, 18, NULL),
-(49, 2, 1, 'veg fried rice', 120.00, 'plate', NULL, '2025-10-07 10:37:26', 13, 19, NULL),
-(50, 2, 1, 'paneer tikka', 150.00, 'plate', NULL, '2025-10-07 10:37:26', 14, 20, NULL),
-(51, 2, 1, 'veg fried chicken rice', 120.00, 'plate', NULL, '2025-10-07 10:47:48', 13, 19, NULL),
-(52, 2, 1, 'paneer tikka aathan aama', 150.00, 'plate', NULL, '2025-10-07 10:47:48', 14, 20, NULL),
-(53, 2, 1, 'veg fried chicken rice 222', 120.00, 'plate', NULL, '2025-10-07 10:53:13', 13, 19, NULL),
-(54, 2, 1, 'paneer tikka aathan aama222', 150.00, 'plate', NULL, '2025-10-07 10:53:13', 14, 20, NULL),
-(55, 2, 1, 'veg fried chicken rice 222222222', 120.00, 'plate', NULL, '2025-10-07 11:00:21', 13, 19, NULL),
-(56, 2, 1, 'paneer tikka aathan aama22222222', 150.00, 'plate', NULL, '2025-10-07 11:00:21', 14, 20, NULL),
-(57, 2, 1, 'veg fried chicken rice 2', 120.00, 'plate', 'products/uploads/2025-10-07/prod_68e4a9685bb18.png', '2025-10-07 11:17:20', 13, 19, NULL),
-(58, 2, 1, 'paneer tikka aathan aam', 150.00, 'plate', 'products/uploads/2025-10-07/prod_68e4a96862868.png', '2025-10-07 11:17:20', 14, 20, NULL),
-(59, 2, 1, 'veg fried chicken rice 21', 120.00, 'plate', 'products/uploads/2025-10-07/prod_68e4ab268d90c.png', '2025-10-07 11:24:46', 13, 19, NULL),
-(60, 2, 1, 'paneer tikka aathan aam 1', 150.00, 'plate', 'products/uploads/2025-10-07/prod_68e4ab268ef9d.png', '2025-10-07 11:24:46', 14, 20, NULL),
-(61, 2, 1, 'butter naan1', 50.00, 'plate', 'products/uploads/2025-10-07/prod_68e4abcac8709.png', '2025-10-07 11:27:30', 15, 21, NULL),
-(62, 2, 1, 'paneer butter masala1', 180.00, 'plate', 'products/uploads/2025-10-07/prod_68e4abcaca320.png', '2025-10-07 11:27:30', 15, 22, NULL),
-(63, 2, 1, 'mushroom pizza1', 200.00, 'plate', 'products/uploads/2025-10-07/prod_68e4abcad0d56.png', '2025-10-07 11:27:30', 16, 23, NULL),
-(64, 2, 1, 'veg burger1', 120.00, 'piece', NULL, '2025-10-07 11:27:30', 17, 24, NULL),
-(65, 2, 1, 'cold coffee', 100.00, 'glass', NULL, '2025-10-07 11:27:30', 18, 25, NULL),
-(66, 2, 1, 'masala dosa', 80.00, 'plate', NULL, '2025-10-07 11:27:30', 19, 26, NULL),
-(67, 2, 1, 'chicken biryani', 250.00, 'plate', NULL, '2025-10-07 11:27:30', 20, 27, NULL),
-(68, 2, 1, 'french fries', 90.00, 'plate', NULL, '2025-10-07 11:27:30', 17, 28, NULL),
-(69, 2, 1, 'green tea', 60.00, 'cup', NULL, '2025-10-07 11:27:30', 18, 29, NULL),
-(70, 2, 1, 'ice cream', 70.00, 'cup', NULL, '2025-10-07 11:27:30', 21, 30, NULL),
-(71, 6, 5, 'butter naan1', 50.00, 'piece', 'products/uploads/2025-10-07/prod_68e4af8bdd9e9.png', '2025-10-07 11:43:31', 22, 31, NULL),
-(72, 6, 5, 'paneer butter masala1', 180.00, 'piece', 'products/uploads/2025-10-07/prod_68e4af8bdf132.png', '2025-10-07 11:43:31', 22, 32, NULL),
-(73, 6, 5, 'mushroom pizza1', 200.00, 'piece', 'products/uploads/2025-10-07/prod_68e4af8be0d9f.png', '2025-10-07 11:43:31', 23, 33, NULL),
-(74, 6, 5, 'veg burger1', 120.00, 'piece', NULL, '2025-10-07 11:43:31', 24, 34, NULL),
-(75, 6, 5, 'cold coffee', 100.00, 'piece', NULL, '2025-10-07 11:43:31', 25, 35, NULL),
-(76, 6, 5, 'masala dosa', 80.00, 'piece', NULL, '2025-10-07 11:43:31', 26, 36, NULL),
-(77, 6, 5, 'chicken biryani', 250.00, 'piece', NULL, '2025-10-07 11:43:31', 27, 37, NULL),
-(78, 6, 5, 'french fries', 90.00, 'piece', NULL, '2025-10-07 11:43:31', 24, 38, NULL),
-(79, 6, 5, 'green tea', 60.00, 'piece', NULL, '2025-10-07 11:43:31', 25, 39, NULL),
-(80, 6, 5, 'ice cream', 70.00, 'piece', NULL, '2025-10-07 11:43:31', 28, 40, NULL),
-(81, 6, 5, 'butter naan12', 50.00, 'piece', 'products/uploads/2025-10-07/prod_68e4b179b3e5c.png', '2025-10-07 11:51:45', 22, 31, NULL),
-(82, 6, 5, 'paneer butter masala12', 180.00, 'piece', 'products/uploads/2025-10-07/prod_68e4b179b59e5.png', '2025-10-07 11:51:45', 22, 32, NULL),
-(83, 6, 5, 'mushroom pizza12', 200.00, 'piece', 'products/uploads/2025-10-07/prod_68e4b179b7265.png', '2025-10-07 11:51:45', 23, 33, NULL),
-(84, 6, 5, 'butter naan123', 50.00, 'piece', 'products/uploads/2025-10-07/prod_68e4b41117324.png', '2025-10-07 12:02:49', 22, 31, NULL),
-(85, 6, 5, 'paneer butter masala123', 180.00, 'piece', 'products/uploads/2025-10-07/prod_68e4b4111ae38.png', '2025-10-07 12:02:49', 22, 32, NULL),
-(86, 6, 5, 'mushroom pizza123', 200.00, 'piece', 'products/uploads/2025-10-07/prod_68e4b4111d6ca.png', '2025-10-07 12:02:49', 23, 33, NULL),
-(87, 6, 5, 'veg hakka noodles', 120.00, 'piece', NULL, '2025-10-07 12:05:17', NULL, NULL, NULL);
+INSERT INTO `products` (`product_id`, `user_id`, `business_type_id`, `name`, `price`, `unit`, `image`, `description`, `created_at`, `category_id`, `subcategory_id`, `updated_at`, `is_active`) VALUES
+(1, 2, 1, 'Dosa', 50.00, 'Plate', NULL, NULL, '2025-09-19 15:52:33', NULL, NULL, NULL, 1),
+(2, 2, 1, 'Masala Dosa', 60.00, 'Plate', NULL, NULL, '2025-09-19 15:56:55', NULL, NULL, NULL, 1),
+(3, 2, 1, 'Idly', 20.00, 'Plate', NULL, NULL, '2025-09-19 16:21:08', NULL, NULL, NULL, 1),
+(4, 2, 1, 'Poori', 40.00, 'Plate', NULL, NULL, '2025-09-19 16:21:08', NULL, NULL, NULL, 1),
+(5, 2, 1, 'Pongal', 50.00, 'Plate', NULL, NULL, '2025-09-19 16:21:08', NULL, NULL, NULL, 1),
+(6, 2, 1, 'Vada', 10.00, 'Plate', NULL, NULL, '2025-09-19 16:21:08', NULL, NULL, NULL, 1),
+(7, 2, 1, 'Rava Dosa', 40.00, 'Plate', NULL, NULL, '2025-09-19 16:21:08', NULL, NULL, NULL, 1),
+(8, 2, 1, 'Podi Idly', 80.00, 'Plate', NULL, NULL, '2025-09-19 16:21:08', NULL, NULL, '2025-10-10 11:57:01', 0),
+(10, 4, 5, 'apple', 300.00, 'dozen', NULL, NULL, '2025-09-25 11:09:18', NULL, NULL, NULL, 1),
+(11, 4, 5, 'banana', 60.00, 'dozen', NULL, NULL, '2025-09-25 11:16:11', NULL, NULL, NULL, 1),
+(12, 4, 5, 'mushroom pizza', 180.00, 'plate', NULL, NULL, '2025-09-25 11:16:11', 2, 2, NULL, 1),
+(13, 4, 5, 'mango', 300.00, 'kg', NULL, NULL, '2025-09-25 11:16:11', NULL, NULL, NULL, 1),
+(15, 4, 5, 'pineapple', 90.00, 'pcs', NULL, NULL, '2025-09-25 11:16:11', NULL, NULL, NULL, 1),
+(16, 4, 5, 'watermelon', 40.00, 'kg', NULL, NULL, '2025-09-25 11:16:11', NULL, NULL, NULL, 1),
+(17, 4, 5, 'papaya', 70.00, 'kg', NULL, NULL, '2025-09-25 11:16:11', NULL, NULL, NULL, 1),
+(18, 4, 5, 'strawberry', 450.00, 'kg', NULL, NULL, '2025-09-25 11:16:11', NULL, NULL, NULL, 1),
+(19, 4, 5, 'guava', 110.00, 'kg', NULL, NULL, '2025-09-25 11:16:11', NULL, NULL, NULL, 1),
+(20, 5, 5, 'apple', 250.00, 'kg', NULL, NULL, '2025-09-26 12:18:55', NULL, NULL, NULL, 1),
+(21, 5, 5, 'banana', 60.00, 'dozen', NULL, NULL, '2025-09-26 12:19:39', NULL, NULL, NULL, 1),
+(22, 5, 5, 'orange', 120.00, 'kg', NULL, NULL, '2025-09-26 12:19:39', NULL, NULL, NULL, 1),
+(23, 5, 5, 'mango', 300.00, 'kg', NULL, NULL, '2025-09-26 12:19:39', NULL, NULL, NULL, 1),
+(24, 5, 5, 'grapes', 180.00, 'kg', NULL, NULL, '2025-09-26 12:19:39', NULL, NULL, NULL, 1),
+(25, 5, 5, 'pineapple', 90.00, 'pcs', NULL, NULL, '2025-09-26 12:19:39', NULL, NULL, NULL, 1),
+(26, 5, 5, 'watermelon', 40.00, 'kg', NULL, NULL, '2025-09-26 12:19:39', NULL, NULL, NULL, 1),
+(27, 5, 5, 'papaya', 70.00, 'kg', NULL, NULL, '2025-09-26 12:19:39', NULL, NULL, NULL, 1),
+(28, 5, 5, 'strawberry', 450.00, 'kg', NULL, NULL, '2025-09-26 12:19:39', NULL, NULL, NULL, 1),
+(29, 5, 5, 'guava', 110.00, 'kg', NULL, NULL, '2025-09-26 12:19:39', NULL, NULL, NULL, 1),
+(30, 4, 5, 'butter naan', 50.00, 'plate', NULL, NULL, '2025-09-29 10:36:58', 1, 1, NULL, 1),
+(31, 4, 5, 'paneer butter masala', 180.00, 'plate', NULL, NULL, '2025-09-29 10:58:26', 1, 3, NULL, 1),
+(32, 4, 5, 'veg burger', 120.00, 'piece', NULL, NULL, '2025-09-29 10:58:26', 3, 4, NULL, 1),
+(33, 4, 5, 'cold coffee', 100.00, 'glass', NULL, NULL, '2025-09-29 10:58:26', 4, 5, NULL, 1),
+(34, 4, 5, 'masala dosa', 80.00, 'plate', NULL, NULL, '2025-09-29 10:58:26', NULL, NULL, NULL, 1),
+(35, 4, 5, 'chicken biryani', 250.00, 'plate', NULL, NULL, '2025-09-29 10:58:26', 6, 7, NULL, 1),
+(36, 4, 5, 'french fries', 90.00, 'plate', NULL, NULL, '2025-09-29 10:58:26', 3, 8, NULL, 1),
+(37, 4, 5, 'green tea', 60.00, 'cup', NULL, NULL, '2025-09-29 10:58:26', 4, 9, NULL, 1),
+(38, 4, 5, 'ice cream', 70.00, 'cup', NULL, NULL, '2025-09-29 10:58:26', 7, 10, NULL, 1),
+(39, 4, 5, 'veg hakka', 130.00, 'plate', NULL, NULL, '2025-09-29 12:25:37', 9, 12, NULL, 1),
+(40, 4, 5, 'veg hakka noodles', 120.00, 'plate', NULL, NULL, '2025-09-29 12:28:12', NULL, NULL, NULL, 1),
+(41, 4, 5, 'veg hakka noodles', 120.00, 'plate', NULL, NULL, '2025-09-29 12:30:27', 8, 11, NULL, 1),
+(42, 4, 5, 'veg hakka noodles', 120.00, 'plate', NULL, NULL, '2025-09-29 12:44:26', 9, 12, NULL, 1),
+(43, 4, 5, 'paneer butter masala', 250.00, 'plate', NULL, NULL, '2025-09-29 12:44:26', 9, 13, NULL, 1),
+(44, 4, 5, 'chicken biryani', 200.00, 'plate', NULL, NULL, '2025-09-29 12:44:26', 9, 14, NULL, 1),
+(45, 4, 5, 'chocolate cake', 150.00, 'slice', NULL, NULL, '2025-09-29 12:44:26', 7, 15, NULL, 1),
+(46, 4, 5, 'veg spring roll', 50.00, 'pcs', NULL, NULL, '2025-09-29 12:44:26', 10, 16, NULL, 1),
+(47, 1, 5, 'veg fried rice', 120.00, 'plate', NULL, NULL, '2025-10-07 10:33:08', 11, 17, NULL, 1),
+(48, 1, 5, 'paneer tikka', 150.00, 'plate', NULL, NULL, '2025-10-07 10:33:08', 12, 18, NULL, 1),
+(49, 2, 1, 'veg fried rice', 120.00, 'plate', NULL, NULL, '2025-10-07 10:37:26', 13, 19, NULL, 1),
+(50, 2, 1, 'paneer tikka', 150.00, 'plate', NULL, NULL, '2025-10-07 10:37:26', 14, 20, NULL, 1),
+(51, 2, 1, 'veg fried chicken rice', 120.00, 'plate', NULL, NULL, '2025-10-07 10:47:48', 13, 19, NULL, 1),
+(52, 2, 1, 'paneer tikka aathan aama', 150.00, 'plate', NULL, NULL, '2025-10-07 10:47:48', 14, 20, NULL, 1),
+(53, 2, 1, 'veg fried chicken rice 222', 120.00, 'plate', NULL, NULL, '2025-10-07 10:53:13', 13, 19, NULL, 1),
+(54, 2, 1, 'paneer tikka aathan aama222', 150.00, 'plate', NULL, NULL, '2025-10-07 10:53:13', 14, 20, NULL, 1),
+(55, 2, 1, 'veg fried chicken rice 222222222', 120.00, 'plate', NULL, NULL, '2025-10-07 11:00:21', 13, 19, NULL, 1),
+(56, 2, 1, 'paneer tikka aathan aama22222222', 150.00, 'plate', NULL, NULL, '2025-10-07 11:00:21', 14, 20, NULL, 1),
+(57, 2, 1, 'veg fried chicken rice 2', 120.00, 'plate', 'products/uploads/2025-10-07/prod_68e4a9685bb18.png', NULL, '2025-10-07 11:17:20', 13, 19, NULL, 1),
+(58, 2, 1, 'paneer tikka aathan aam', 150.00, 'plate', 'products/uploads/2025-10-07/prod_68e4a96862868.png', NULL, '2025-10-07 11:17:20', 14, 20, NULL, 1),
+(59, 2, 1, 'veg fried chicken rice 21', 120.00, 'plate', 'products/uploads/2025-10-07/prod_68e4ab268d90c.png', NULL, '2025-10-07 11:24:46', 13, 19, NULL, 1),
+(60, 2, 1, 'paneer tikka aathan aam 1', 150.00, 'plate', 'products/uploads/2025-10-07/prod_68e4ab268ef9d.png', NULL, '2025-10-07 11:24:46', 14, 20, NULL, 1),
+(61, 2, 1, 'butter naan1', 50.00, 'plate', 'products/uploads/2025-10-07/prod_68e4abcac8709.png', NULL, '2025-10-07 11:27:30', 15, 21, NULL, 1),
+(62, 2, 1, 'paneer butter masala1', 180.00, 'plate', 'products/uploads/2025-10-07/prod_68e4abcaca320.png', NULL, '2025-10-07 11:27:30', 15, 22, NULL, 1),
+(63, 2, 1, 'mushroom pizza1', 200.00, 'plate', 'products/uploads/2025-10-07/prod_68e4abcad0d56.png', NULL, '2025-10-07 11:27:30', 16, 23, NULL, 1),
+(64, 2, 1, 'veg burger1', 120.00, 'piece', NULL, NULL, '2025-10-07 11:27:30', 17, 24, NULL, 1),
+(65, 2, 1, 'cold coffee', 100.00, 'glass', NULL, NULL, '2025-10-07 11:27:30', 18, 25, NULL, 1),
+(66, 2, 1, 'masala dosa', 80.00, 'plate', NULL, NULL, '2025-10-07 11:27:30', 19, 26, NULL, 1),
+(67, 2, 1, 'chicken biryani', 250.00, 'plate', NULL, NULL, '2025-10-07 11:27:30', 20, 27, NULL, 1),
+(68, 2, 1, 'french fries', 90.00, 'plate', NULL, NULL, '2025-10-07 11:27:30', 17, 28, NULL, 1),
+(69, 2, 1, 'green tea', 60.00, 'cup', NULL, NULL, '2025-10-07 11:27:30', 18, 29, NULL, 1),
+(70, 2, 1, 'ice cream', 70.00, 'cup', NULL, NULL, '2025-10-07 11:27:30', 21, 30, NULL, 1),
+(71, 6, 5, 'butter naan1', 50.00, 'piece', 'products/uploads/2025-10-07/prod_68e4af8bdd9e9.png', NULL, '2025-10-07 11:43:31', 22, 31, NULL, 1),
+(72, 6, 5, 'paneer butter masala1', 180.00, 'piece', 'products/uploads/2025-10-07/prod_68e4af8bdf132.png', NULL, '2025-10-07 11:43:31', 22, 32, NULL, 1),
+(73, 6, 5, 'mushroom pizza1', 200.00, 'piece', 'products/uploads/2025-10-07/prod_68e4af8be0d9f.png', NULL, '2025-10-07 11:43:31', 23, 33, NULL, 1),
+(74, 6, 5, 'veg burger1', 120.00, 'piece', NULL, NULL, '2025-10-07 11:43:31', 24, 34, NULL, 1),
+(75, 6, 5, 'cold coffee', 100.00, 'piece', NULL, NULL, '2025-10-07 11:43:31', 25, 35, NULL, 1),
+(76, 6, 5, 'masala dosa', 80.00, 'piece', NULL, NULL, '2025-10-07 11:43:31', 26, 36, NULL, 1),
+(77, 6, 5, 'chicken biryani', 250.00, 'piece', NULL, NULL, '2025-10-07 11:43:31', 27, 37, NULL, 1),
+(78, 6, 5, 'french fries', 90.00, 'piece', NULL, NULL, '2025-10-07 11:43:31', 24, 38, NULL, 1),
+(79, 6, 5, 'green tea', 60.00, 'piece', NULL, NULL, '2025-10-07 11:43:31', 25, 39, NULL, 1),
+(80, 6, 5, 'ice cream', 70.00, 'piece', NULL, NULL, '2025-10-07 11:43:31', 28, 40, NULL, 1),
+(81, 6, 5, 'butter naan12', 50.00, 'piece', 'products/uploads/2025-10-07/prod_68e4b179b3e5c.png', NULL, '2025-10-07 11:51:45', 22, 31, NULL, 1),
+(82, 6, 5, 'paneer butter masala12', 180.00, 'piece', 'products/uploads/2025-10-07/prod_68e4b179b59e5.png', NULL, '2025-10-07 11:51:45', 22, 32, NULL, 1),
+(83, 6, 5, 'mushroom pizza12', 200.00, 'piece', 'products/uploads/2025-10-07/prod_68e4b179b7265.png', NULL, '2025-10-07 11:51:45', 23, 33, NULL, 1),
+(84, 6, 5, 'butter naan123', 50.00, 'piece', 'products/uploads/2025-10-07/prod_68e4b41117324.png', NULL, '2025-10-07 12:02:49', 22, 31, NULL, 1),
+(85, 6, 5, 'paneer butter masala123', 180.00, 'piece', 'products/uploads/2025-10-07/prod_68e4b4111ae38.png', NULL, '2025-10-07 12:02:49', 22, 32, NULL, 1),
+(86, 6, 5, 'mushroom pizza123', 200.00, 'piece', 'products/uploads/2025-10-07/prod_68e4b4111d6ca.png', NULL, '2025-10-07 12:02:49', 23, 33, NULL, 1),
+(87, 6, 5, 'veg hakka noodles', 120.00, 'piece', NULL, NULL, '2025-10-07 12:05:17', NULL, NULL, NULL, 1),
+(88, 6, 5, 'apple1', 80.00, 'kg', 'products/uploads/2025-10-10/prod_68e8b46871b91.jpg', NULL, '2025-10-10 12:53:21', 29, 41, NULL, 1),
+(89, 6, 5, 'banana1', 50.00, 'dozen', 'products/uploads/2025-10-10/prod_68e8b4693fd20.jpg', NULL, '2025-10-10 12:53:22', 29, 41, NULL, 1),
+(90, 6, 5, 'milk1', 60.00, 'ltr', NULL, 'schavsccvufv', '2025-10-10 12:57:24', 30, 42, NULL, 1),
+(91, 6, 5, 'cheese1', 250.00, 'kg', NULL, 'jwvcuwdvu', '2025-10-10 12:57:25', 30, 42, NULL, 1),
+(92, 6, 5, 'tomato1', 40.00, 'kg', 'products/uploads/2025-10-10/prod_68e8b55d6720a.jpg', 'digwuid', '2025-10-10 12:57:26', 31, 43, NULL, 1),
+(93, 6, 5, 'potato1', 30.00, 'kg', NULL, 'sssqefqwqywyw', '2025-10-10 12:57:27', 31, 43, NULL, 1),
+(94, 6, 5, 'turmeric', 60.00, 'kg', 'products/uploads/2025-10-10/prod_68e8b75a7e5c1.jpg', 'podaaa aandavaney namma pakkam', '2025-10-10 13:05:54', 25, 44, NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -560,7 +583,18 @@ INSERT INTO `sessions` (`id`, `user_id`, `token`, `last_activity`) VALUES
 (15, 4, 'd3242e4ebf51b6526abab41ec42fd7e96e1a36fb32ef72e410b5c1d6cfbb827e', '2025-09-30 12:04:23'),
 (16, 1, 'c43f7c68fd19efd1f2104bd43d9f3bc9d9bb81fe90be582b08dbb8e5cb15f3d8', '2025-10-07 10:33:08'),
 (17, 2, 'c891ed4d7309078e0dc30c1d93d8c1b44f215c4e91cdfae2b54bdb69e6f203dd', '2025-10-07 11:42:06'),
-(18, 6, 'ad4c78e257519e29204d94974677a79755515f166b73b2ab1f529686bf334599', '2025-10-07 12:50:54');
+(18, 6, 'ad4c78e257519e29204d94974677a79755515f166b73b2ab1f529686bf334599', '2025-10-07 12:50:54'),
+(19, 2, '70ae77441920544ff22ac474fb73e4ec2f9ea0843ba4d047559478cf59175c7b', '2025-10-10 12:13:36'),
+(20, 6, '1fc4a0c4b5c771742d6e1cd62cf34000c31caed00d0d918b3672e2ef96668144', '2025-10-10 13:05:54'),
+(21, 7, '09d000c4a9fec8b278beb5c37df742b5c2de74f22d5b59688465187dd08de619', '2025-10-10 15:44:48'),
+(22, 7, '03e0806b4582fc66e3733d7701386c28e85f69ef63fcc1dd9bd081b373cf7660', '2025-10-10 15:45:05'),
+(23, 7, 'c4db3a112dec3a47860bfea279b0866cf2d6b3deb9f29439e1d8ebd48d4fced2', '2025-10-10 15:45:20'),
+(24, 7, '29bf48f094bd1086b8afce875b37a3d54cca7fb5e09fbe85a6506550a2855f0b', '2025-10-10 15:45:21'),
+(25, 7, 'add4a86da8febf1b75594e0fc984b4ee0173c42a729e941f90f816f5d2c68ab4', '2025-10-10 15:45:22'),
+(26, 7, 'acb05384e7787c9cb6094617222651f1b5a088f4ce021b74de75dc030500959e', '2025-10-10 15:50:37'),
+(27, 8, '92d89925d80f25edeb69d3d6a28eb5b73d14f90fc347759c772de1b9aeea21ef', '2025-10-10 15:51:06'),
+(28, 9, '4df97f62e3be5326b4433dba0a20108462213db3f81d6ade6cac3db9efda3b8e', '2025-10-10 15:55:20'),
+(29, 9, '6fc86da846d13eb4d58c40155fabe57fdf3ac570e41e5d259d9dec7226b115a4', '2025-10-10 16:30:23');
 
 -- --------------------------------------------------------
 
@@ -618,7 +652,11 @@ INSERT INTO `subcategories` (`subcategory_id`, `category_id`, `name`, `created_a
 (37, 27, 'biryani', '2025-10-07 11:43:31'),
 (38, 24, 'snacks', '2025-10-07 11:43:31'),
 (39, 25, 'tea', '2025-10-07 11:43:31'),
-(40, 28, 'ice creams', '2025-10-07 11:43:31');
+(40, 28, 'ice creams', '2025-10-07 11:43:31'),
+(41, 29, 'fresh fruits', '2025-10-10 12:32:45'),
+(42, 30, 'milk products', '2025-10-10 12:57:23'),
+(43, 31, 'fresh vegetables', '2025-10-10 12:57:25'),
+(44, 25, 'milkshakes', '2025-10-10 13:05:54');
 
 -- --------------------------------------------------------
 
@@ -640,7 +678,7 @@ CREATE TABLE `subscriptions` (
 --
 
 INSERT INTO `subscriptions` (`sub_id`, `user_id`, `plan`, `start_date`, `end_date`, `status`) VALUES
-(1, 2, 'free', '2025-09-19', '2025-09-26', 'active'),
+(1, 2, 'free', '2025-09-19', '2025-09-26', 'expired'),
 (2, 1, 'free', '2025-09-24', '2025-10-01', 'active'),
 (3, 3, 'free', '2025-09-24', '2025-10-01', 'active'),
 (4, 4, 'free', '2025-09-24', '2025-10-01', 'active'),
@@ -703,7 +741,8 @@ INSERT INTO `template_fields` (`field_id`, `business_type_id`, `field_name`, `fi
 (36, 10, 'Trainer Name', 'text'),
 (37, 11, 'gram', 'gram'),
 (38, 11, 'kg', 'kg'),
-(39, 5, 'dozen', '');
+(39, 5, 'dozen', ''),
+(41, 5, 'ltr', 'text');
 
 -- --------------------------------------------------------
 
@@ -715,6 +754,7 @@ CREATE TABLE `users` (
   `user_id` int(11) NOT NULL,
   `mobile` varchar(15) NOT NULL,
   `name` varchar(100) DEFAULT NULL,
+  `photo` varchar(255) NOT NULL,
   `created_at` datetime DEFAULT current_timestamp(),
   `selected_template_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -723,13 +763,16 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`user_id`, `mobile`, `name`, `created_at`, `selected_template_id`) VALUES
-(1, '9360552619', 'dheeran sriram', '2025-09-18 16:20:04', 5),
-(2, '9876543210', 'arun kumar', '2025-09-19 12:25:51', 1),
-(3, '9360556666', 'thulasi', '2025-09-24 16:17:41', 5),
-(4, '9360556662', 'thulasi1', '2025-09-24 16:24:35', 5),
-(5, '9360556622', 'karthick', '2025-09-26 12:14:18', 5),
-(6, '9003673183', 'neelamegam', '2025-10-07 11:34:48', 5);
+INSERT INTO `users` (`user_id`, `mobile`, `name`, `photo`, `created_at`, `selected_template_id`) VALUES
+(1, '9360552619', 'dheeran sriram', '', '2025-09-18 16:20:04', 5),
+(2, '9876543210', 'arun kumar', '', '2025-09-19 12:25:51', 1),
+(3, '9360556666', 'thulasi', '', '2025-09-24 16:17:41', 5),
+(4, '9360556662', 'thulasi1', '', '2025-09-24 16:24:35', 5),
+(5, '9360556622', 'karthick', '', '2025-09-26 12:14:18', 5),
+(6, '9003673183', 'neelamegam', '', '2025-10-07 11:34:48', 5),
+(7, '9003675555', 'gu', '', '2025-10-10 15:44:48', NULL),
+(8, '9003675556', 'gu', '', '2025-10-10 15:51:06', NULL),
+(9, '9003675557', 'g', 'uploads/1760094023_Screenshot 2024-10-09 210518.png', '2025-10-10 15:55:20', NULL);
 
 -- --------------------------------------------------------
 
@@ -897,13 +940,13 @@ ALTER TABLE `cart_items`
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT for table `order_items`
@@ -915,7 +958,7 @@ ALTER TABLE `order_items`
 -- AUTO_INCREMENT for table `otps`
 --
 ALTER TABLE `otps`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `payment_credentials`
@@ -927,7 +970,7 @@ ALTER TABLE `payment_credentials`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=88;
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=95;
 
 --
 -- AUTO_INCREMENT for table `qr_codes`
@@ -945,13 +988,13 @@ ALTER TABLE `qr_scans`
 -- AUTO_INCREMENT for table `sessions`
 --
 ALTER TABLE `sessions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `subcategories`
 --
 ALTER TABLE `subcategories`
-  MODIFY `subcategory_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `subcategory_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT for table `subscriptions`
@@ -963,13 +1006,13 @@ ALTER TABLE `subscriptions`
 -- AUTO_INCREMENT for table `template_fields`
 --
 ALTER TABLE `template_fields`
-  MODIFY `field_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `field_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `webhook_logs`
