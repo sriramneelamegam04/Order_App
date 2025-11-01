@@ -773,45 +773,6 @@
 					"response": []
 				},
 				{
-					"name": "access.php",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "a8f78c478ed94b068c1a8c005b9c4df0cdab3c871e2d2faf015141065ccef89f",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n  \"slug\": \"1d645e7b8e\",   // generate.php-le irundha QR slug\r\n  \"name\": \"Mullai Malar\",\r\n  \"mobile\": \"955623147\"\r\n}\r\n",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost/order_app/qr/access.php",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"path": [
-								"order_app",
-								"qr",
-								"access.php"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "delete.php",
 					"request": {
 						"method": "DELETE",
@@ -846,6 +807,99 @@
 								"order_app",
 								"qr",
 								"list.php"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "request_otp.php",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"mobile\": \"9876543210\", \"slug\": \"f586897889\" }\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/order_app/qr/request_otp.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"order_app",
+								"qr",
+								"request_otp.php"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "verify_otp.php",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"mobile\": \"9876543210\", \"slug\": \"f586897889\", \"otp\": \"9780\", \"name\": \"vijay\" }\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/order_app/qr/verify_otp.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"order_app",
+								"qr",
+								"verify_otp.php"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "menu.php",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"session_id\": \"sess_6905b6efeeaeb4.21096534\",\r\n  \"category\": \"fruits\" ,\r\n  \"subcategory\": \"fresh fruits\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/order_app/qr/menu.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"order_app",
+								"qr",
+								"menu.php"
 							]
 						}
 					},
@@ -1321,6 +1375,36 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "qr_access_list.php",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "adc554c347143394f7381214e05a0dd22d9fdd731d59b806150449b955b92f54",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/order_app/dashboard/qr_access_list.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"order_app",
+								"dashboard",
+								"qr_access_list.php"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -1606,6 +1690,163 @@
 								"order_app",
 								"categories",
 								"sub_cat_update.php"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "staff",
+			"item": [
+				{
+					"name": "create.php",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "9a146115c4030d2af8c06c18c3ae57d69fd7536cfa37f63c754605630088fed4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"Sunil\",\r\n  \"password\": \"Sunil@123\",\r\n  \"display_name\": \"Rocky bhai\",\r\n  \"role\": \"waiter\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/order_app/staff/create.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"order_app",
+								"staff",
+								"create.php"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login.php",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"Sunil\",\r\n  \"password\": \"Sunil@123\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/order_app/staff/login.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"order_app",
+								"staff",
+								"login.php"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "waiter_orders.php",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "9bfa92f80ba372f1cbce082e0e905b0223161ce5fcdf70d731a2c2996e857486",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/order_app/staff/waiter_orders.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"order_app",
+								"staff",
+								"waiter_orders.php"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "toggle_received.php",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "10bea769e743958e5ea7055ce3e0927bae5dbd2f414d3b511b7871df807a5c5d",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"order_id\": 44,\r\n  \"is_received\": 1\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/order_app/staff/toggle_received.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"order_app",
+								"staff",
+								"toggle_received.php"
 							]
 						}
 					},

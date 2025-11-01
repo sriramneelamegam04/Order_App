@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 10, 2025 at 01:08 PM
+-- Generation Time: Nov 01, 2025 at 09:03 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -91,7 +91,10 @@ INSERT INTO `carts` (`cart_id`, `session_id`, `user_id`, `created_at`) VALUES
 (18, 'sess_68d38195233004.83736067', 0, '2025-09-24 10:59:09'),
 (19, 'sess_68d384bf9925e4.98870884', 0, '2025-09-24 11:12:56'),
 (20, 'sess_68d4e3851435a2.44236074', 0, '2025-09-25 12:18:06'),
-(21, 'sess_68d6381512c421.83012927', 0, '2025-09-26 12:23:15');
+(21, 'sess_68d6381512c421.83012927', 0, '2025-09-26 12:23:15'),
+(22, 'sess_68fc74543bb7e1.38397708', 0, '2025-10-25 12:26:13'),
+(23, 'sess_6905a1b95f35b6.48935904', 0, '2025-11-01 11:30:21'),
+(24, 'sess_6905b6efeeaeb4.21096534', 0, '2025-11-01 13:29:50');
 
 -- --------------------------------------------------------
 
@@ -168,7 +171,10 @@ INSERT INTO `categories` (`category_id`, `user_id`, `business_type_id`, `name`, 
 (28, 6, 5, 'desserts', '2025-10-07 11:43:31'),
 (29, 6, 5, 'fruits', '2025-10-10 12:32:45'),
 (30, 6, 5, 'dairy', '2025-10-10 12:57:23'),
-(31, 6, 5, 'vegetables', '2025-10-10 12:57:25');
+(31, 6, 5, 'vegetables', '2025-10-10 12:57:25'),
+(32, 10, 1, 'fruits', '2025-10-25 12:19:39'),
+(33, 10, 1, 'dairy', '2025-10-25 12:19:41'),
+(34, 10, 1, 'vegetables', '2025-10-25 12:21:04');
 
 -- --------------------------------------------------------
 
@@ -187,54 +193,61 @@ CREATE TABLE `orders` (
   `payment_method` enum('COD','UPI') DEFAULT 'COD',
   `razorpay_order_id` varchar(100) DEFAULT NULL,
   `razorpay_payment_id` varchar(100) DEFAULT NULL,
-  `created_at` datetime DEFAULT current_timestamp()
+  `created_at` datetime DEFAULT current_timestamp(),
+  `is_received` tinyint(1) DEFAULT 0,
+  `received_by_staff_id` int(11) DEFAULT NULL,
+  `received_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`order_id`, `user_id`, `qr_id`, `customer_name`, `customer_mobile`, `status`, `total`, `payment_method`, `razorpay_order_id`, `razorpay_payment_id`, `created_at`) VALUES
-(1, 2, 1, 'Sriram', '9876543210', 'pending', 0.00, 'COD', NULL, NULL, '2025-09-20 12:55:02'),
-(2, 2, 4, 'Sriram', '9876543210', 'pending', 0.00, 'COD', NULL, NULL, '2025-09-20 13:43:17'),
-(3, 2, 4, 'Sriram', '9876543210', 'pending', 0.00, 'COD', NULL, NULL, '2025-09-23 12:11:19'),
-(4, 2, 4, 'Sriram', '9876543210', 'pending', 0.00, 'COD', NULL, NULL, '2025-09-23 12:21:35'),
-(5, 2, 4, 'Sriram', '9876543210', 'pending', 0.00, 'COD', NULL, NULL, '2025-09-23 12:21:52'),
-(6, 2, 4, 'Sriram', '9876543210', 'pending', 0.00, 'COD', NULL, NULL, '2025-09-23 12:25:23'),
-(7, 2, 4, 'Sriram', '9876543210', 'pending', 0.00, 'COD', NULL, NULL, '2025-09-23 16:50:21'),
-(8, 2, NULL, 'Raj Kumar', '9876543210', 'pending', 220.00, 'COD', NULL, NULL, '2025-09-23 16:57:23'),
-(9, 2, 4, 'Sriram', '9876543210', 'pending', 0.00, 'COD', NULL, NULL, '2025-09-23 17:01:20'),
-(10, 2, 4, 'Sriram', '9360552619', 'pending', 0.00, 'COD', NULL, NULL, '2025-09-23 17:03:15'),
-(11, 2, 4, 'Sriram', '9360552619', 'pending', 0.00, 'COD', NULL, NULL, '2025-09-23 17:03:19'),
-(12, 2, 4, 'Sriram', '9360552619', 'pending', 0.00, 'COD', NULL, NULL, '2025-09-23 17:03:20'),
-(13, 2, 4, 'Sriram', '9360552619', 'pending', 0.00, 'COD', NULL, NULL, '2025-09-23 17:03:21'),
-(14, 2, 4, 'Sriram', '9360552619', 'pending', 0.00, 'COD', NULL, NULL, '2025-09-23 17:03:23'),
-(15, 2, 4, 'Sriram', '9360552619', 'pending', 0.00, 'COD', NULL, NULL, '2025-09-23 17:03:24'),
-(16, 2, 4, 'Sriram', '9360552619', 'pending', 0.00, 'COD', NULL, NULL, '2025-09-23 17:04:04'),
-(17, 2, 4, 'Sriram', '9360552619', 'pending', 390.00, 'COD', NULL, NULL, '2025-09-23 17:06:23'),
-(18, 2, 4, 'Sriram', '9360552619', 'pending', 430.00, 'UPI', 'order_68d286ba1aad6', NULL, '2025-09-23 17:07:42'),
-(19, 2, 4, 'Sriram', '9360552619', 'pending', 430.00, 'UPI', 'order_68d28859341c1', NULL, '2025-09-23 17:14:54'),
-(20, 2, 4, 'Sriram', '9360552619', 'pending', 430.00, 'UPI', NULL, NULL, '2025-09-23 17:20:28'),
-(21, 2, 4, 'Sriram', '9360552619', 'pending', 430.00, 'UPI', NULL, NULL, '2025-09-23 17:21:58'),
-(22, 2, 4, 'Sriram', '9360552619', 'pending', 430.00, 'UPI', NULL, NULL, '2025-09-23 17:24:26'),
-(23, 2, 4, 'Sriram', '9360552619', 'pending', 430.00, 'UPI', NULL, NULL, '2025-09-23 17:30:53'),
-(24, 2, 4, 'Sriram', '9360552619', 'pending', 430.00, 'UPI', NULL, NULL, '2025-09-24 10:13:55'),
-(25, 2, 4, 'Sriram', '9360552619', 'pending', 430.00, 'UPI', NULL, NULL, '2025-09-24 10:19:59'),
-(26, 2, 4, 'Sriram', '9360552619', 'pending', 430.00, 'UPI', NULL, NULL, '2025-09-24 10:21:00'),
-(27, 2, 4, 'Sriram', '9360552619', 'pending', 430.00, 'UPI', NULL, NULL, '2025-09-24 10:23:16'),
-(28, 2, 4, 'Sriram', '9360552619', 'pending', 430.00, 'UPI', NULL, NULL, '2025-09-24 10:26:53'),
-(29, 2, 4, 'Sriram', '9360552619', 'pending', 430.00, 'UPI', NULL, NULL, '2025-09-24 10:44:59'),
-(30, 2, 4, 'Sriram', '9360552619', 'pending', 430.00, 'UPI', NULL, NULL, '2025-09-24 10:50:29'),
-(31, 2, 4, 'Sriram', '9360552619', 'pending', 430.00, 'UPI', NULL, NULL, '2025-09-24 10:56:45'),
-(32, 2, 4, 'Sriram', '9360552619', 'pending', 430.00, 'UPI', 'order_68d381af1d8e3', NULL, '2025-09-24 10:58:53'),
-(33, 2, 4, 'Sriram', '9360552619', 'paid', 430.00, 'UPI', 'order_68d384f391107', NULL, '2025-09-24 11:12:23'),
-(34, 4, 5, 'Mullai Malar', '955623147', 'pending', 0.00, 'COD', NULL, NULL, '2025-09-25 12:03:56'),
-(35, 4, 5, 'mullai malar', '955623147', 'pending', 1680.00, 'COD', NULL, NULL, '2025-09-25 12:09:01'),
-(36, 5, 6, 'mullai malar', '955623147', 'pending', 1890.00, 'COD', NULL, NULL, '2025-09-26 12:22:05'),
-(37, 5, 6, 'mullai malar', '955623147', 'pending', 0.00, 'COD', NULL, NULL, '2025-09-30 12:09:03'),
-(38, 2, 4, 'mullai malar', '955623147', 'pending', 0.00, 'COD', NULL, NULL, '2025-10-10 11:56:08'),
-(39, 2, 4, 'mullai malar', '955623147', 'pending', 0.00, 'COD', NULL, NULL, '2025-10-10 11:56:52'),
-(40, 2, 4, 'mullai malar', '955623147', 'pending', 0.00, 'COD', NULL, NULL, '2025-10-10 13:15:24');
+INSERT INTO `orders` (`order_id`, `user_id`, `qr_id`, `customer_name`, `customer_mobile`, `status`, `total`, `payment_method`, `razorpay_order_id`, `razorpay_payment_id`, `created_at`, `is_received`, `received_by_staff_id`, `received_at`) VALUES
+(1, 2, 1, 'Sriram', '9876543210', 'pending', 0.00, 'COD', NULL, NULL, '2025-09-20 12:55:02', 0, NULL, NULL),
+(2, 2, 4, 'Sriram', '9876543210', 'pending', 0.00, 'COD', NULL, NULL, '2025-09-20 13:43:17', 0, NULL, NULL),
+(3, 2, 4, 'Sriram', '9876543210', 'pending', 0.00, 'COD', NULL, NULL, '2025-09-23 12:11:19', 0, NULL, NULL),
+(4, 2, 4, 'Sriram', '9876543210', 'pending', 0.00, 'COD', NULL, NULL, '2025-09-23 12:21:35', 0, NULL, NULL),
+(5, 2, 4, 'Sriram', '9876543210', 'pending', 0.00, 'COD', NULL, NULL, '2025-09-23 12:21:52', 0, NULL, NULL),
+(6, 2, 4, 'Sriram', '9876543210', 'pending', 0.00, 'COD', NULL, NULL, '2025-09-23 12:25:23', 0, NULL, NULL),
+(7, 2, 4, 'Sriram', '9876543210', 'pending', 0.00, 'COD', NULL, NULL, '2025-09-23 16:50:21', 0, NULL, NULL),
+(8, 2, NULL, 'Raj Kumar', '9876543210', 'pending', 220.00, 'COD', NULL, NULL, '2025-09-23 16:57:23', 0, NULL, NULL),
+(9, 2, 4, 'Sriram', '9876543210', 'pending', 0.00, 'COD', NULL, NULL, '2025-09-23 17:01:20', 0, NULL, NULL),
+(10, 2, 4, 'Sriram', '9360552619', 'pending', 0.00, 'COD', NULL, NULL, '2025-09-23 17:03:15', 0, NULL, NULL),
+(11, 2, 4, 'Sriram', '9360552619', 'pending', 0.00, 'COD', NULL, NULL, '2025-09-23 17:03:19', 0, NULL, NULL),
+(12, 2, 4, 'Sriram', '9360552619', 'pending', 0.00, 'COD', NULL, NULL, '2025-09-23 17:03:20', 0, NULL, NULL),
+(13, 2, 4, 'Sriram', '9360552619', 'pending', 0.00, 'COD', NULL, NULL, '2025-09-23 17:03:21', 0, NULL, NULL),
+(14, 2, 4, 'Sriram', '9360552619', 'pending', 0.00, 'COD', NULL, NULL, '2025-09-23 17:03:23', 0, NULL, NULL),
+(15, 2, 4, 'Sriram', '9360552619', 'pending', 0.00, 'COD', NULL, NULL, '2025-09-23 17:03:24', 0, NULL, NULL),
+(16, 2, 4, 'Sriram', '9360552619', 'pending', 0.00, 'COD', NULL, NULL, '2025-09-23 17:04:04', 0, NULL, NULL),
+(17, 2, 4, 'Sriram', '9360552619', 'pending', 390.00, 'COD', NULL, NULL, '2025-09-23 17:06:23', 0, NULL, NULL),
+(18, 2, 4, 'Sriram', '9360552619', 'pending', 430.00, 'UPI', 'order_68d286ba1aad6', NULL, '2025-09-23 17:07:42', 0, NULL, NULL),
+(19, 2, 4, 'Sriram', '9360552619', 'pending', 430.00, 'UPI', 'order_68d28859341c1', NULL, '2025-09-23 17:14:54', 0, NULL, NULL),
+(20, 2, 4, 'Sriram', '9360552619', 'pending', 430.00, 'UPI', NULL, NULL, '2025-09-23 17:20:28', 0, NULL, NULL),
+(21, 2, 4, 'Sriram', '9360552619', 'pending', 430.00, 'UPI', NULL, NULL, '2025-09-23 17:21:58', 0, NULL, NULL),
+(22, 2, 4, 'Sriram', '9360552619', 'pending', 430.00, 'UPI', NULL, NULL, '2025-09-23 17:24:26', 0, NULL, NULL),
+(23, 2, 4, 'Sriram', '9360552619', 'pending', 430.00, 'UPI', NULL, NULL, '2025-09-23 17:30:53', 0, NULL, NULL),
+(24, 2, 4, 'Sriram', '9360552619', 'pending', 430.00, 'UPI', NULL, NULL, '2025-09-24 10:13:55', 0, NULL, NULL),
+(25, 2, 4, 'Sriram', '9360552619', 'pending', 430.00, 'UPI', NULL, NULL, '2025-09-24 10:19:59', 0, NULL, NULL),
+(26, 2, 4, 'Sriram', '9360552619', 'pending', 430.00, 'UPI', NULL, NULL, '2025-09-24 10:21:00', 0, NULL, NULL),
+(27, 2, 4, 'Sriram', '9360552619', 'pending', 430.00, 'UPI', NULL, NULL, '2025-09-24 10:23:16', 0, NULL, NULL),
+(28, 2, 4, 'Sriram', '9360552619', 'pending', 430.00, 'UPI', NULL, NULL, '2025-09-24 10:26:53', 0, NULL, NULL),
+(29, 2, 4, 'Sriram', '9360552619', 'pending', 430.00, 'UPI', NULL, NULL, '2025-09-24 10:44:59', 0, NULL, NULL),
+(30, 2, 4, 'Sriram', '9360552619', 'pending', 430.00, 'UPI', NULL, NULL, '2025-09-24 10:50:29', 0, NULL, NULL),
+(31, 2, 4, 'Sriram', '9360552619', 'pending', 430.00, 'UPI', NULL, NULL, '2025-09-24 10:56:45', 0, NULL, NULL),
+(32, 2, 4, 'Sriram', '9360552619', 'pending', 430.00, 'UPI', 'order_68d381af1d8e3', NULL, '2025-09-24 10:58:53', 0, NULL, NULL),
+(33, 2, 4, 'Sriram', '9360552619', 'paid', 430.00, 'UPI', 'order_68d384f391107', NULL, '2025-09-24 11:12:23', 0, NULL, NULL),
+(34, 4, 5, 'Mullai Malar', '955623147', 'pending', 0.00, 'COD', NULL, NULL, '2025-09-25 12:03:56', 0, NULL, NULL),
+(35, 4, 5, 'mullai malar', '955623147', 'pending', 1680.00, 'COD', NULL, NULL, '2025-09-25 12:09:01', 0, NULL, NULL),
+(36, 5, 6, 'mullai malar', '955623147', 'pending', 1890.00, 'COD', NULL, NULL, '2025-09-26 12:22:05', 0, NULL, NULL),
+(37, 5, 6, 'mullai malar', '955623147', 'pending', 0.00, 'COD', NULL, NULL, '2025-09-30 12:09:03', 0, NULL, NULL),
+(38, 2, 4, 'mullai malar', '955623147', 'pending', 0.00, 'COD', NULL, NULL, '2025-10-10 11:56:08', 0, NULL, NULL),
+(39, 2, 4, 'mullai malar', '955623147', 'pending', 0.00, 'COD', NULL, NULL, '2025-10-10 11:56:52', 0, NULL, NULL),
+(40, 2, 4, 'mullai malar', '955623147', 'pending', 0.00, 'COD', NULL, NULL, '2025-10-10 13:15:24', 0, NULL, NULL),
+(41, 2, 4, 'mullai malar', '955623147', 'pending', 0.00, 'COD', NULL, NULL, '2025-10-25 11:51:39', 0, NULL, NULL),
+(42, 10, 10, 'mullai malar', '955623147', 'paid', 2323.00, 'COD', NULL, NULL, '2025-10-25 12:25:16', 0, NULL, NULL),
+(43, 10, 10, 'murugan', '9865721234', 'pending', 3858.00, 'COD', NULL, NULL, '2025-11-01 11:29:21', 1, 1, '2025-11-01 07:50:18'),
+(44, 10, 10, 'vijay', '9876543210', 'pending', 48300.00, 'COD', NULL, NULL, '2025-11-01 13:02:57', 1, 1, '2025-11-01 09:00:36');
 
 -- --------------------------------------------------------
 
@@ -314,7 +327,19 @@ INSERT INTO `order_items` (`item_id`, `order_id`, `product_id`, `qty`, `subtotal
 (57, 35, 12, 5.00, 600.00),
 (58, 36, 23, 3.00, 900.00),
 (59, 36, 24, 3.00, 540.00),
-(60, 36, 25, 5.00, 450.00);
+(60, 36, 25, 5.00, 450.00),
+(61, 42, 1, 3.00, 150.00),
+(62, 42, 2, 3.00, 180.00),
+(63, 42, 3, 5.00, 100.00),
+(64, 42, 98, 3.00, 450.00),
+(65, 42, 99, 3.00, 333.00),
+(66, 42, 100, 5.00, 1110.00),
+(67, 43, 98, 5.00, 750.00),
+(68, 43, 99, 8.00, 888.00),
+(69, 43, 100, 10.00, 2220.00),
+(70, 44, 98, 100.00, 15000.00),
+(71, 44, 99, 100.00, 11100.00),
+(72, 44, 100, 100.00, 22200.00);
 
 -- --------------------------------------------------------
 
@@ -363,7 +388,31 @@ INSERT INTO `otps` (`id`, `name`, `mobile`, `otp_hash`, `expires_at`, `created_a
 (25, '', '9003675555', '$2y$10$UZJWzuT0UckTkh2nUOueSeOV1RJkD02dukUotih37OfAM/rY.ufGa', '2025-10-10 15:49:13', '2025-10-10 15:44:13'),
 (26, '', '9003675556', '$2y$10$K2IHNmxqRXDrJ9FRufLueOF7VrOkJYxckJFY6k71OVYw0p1ObJGOK', '2025-10-10 15:55:49', '2025-10-10 15:50:49'),
 (27, 'Guna', '9003675557', '$2y$10$fkdcJq2Mf8QyGyPJJ4ktX.FQ4GmtcT2tpuCe.xK9LvrGKTBiqkd0i', '2025-10-10 15:59:31', '2025-10-10 15:54:31'),
-(28, 'Guna', '9003675557', '$2y$10$iBNilTFdftPGoQHVicuBVegkqyEhxurPYR6FF.UoKidxj6BSek3wi', '2025-10-10 16:22:45', '2025-10-10 16:17:45');
+(28, 'Guna', '9003675557', '$2y$10$iBNilTFdftPGoQHVicuBVegkqyEhxurPYR6FF.UoKidxj6BSek3wi', '2025-10-10 16:22:45', '2025-10-10 16:17:45'),
+(29, 'Bala', '9807060504', '$2y$10$HulQ7xLkIIqr6TW/AIOvyOm3Tc/EJgg/9fdqLfVFQDDejjK/xA5cK', '2025-10-25 12:22:11', '2025-10-25 12:17:11'),
+(30, 'Bala', '9807060504', '$2y$10$UYtbsc3Xhnog.348SnpaMuaI.oOwc7T6teXGJ6CRvhJlkOpUW9ac2', '2025-11-01 11:23:14', '2025-11-01 11:18:14');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `otp_sessions`
+--
+
+CREATE TABLE `otp_sessions` (
+  `id` int(11) NOT NULL,
+  `mobile` varchar(15) NOT NULL,
+  `slug` varchar(100) NOT NULL,
+  `otp` varchar(6) NOT NULL,
+  `expires_at` datetime NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `otp_sessions`
+--
+
+INSERT INTO `otp_sessions` (`id`, `mobile`, `slug`, `otp`, `expires_at`, `created_at`) VALUES
+(1, '9876543210', 'f586897889', '9780', '2025-11-01 08:33:06', '2025-11-01 07:28:06');
 
 -- --------------------------------------------------------
 
@@ -507,7 +556,15 @@ INSERT INTO `products` (`product_id`, `user_id`, `business_type_id`, `name`, `pr
 (91, 6, 5, 'cheese1', 250.00, 'kg', NULL, 'jwvcuwdvu', '2025-10-10 12:57:25', 30, 42, NULL, 1),
 (92, 6, 5, 'tomato1', 40.00, 'kg', 'products/uploads/2025-10-10/prod_68e8b55d6720a.jpg', 'digwuid', '2025-10-10 12:57:26', 31, 43, NULL, 1),
 (93, 6, 5, 'potato1', 30.00, 'kg', NULL, 'sssqefqwqywyw', '2025-10-10 12:57:27', 31, 43, NULL, 1),
-(94, 6, 5, 'turmeric', 60.00, 'kg', 'products/uploads/2025-10-10/prod_68e8b75a7e5c1.jpg', 'podaaa aandavaney namma pakkam', '2025-10-10 13:05:54', 25, 44, NULL, 1);
+(94, 6, 5, 'turmeric', 60.00, 'kg', 'products/uploads/2025-10-10/prod_68e8b75a7e5c1.jpg', 'podaaa aandavaney namma pakkam', '2025-10-10 13:05:54', 25, 44, NULL, 1),
+(95, 10, 1, 'apple1', 80.00, 'kg', 'products/uploads/2025-10-25/prod_68fc7303ed656.jpg', 'allalaoihfab', '2025-10-25 12:19:40', 32, 45, NULL, 1),
+(96, 10, 1, 'banana1', 50.00, 'dozen', 'products/uploads/2025-10-25/prod_68fc7304b8d89.jpg', 'fqcqyfuqyud', '2025-10-25 12:19:41', 32, 45, NULL, 1),
+(97, 10, 1, 'apple10', 800.00, 'kg', 'products/uploads/2025-10-25/prod_68fc73545c25f.jpg', 'allalaoihfab', '2025-10-25 12:21:01', 32, 45, NULL, 1),
+(98, 10, 1, 'banana10', 150.00, 'dozen', 'products/uploads/2025-10-25/prod_68fc735526e67.jpg', 'fqcqyfuqyud', '2025-10-25 12:21:02', 32, 45, NULL, 1),
+(99, 10, 1, 'milk new10', 111.00, 'ltr', 'products/uploads/2025-10-25/prod_68fc73560e6c9.jpg', 'schavsccvufv', '2025-10-25 12:21:03', 33, 46, NULL, 1),
+(100, 10, 1, 'cheese new10', 222.00, 'kg', 'products/uploads/2025-10-25/prod_68fc735729ac3.jpg', 'jwvcuwdvu', '2025-10-25 12:21:04', 33, 46, NULL, 1),
+(101, 10, 1, 'tomato new10', 33.00, 'kg', 'products/uploads/2025-10-25/prod_68fc7358a8e4a.jpg', 'digwuid', '2025-10-25 12:21:05', 34, 47, NULL, 1),
+(102, 10, 1, 'potato new10', 35.00, 'kg', 'products/uploads/2025-10-25/prod_68fc735984447.jpg', 'sssqefqwqywyw', '2025-10-25 12:21:06', 34, 47, NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -535,7 +592,10 @@ INSERT INTO `qr_codes` (`qr_id`, `user_id`, `business_type_id`, `qr_slug`, `tabl
 (4, 2, 1, '1d645e7b8e', '2', '2025-09-20 13:32:52'),
 (5, 4, 5, '20af83c85b', '1', '2025-09-25 12:01:32'),
 (6, 5, 5, 'a26821067c', '1', '2025-09-26 12:20:36'),
-(7, 4, 5, 'c9292df746', '2', '2025-09-30 12:04:23');
+(7, 4, 5, 'c9292df746', '2', '2025-09-30 12:04:23'),
+(8, 10, 1, '49c361e3e8', '1', '2025-10-25 12:21:38'),
+(9, 10, 1, 'a058847336', '1', '2025-10-25 12:22:41'),
+(10, 10, 1, 'f586897889', '1', '2025-10-25 12:24:51');
 
 -- --------------------------------------------------------
 
@@ -549,6 +609,28 @@ CREATE TABLE `qr_scans` (
   `scanned_at` datetime DEFAULT current_timestamp(),
   `device_info` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `qr_sessions`
+--
+
+CREATE TABLE `qr_sessions` (
+  `id` int(11) NOT NULL,
+  `session_id` varchar(100) NOT NULL,
+  `slug` varchar(100) NOT NULL,
+  `mobile` varchar(15) NOT NULL,
+  `customer_name` varchar(100) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `qr_sessions`
+--
+
+INSERT INTO `qr_sessions` (`id`, `session_id`, `slug`, `mobile`, `customer_name`, `created_at`) VALUES
+(1, 'sess_6905b6efeeaeb4.21096534', 'f586897889', '9876543210', 'vijay', '2025-11-01 07:29:51');
 
 -- --------------------------------------------------------
 
@@ -573,7 +655,6 @@ INSERT INTO `sessions` (`id`, `user_id`, `token`, `last_activity`) VALUES
 (4, 2, '4fd6c26159b652cd296dbe4361c55af6386e6cc69df83ce4289d215b1502e683', '2025-09-20 13:32:52'),
 (5, 2, 'a8f78c478ed94b068c1a8c005b9c4df0cdab3c871e2d2faf015141065ccef89f', '2025-09-23 12:10:25'),
 (6, 2, '63d16fa3592f1a6c239fbe13b9d341443be3900bc82e09fa26660996b764b03d', '2025-09-23 16:18:25'),
-(7, 2, '15c0594fbe8f925878b3685d950db7896a1608adb5b2d5d883d6ab48a2da49ab', '2025-09-24 12:49:19'),
 (9, 3, '06e89694236625e50d417db463c8e3b0e59b8ef954fa924e1ba0e82e0d4a6fe5', '2025-09-24 16:23:28'),
 (10, 4, '0e757644f86a484f37424802304049fe23c92abbac6d9ad93c0ed01348e245b7', '2025-09-24 16:41:05'),
 (11, 4, 'baea1c383c3c2976547e579241923a7ddf6ed4f94ee1333adf7a80e0c58bb5d9', '2025-09-25 10:55:35'),
@@ -594,7 +675,57 @@ INSERT INTO `sessions` (`id`, `user_id`, `token`, `last_activity`) VALUES
 (26, 7, 'acb05384e7787c9cb6094617222651f1b5a088f4ce021b74de75dc030500959e', '2025-10-10 15:50:37'),
 (27, 8, '92d89925d80f25edeb69d3d6a28eb5b73d14f90fc347759c772de1b9aeea21ef', '2025-10-10 15:51:06'),
 (28, 9, '4df97f62e3be5326b4433dba0a20108462213db3f81d6ade6cac3db9efda3b8e', '2025-10-10 15:55:20'),
-(29, 9, '6fc86da846d13eb4d58c40155fabe57fdf3ac570e41e5d259d9dec7226b115a4', '2025-10-10 16:30:23');
+(29, 9, '6fc86da846d13eb4d58c40155fabe57fdf3ac570e41e5d259d9dec7226b115a4', '2025-10-10 16:30:23'),
+(30, 10, '176a9958c490ea5d4eae086d6baa781509252490abe0ad8f3b0f4b6cc03d62dd', '2025-10-25 12:33:49'),
+(31, 10, '9a146115c4030d2af8c06c18c3ae57d69fd7536cfa37f63c754605630088fed4', '2025-11-01 12:37:34'),
+(32, 10, 'adc554c347143394f7381214e05a0dd22d9fdd731d59b806150449b955b92f54', '2025-11-01 13:28:50');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `staff`
+--
+
+CREATE TABLE `staff` (
+  `staff_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `username` varchar(100) NOT NULL,
+  `password_hash` varchar(255) NOT NULL,
+  `display_name` varchar(150) DEFAULT NULL,
+  `role` enum('waiter','chef','manager') DEFAULT 'waiter',
+  `is_active` tinyint(1) DEFAULT 1,
+  `created_at` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `staff`
+--
+
+INSERT INTO `staff` (`staff_id`, `user_id`, `username`, `password_hash`, `display_name`, `role`, `is_active`, `created_at`) VALUES
+(1, 10, 'VijayKumar', '$2y$10$Rd/ydGOMc5m9EFm/EIzbHezNnFG9tORZb.f4uwu63.QMvld0IuwDy', 'Vijay', 'waiter', 1, '2025-11-01 11:20:14'),
+(2, 10, 'sunil', '$2y$10$j0ccLgWVqmkvgNZ0Dde7s.tXOHx4Q4RdxAXzcrdCDk9BBAIBa2Of6', 'rocky bhai', 'waiter', 1, '2025-11-01 12:37:34');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `staff_sessions`
+--
+
+CREATE TABLE `staff_sessions` (
+  `id` bigint(20) NOT NULL,
+  `staff_id` int(11) NOT NULL,
+  `token` varchar(128) NOT NULL,
+  `last_activity` datetime NOT NULL,
+  `created_at` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `staff_sessions`
+--
+
+INSERT INTO `staff_sessions` (`id`, `staff_id`, `token`, `last_activity`, `created_at`) VALUES
+(1, 1, '10bea769e743958e5ea7055ce3e0927bae5dbd2f414d3b511b7871df807a5c5d', '2025-11-01 13:30:36', '2025-11-01 11:21:46'),
+(2, 2, '9bfa92f80ba372f1cbce082e0e905b0223161ce5fcdf70d731a2c2996e857486', '2025-11-01 13:30:41', '2025-11-01 12:40:25');
 
 -- --------------------------------------------------------
 
@@ -656,7 +787,10 @@ INSERT INTO `subcategories` (`subcategory_id`, `category_id`, `name`, `created_a
 (41, 29, 'fresh fruits', '2025-10-10 12:32:45'),
 (42, 30, 'milk products', '2025-10-10 12:57:23'),
 (43, 31, 'fresh vegetables', '2025-10-10 12:57:25'),
-(44, 25, 'milkshakes', '2025-10-10 13:05:54');
+(44, 25, 'milkshakes', '2025-10-10 13:05:54'),
+(45, 32, 'fresh fruits', '2025-10-25 12:19:39'),
+(46, 33, 'milk products', '2025-10-25 12:19:41'),
+(47, 34, 'fresh vegetables', '2025-10-25 12:21:04');
 
 -- --------------------------------------------------------
 
@@ -670,20 +804,22 @@ CREATE TABLE `subscriptions` (
   `plan` enum('free','yearly') NOT NULL,
   `start_date` date NOT NULL,
   `end_date` date NOT NULL,
-  `status` enum('active','expired') DEFAULT 'active'
+  `status` enum('active','expired') DEFAULT 'active',
+  `meta` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`meta`))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `subscriptions`
 --
 
-INSERT INTO `subscriptions` (`sub_id`, `user_id`, `plan`, `start_date`, `end_date`, `status`) VALUES
-(1, 2, 'free', '2025-09-19', '2025-09-26', 'expired'),
-(2, 1, 'free', '2025-09-24', '2025-10-01', 'active'),
-(3, 3, 'free', '2025-09-24', '2025-10-01', 'active'),
-(4, 4, 'free', '2025-09-24', '2025-10-01', 'active'),
-(5, 5, 'free', '2025-09-26', '2025-10-03', 'active'),
-(6, 6, 'free', '2025-10-07', '2025-10-14', 'active');
+INSERT INTO `subscriptions` (`sub_id`, `user_id`, `plan`, `start_date`, `end_date`, `status`, `meta`) VALUES
+(1, 2, 'free', '2025-09-19', '2025-09-26', 'expired', '{\"allowed_waiters\": -1}'),
+(2, 1, 'free', '2025-09-24', '2025-10-01', 'active', '{\"allowed_waiters\": -1}'),
+(3, 3, 'free', '2025-09-24', '2025-10-01', 'active', '{\"allowed_waiters\": -1}'),
+(4, 4, 'free', '2025-09-24', '2025-10-01', 'active', '{\"allowed_waiters\": -1}'),
+(5, 5, 'free', '2025-09-26', '2025-10-03', 'active', '{\"allowed_waiters\": -1}'),
+(6, 6, 'free', '2025-10-07', '2025-10-14', 'active', '{\"allowed_waiters\": -1}'),
+(7, 10, 'free', '2025-10-25', '2025-11-01', 'active', '{\"allowed_waiters\": -1}');
 
 -- --------------------------------------------------------
 
@@ -742,7 +878,10 @@ INSERT INTO `template_fields` (`field_id`, `business_type_id`, `field_name`, `fi
 (37, 11, 'gram', 'gram'),
 (38, 11, 'kg', 'kg'),
 (39, 5, 'dozen', ''),
-(41, 5, 'ltr', 'text');
+(41, 5, 'ltr', 'text'),
+(42, 1, 'kg', 'text'),
+(43, 1, 'dozen', 'text'),
+(44, 1, 'ltr', 'text');
 
 -- --------------------------------------------------------
 
@@ -772,7 +911,8 @@ INSERT INTO `users` (`user_id`, `mobile`, `name`, `photo`, `created_at`, `select
 (6, '9003673183', 'neelamegam', '', '2025-10-07 11:34:48', 5),
 (7, '9003675555', 'gu', '', '2025-10-10 15:44:48', NULL),
 (8, '9003675556', 'gu', '', '2025-10-10 15:51:06', NULL),
-(9, '9003675557', 'g', 'uploads/1760094023_Screenshot 2024-10-09 210518.png', '2025-10-10 15:55:20', NULL);
+(9, '9003675557', 'g', 'uploads/1760094023_Screenshot 2024-10-09 210518.png', '2025-10-10 15:55:20', NULL),
+(10, '9807060504', 'bala', '', '2025-10-25 12:17:44', 1);
 
 -- --------------------------------------------------------
 
@@ -824,7 +964,8 @@ ALTER TABLE `categories`
 --
 ALTER TABLE `orders`
   ADD PRIMARY KEY (`order_id`),
-  ADD KEY `orders_ibfk_1` (`qr_id`);
+  ADD KEY `orders_ibfk_1` (`qr_id`),
+  ADD KEY `fk_orders_received_by` (`received_by_staff_id`);
 
 --
 -- Indexes for table `order_items`
@@ -839,6 +980,13 @@ ALTER TABLE `order_items`
 --
 ALTER TABLE `otps`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `otp_sessions`
+--
+ALTER TABLE `otp_sessions`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `unique_mobile_slug` (`mobile`,`slug`);
 
 --
 -- Indexes for table `payment_credentials`
@@ -874,11 +1022,34 @@ ALTER TABLE `qr_scans`
   ADD KEY `qr_id` (`qr_id`);
 
 --
+-- Indexes for table `qr_sessions`
+--
+ALTER TABLE `qr_sessions`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `unique_session` (`session_id`);
+
+--
 -- Indexes for table `sessions`
 --
 ALTER TABLE `sessions`
   ADD PRIMARY KEY (`id`),
   ADD KEY `user_id` (`user_id`);
+
+--
+-- Indexes for table `staff`
+--
+ALTER TABLE `staff`
+  ADD PRIMARY KEY (`staff_id`),
+  ADD UNIQUE KEY `username` (`username`),
+  ADD KEY `user_id` (`user_id`);
+
+--
+-- Indexes for table `staff_sessions`
+--
+ALTER TABLE `staff_sessions`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `token` (`token`),
+  ADD KEY `staff_id` (`staff_id`);
 
 --
 -- Indexes for table `subcategories`
@@ -928,37 +1099,43 @@ ALTER TABLE `business_types`
 -- AUTO_INCREMENT for table `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `cart_items`
 --
 ALTER TABLE `cart_items`
-  MODIFY `cart_item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
+  MODIFY `cart_item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
 
 --
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT for table `order_items`
 --
 ALTER TABLE `order_items`
-  MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
+  MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
 
 --
 -- AUTO_INCREMENT for table `otps`
 --
 ALTER TABLE `otps`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+
+--
+-- AUTO_INCREMENT for table `otp_sessions`
+--
+ALTER TABLE `otp_sessions`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `payment_credentials`
@@ -970,13 +1147,13 @@ ALTER TABLE `payment_credentials`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=95;
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=103;
 
 --
 -- AUTO_INCREMENT for table `qr_codes`
 --
 ALTER TABLE `qr_codes`
-  MODIFY `qr_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `qr_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `qr_scans`
@@ -985,34 +1162,52 @@ ALTER TABLE `qr_scans`
   MODIFY `scan_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `qr_sessions`
+--
+ALTER TABLE `qr_sessions`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `sessions`
 --
 ALTER TABLE `sessions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+
+--
+-- AUTO_INCREMENT for table `staff`
+--
+ALTER TABLE `staff`
+  MODIFY `staff_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `staff_sessions`
+--
+ALTER TABLE `staff_sessions`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `subcategories`
 --
 ALTER TABLE `subcategories`
-  MODIFY `subcategory_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `subcategory_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 
 --
 -- AUTO_INCREMENT for table `subscriptions`
 --
 ALTER TABLE `subscriptions`
-  MODIFY `sub_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `sub_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `template_fields`
 --
 ALTER TABLE `template_fields`
-  MODIFY `field_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `field_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `webhook_logs`
@@ -1042,6 +1237,7 @@ ALTER TABLE `categories`
 -- Constraints for table `orders`
 --
 ALTER TABLE `orders`
+  ADD CONSTRAINT `fk_orders_received_by` FOREIGN KEY (`received_by_staff_id`) REFERENCES `staff` (`staff_id`) ON DELETE SET NULL,
   ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`qr_id`) REFERENCES `qr_codes` (`qr_id`);
 
 --
@@ -1084,6 +1280,18 @@ ALTER TABLE `qr_scans`
 --
 ALTER TABLE `sessions`
   ADD CONSTRAINT `sessions_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `staff`
+--
+ALTER TABLE `staff`
+  ADD CONSTRAINT `staff_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `staff_sessions`
+--
+ALTER TABLE `staff_sessions`
+  ADD CONSTRAINT `staff_sessions_ibfk_1` FOREIGN KEY (`staff_id`) REFERENCES `staff` (`staff_id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `subcategories`

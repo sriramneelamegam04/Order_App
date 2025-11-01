@@ -1,13 +1,14 @@
 <?php
 header("Content-Type: application/json");
 header("Access-Control-Allow-Origin: http://localhost:3000");
-header("Access-Control-Allow-Methods: POST, PATCH , GET, OPTIONS");
+header("Access-Control-Allow-Methods: POST, PATCH, GET, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
 
 if ($_SERVER['REQUEST_METHOD'] === "OPTIONS") {
     http_response_code(200);
     exit;
 }
+
 require '../config/db.php';
 require '../auth/middleware.php'; // Auth token check, $user_id available
 require '../config/crypto.php';
@@ -20,30 +21,38 @@ if ($_SERVER['REQUEST_METHOD'] !== "GET") {
     exit;
 }
 
-
-// 🔹 authenticated user
+// 🔹 Authenticated user
 $owner_id = $user_id;
 
-// 🔹 query params
+// 🔹 Query params
 $search = $_GET['search'] ?? null;         // search by customer_name / mobile
 $status = $_GET['status'] ?? null;         // filter by order status
 $page = max(1, (int)($_GET['page'] ?? 1)); // pagination
 $limit = max(1, min(50, (int)($_GET['limit'] ?? 10))); // items per page
 $offset = ($page - 1) * $limit;
 
-// 🔹 base query
+// 🔹 Base query
 $query = "
-    SELECT o.order_id, o.qr_id, o.customer_name, o.customer_mobile, o.status, o.total, o.payment_method, o.razorpay_order_id, o.created_at,
-           q.qr_slug
+    SELECT 
+        o.order_id, 
+        o.qr_id, 
+        o.customer_name, 
+        o.customer_mobile, 
+        o.status, 
+        o.total, 
+        o.payment_method, 
+        o.razorpay_order_id, 
+        o.created_at,
+        q.table_no
     FROM orders o
-    JOIN qr_codes q ON o.qr_id = q.qr_id
+    LEFT JOIN qr_codes q ON o.qr_id = q.qr_id
     WHERE o.user_id = ?
 ";
 
 $params = [$owner_id];
 $types = "i";
 
-// 🔹 search
+// 🔹 Search
 if ($search) {
     $query .= " AND (o.customer_name LIKE ? OR o.customer_mobile LIKE ?)";
     $searchTerm = "%$search%";
@@ -52,20 +61,20 @@ if ($search) {
     $types .= "ss";
 }
 
-// 🔹 status filter
+// 🔹 Status filter
 if ($status) {
     $query .= " AND o.status = ?";
     $params[] = $status;
     $types .= "s";
 }
 
-// 🔹 order + pagination
+// 🔹 Order + pagination
 $query .= " ORDER BY o.order_id DESC LIMIT ? OFFSET ?";
 $params[] = $limit;
 $params[] = $offset;
 $types .= "ii";
 
-// 🔹 prepare statement
+// 🔹 Prepare statement
 $stmt = $conn->prepare($query);
 $stmt->bind_param($types, ...$params);
 $stmt->execute();
@@ -74,9 +83,19 @@ $res = $stmt->get_result();
 $orders = [];
 while ($order = $res->fetch_assoc()) {
 
-    // fetch items
+    // Ensure table_no is always present
+    if (!isset($order['table_no'])) {
+        $order['table_no'] = null;
+    }
+
+    // 🔹 Fetch items
     $stmt_items = $conn->prepare("
-        SELECT oi.item_id, oi.product_id, p.name, oi.qty, oi.subtotal
+        SELECT 
+            oi.item_id, 
+            oi.product_id, 
+            p.name, 
+            oi.qty, 
+            oi.subtotal
         FROM order_items oi
         JOIN products p ON oi.product_id = p.product_id
         WHERE oi.order_id = ?
@@ -95,7 +114,7 @@ while ($order = $res->fetch_assoc()) {
     $order['items'] = $items;
     $order['total_items'] = $total_items;
 
-    // fetch Razorpay key if UPI
+    // 🔹 Fetch Razorpay key if UPI
     if ($order['payment_method'] != "COD") {
         $stmt_cred = $conn->prepare("
             SELECT encrypted_key, iv, payments_enabled
@@ -106,6 +125,7 @@ while ($order = $res->fetch_assoc()) {
         $stmt_cred->bind_param("i", $owner_id);
         $stmt_cred->execute();
         $res_cred = $stmt_cred->get_result();
+
         if ($res_cred->num_rows) {
             $cred = $res_cred->fetch_assoc();
             if ($cred['payments_enabled']) {
@@ -118,7 +138,7 @@ while ($order = $res->fetch_assoc()) {
     $orders[] = $order;
 }
 
-// 🔹 total count for pagination
+// 🔹 Total count for pagination
 $countQuery = "SELECT COUNT(*) as total FROM orders WHERE user_id = ?";
 $countParams = [$owner_id];
 $countTypes = "i";
@@ -140,7 +160,7 @@ $stmt_count->bind_param($countTypes, ...$countParams);
 $stmt_count->execute();
 $total_orders = $stmt_count->get_result()->fetch_assoc()['total'];
 
-// 🔹 respond
+// 🔹 Respond
 echo json_encode([
     "success" => true,
     "page" => $page,

@@ -67,3 +67,16 @@ echo json_encode([
     "data" => ["photo_url" => $photoPath]
 ]);
 ?>
+
+
+
+
+
+
+
+
+
+
+kekka kooda yaarum illaaaaaaa ipdiya adippa oru pombala pillaiya machan vaa namma tea kudikka polam naa samosa vangi thaaren.. i love u machann  
+
+ithuthan aluguratha bava olaikkiraaa vaanga polam iru machan ivainga lam varattum.. mullai akka super ah irukkumm nee pannaley athu
