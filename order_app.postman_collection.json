@@ -1851,6 +1851,120 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "list.php",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "b8eeaccd0492975176b3ac04cfc4b168f115fad6dd4017357381305b03e2e503",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/order_app/staff/list.php?name=sun",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"order_app",
+								"staff",
+								"list.php"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "sun"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update.php",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "0a7045f9457309da0b2eda43669aae25686f88a9e6c10221133d5329624a6eaa",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"Sunil\",\r\n  \"display_name\": \"mairuu\",\r\n  \"password\": \"Sunil@123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/order_app/staff/update.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"order_app",
+								"staff",
+								"update.php"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete.php",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "b8eeaccd0492975176b3ac04cfc4b168f115fad6dd4017357381305b03e2e503",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"staff_id\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/order_app/staff/delete.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"order_app",
+								"staff",
+								"delete.php"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}

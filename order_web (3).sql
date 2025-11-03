@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 01, 2025 at 09:03 AM
+-- Generation Time: Nov 03, 2025 at 07:52 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -246,8 +246,8 @@ INSERT INTO `orders` (`order_id`, `user_id`, `qr_id`, `customer_name`, `customer
 (40, 2, 4, 'mullai malar', '955623147', 'pending', 0.00, 'COD', NULL, NULL, '2025-10-10 13:15:24', 0, NULL, NULL),
 (41, 2, 4, 'mullai malar', '955623147', 'pending', 0.00, 'COD', NULL, NULL, '2025-10-25 11:51:39', 0, NULL, NULL),
 (42, 10, 10, 'mullai malar', '955623147', 'paid', 2323.00, 'COD', NULL, NULL, '2025-10-25 12:25:16', 0, NULL, NULL),
-(43, 10, 10, 'murugan', '9865721234', 'pending', 3858.00, 'COD', NULL, NULL, '2025-11-01 11:29:21', 1, 1, '2025-11-01 07:50:18'),
-(44, 10, 10, 'vijay', '9876543210', 'pending', 48300.00, 'COD', NULL, NULL, '2025-11-01 13:02:57', 1, 1, '2025-11-01 09:00:36');
+(43, 10, 10, 'murugan', '9865721234', 'pending', 3858.00, 'COD', NULL, NULL, '2025-11-01 11:29:21', 1, NULL, '2025-11-01 07:50:18'),
+(44, 10, 10, 'vijay', '9876543210', 'pending', 48300.00, 'COD', NULL, NULL, '2025-11-01 13:02:57', 1, NULL, '2025-11-01 09:00:36');
 
 -- --------------------------------------------------------
 
@@ -390,7 +390,8 @@ INSERT INTO `otps` (`id`, `name`, `mobile`, `otp_hash`, `expires_at`, `created_a
 (27, 'Guna', '9003675557', '$2y$10$fkdcJq2Mf8QyGyPJJ4ktX.FQ4GmtcT2tpuCe.xK9LvrGKTBiqkd0i', '2025-10-10 15:59:31', '2025-10-10 15:54:31'),
 (28, 'Guna', '9003675557', '$2y$10$iBNilTFdftPGoQHVicuBVegkqyEhxurPYR6FF.UoKidxj6BSek3wi', '2025-10-10 16:22:45', '2025-10-10 16:17:45'),
 (29, 'Bala', '9807060504', '$2y$10$HulQ7xLkIIqr6TW/AIOvyOm3Tc/EJgg/9fdqLfVFQDDejjK/xA5cK', '2025-10-25 12:22:11', '2025-10-25 12:17:11'),
-(30, 'Bala', '9807060504', '$2y$10$UYtbsc3Xhnog.348SnpaMuaI.oOwc7T6teXGJ6CRvhJlkOpUW9ac2', '2025-11-01 11:23:14', '2025-11-01 11:18:14');
+(30, 'Bala', '9807060504', '$2y$10$UYtbsc3Xhnog.348SnpaMuaI.oOwc7T6teXGJ6CRvhJlkOpUW9ac2', '2025-11-01 11:23:14', '2025-11-01 11:18:14'),
+(31, 'Bala', '9807060504', '$2y$10$28uHIv2MjfJvejbUIN6zmuTsXJAlkB0kE5MGyCXb5GtZV.fHpLAAS', '2025-11-03 12:11:59', '2025-11-03 12:06:59');
 
 -- --------------------------------------------------------
 
@@ -412,7 +413,7 @@ CREATE TABLE `otp_sessions` (
 --
 
 INSERT INTO `otp_sessions` (`id`, `mobile`, `slug`, `otp`, `expires_at`, `created_at`) VALUES
-(1, '9876543210', 'f586897889', '9780', '2025-11-01 08:33:06', '2025-11-01 07:28:06');
+(1, '9876543210', 'f586897889', '6521', '2025-11-03 07:29:05', '2025-11-01 07:28:06');
 
 -- --------------------------------------------------------
 
@@ -678,7 +679,8 @@ INSERT INTO `sessions` (`id`, `user_id`, `token`, `last_activity`) VALUES
 (29, 9, '6fc86da846d13eb4d58c40155fabe57fdf3ac570e41e5d259d9dec7226b115a4', '2025-10-10 16:30:23'),
 (30, 10, '176a9958c490ea5d4eae086d6baa781509252490abe0ad8f3b0f4b6cc03d62dd', '2025-10-25 12:33:49'),
 (31, 10, '9a146115c4030d2af8c06c18c3ae57d69fd7536cfa37f63c754605630088fed4', '2025-11-01 12:37:34'),
-(32, 10, 'adc554c347143394f7381214e05a0dd22d9fdd731d59b806150449b955b92f54', '2025-11-01 13:28:50');
+(32, 10, 'adc554c347143394f7381214e05a0dd22d9fdd731d59b806150449b955b92f54', '2025-11-01 13:28:50'),
+(33, 10, 'b8eeaccd0492975176b3ac04cfc4b168f115fad6dd4017357381305b03e2e503', '2025-11-03 12:20:30');
 
 -- --------------------------------------------------------
 
@@ -694,16 +696,16 @@ CREATE TABLE `staff` (
   `display_name` varchar(150) DEFAULT NULL,
   `role` enum('waiter','chef','manager') DEFAULT 'waiter',
   `is_active` tinyint(1) DEFAULT 1,
-  `created_at` datetime DEFAULT current_timestamp()
+  `created_at` datetime DEFAULT current_timestamp(),
+  `updated_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `staff`
 --
 
-INSERT INTO `staff` (`staff_id`, `user_id`, `username`, `password_hash`, `display_name`, `role`, `is_active`, `created_at`) VALUES
-(1, 10, 'VijayKumar', '$2y$10$Rd/ydGOMc5m9EFm/EIzbHezNnFG9tORZb.f4uwu63.QMvld0IuwDy', 'Vijay', 'waiter', 1, '2025-11-01 11:20:14'),
-(2, 10, 'sunil', '$2y$10$j0ccLgWVqmkvgNZ0Dde7s.tXOHx4Q4RdxAXzcrdCDk9BBAIBa2Of6', 'rocky bhai', 'waiter', 1, '2025-11-01 12:37:34');
+INSERT INTO `staff` (`staff_id`, `user_id`, `username`, `password_hash`, `display_name`, `role`, `is_active`, `created_at`, `updated_at`) VALUES
+(2, 10, 'Sunil', '$2y$10$JT1v3JkshDVmUZ14E83f4uwB1MTpFDglrFLMWcm1qzK4IrFveZkp.', 'mairuu', 'waiter', 1, '2025-11-01 12:37:34', '2025-11-03 12:19:31');
 
 -- --------------------------------------------------------
 
@@ -724,8 +726,7 @@ CREATE TABLE `staff_sessions` (
 --
 
 INSERT INTO `staff_sessions` (`id`, `staff_id`, `token`, `last_activity`, `created_at`) VALUES
-(1, 1, '10bea769e743958e5ea7055ce3e0927bae5dbd2f414d3b511b7871df807a5c5d', '2025-11-01 13:30:36', '2025-11-01 11:21:46'),
-(2, 2, '9bfa92f80ba372f1cbce082e0e905b0223161ce5fcdf70d731a2c2996e857486', '2025-11-01 13:30:41', '2025-11-01 12:40:25');
+(3, 2, '0a7045f9457309da0b2eda43669aae25686f88a9e6c10221133d5329624a6eaa', '2025-11-03 12:19:31', '2025-11-03 12:15:56');
 
 -- --------------------------------------------------------
 
@@ -1129,13 +1130,13 @@ ALTER TABLE `order_items`
 -- AUTO_INCREMENT for table `otps`
 --
 ALTER TABLE `otps`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `otp_sessions`
 --
 ALTER TABLE `otp_sessions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `payment_credentials`
@@ -1171,7 +1172,7 @@ ALTER TABLE `qr_sessions`
 -- AUTO_INCREMENT for table `sessions`
 --
 ALTER TABLE `sessions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `staff`
@@ -1183,7 +1184,7 @@ ALTER TABLE `staff`
 -- AUTO_INCREMENT for table `staff_sessions`
 --
 ALTER TABLE `staff_sessions`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `subcategories`
