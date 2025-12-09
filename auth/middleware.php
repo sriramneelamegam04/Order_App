@@ -1,8 +1,9 @@
 <?php
 require __DIR__ . '/../config/db.php';
+
 header("Content-Type: application/json");
 header("Access-Control-Allow-Origin: http://localhost:3000");
-header("Access-Control-Allow-Methods: POST, PATCH , GET, OPTIONS");
+header("Access-Control-Allow-Methods: POST, PATCH, GET, OPTIONS, DELETE");
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
 
 if ($_SERVER['REQUEST_METHOD'] === "OPTIONS") {
@@ -50,10 +51,11 @@ function get_authenticated_owner() {
     $stmt->execute();
     $session = $stmt->get_result()->fetch_assoc();
     $stmt->close();
+
     if (!$session) return null;
 
     $lastActivity = new DateTime($session['last_activity']);
-    if ((time() - $lastActivity->getTimestamp()) > 300) {
+    if ((time() - $lastActivity->getTimestamp()) > 300) { // 5 minutes expiry
         $stmt = $conn->prepare("DELETE FROM sessions WHERE token = ?");
         $stmt->bind_param('s', $token);
         $stmt->execute();
@@ -92,10 +94,11 @@ function get_authenticated_staff() {
     $stmt->execute();
     $session = $stmt->get_result()->fetch_assoc();
     $stmt->close();
+
     if (!$session) return null;
 
     $lastActivity = new DateTime($session['last_activity']);
-    if ((time() - $lastActivity->getTimestamp()) > 300) {
+    if ((time() - $lastActivity->getTimestamp()) > 300) { // 5 minutes expiry
         $stmt = $conn->prepare("DELETE FROM staff_sessions WHERE token = ?");
         $stmt->bind_param('s', $token);
         $stmt->execute();
@@ -109,7 +112,8 @@ function get_authenticated_staff() {
     $stmt->close();
 
     $sid = (int)$session['staff_id'];
-    $stmt = $conn->prepare("SELECT staff_id, user_id AS owner_id, username, display_name, role FROM staff WHERE staff_id=?");
+    $stmt = $conn->prepare("SELECT staff_id, user_id AS owner_id, username, display_name, role 
+                            FROM staff WHERE staff_id=?");
     $stmt->bind_param('i', $sid);
     $stmt->execute();
     $staff = $stmt->get_result()->fetch_assoc();
@@ -135,18 +139,63 @@ if (!$auth_user) {
 /* ==========================
    EXPORT GLOBALS
 ========================== */
-// Owner session
 if ($auth_user) {
+    // Owner session
     $user_id = (int)$auth_user['user_id'];
     $is_staff = false;
     $is_owner = true;
-} 
-// Staff session
-elseif ($auth_staff) {
+} elseif ($auth_staff) {
+    // Staff session
     $staff_id = (int)$auth_staff['staff_id'];
     $owner_id = (int)$auth_staff['owner_id'];
     $staff_role = $auth_staff['role'];
     $is_staff = true;
     $is_owner = false;
+}
+
+/* ==========================
+   UNIFIED AUTH HELPERS
+========================== */
+
+/**
+ * Unified getter for whoever is logged in (owner or staff)
+ */
+function get_authenticated_user() {
+    global $auth_user, $auth_staff;
+
+    if ($auth_user) {
+        return [
+            "type" => "owner",
+            "id" => (int)$auth_user['user_id'],
+            "name" => $auth_user['name'],
+            "mobile" => $auth_user['mobile']
+        ];
+    }
+
+    if ($auth_staff) {
+        return [
+            "type" => "staff",
+            "id" => (int)$auth_staff['staff_id'],
+            "owner_id" => (int)$auth_staff['owner_id'],
+            "username" => $auth_staff['username'],
+            "name" => $auth_staff['display_name'],
+            "role" => $auth_staff['role']
+        ];
+    }
+
+    return null;
+}
+
+/**
+ * Short helpers (optional)
+ */
+function is_owner_user() {
+    global $is_owner;
+    return $is_owner === true;
+}
+
+function is_staff_user() {
+    global $is_staff;
+    return $is_staff === true;
 }
 ?>

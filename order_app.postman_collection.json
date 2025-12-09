@@ -202,7 +202,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "ad4c78e257519e29204d94974677a79755515f166b73b2ab1f529686bf334599",
+									"value": "76e7a1aa2e8eb8a1030f151be46cee30e98b803b7e6b67e3ab1d5662ae40d455",
 									"type": "string"
 								}
 							]
@@ -211,7 +211,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"business_type_id\": 5\r\n}\r\n",
+							"raw": "{\r\n  \"business_type_id\": 1\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -324,7 +324,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "0e757644f86a484f37424802304049fe23c92abbac6d9ad93c0ed01348e245b7",
+									"value": "76e7a1aa2e8eb8a1030f151be46cee30e98b803b7e6b67e3ab1d5662ae40d455",
 									"type": "string"
 								}
 							]
@@ -697,7 +697,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "70ae77441920544ff22ac474fb73e4ec2f9ea0843ba4d047559478cf59175c7b",
+									"value": "76e7a1aa2e8eb8a1030f151be46cee30e98b803b7e6b67e3ab1d5662ae40d455",
 									"type": "string"
 								}
 							]
@@ -706,7 +706,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"product_id\": 8,\r\n  \"is_active\": 0\r\n}\r\n",
+							"raw": "{\r\n  \"product_id\": 103,\r\n  \"is_active\": 0\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -904,6 +904,36 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "qr_access_list.php",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "76e7a1aa2e8eb8a1030f151be46cee30e98b803b7e6b67e3ab1d5662ae40d455",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/order_app/qr/qr_access_list.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"order_app",
+								"qr",
+								"qr_access_list.php"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -1036,7 +1066,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "63d16fa3592f1a6c239fbe13b9d341443be3900bc82e09fa26660996b764b03d",
+									"value": "76e7a1aa2e8eb8a1030f151be46cee30e98b803b7e6b67e3ab1d5662ae40d455",
 									"type": "string"
 								}
 							]
@@ -1371,36 +1401,6 @@
 								"order_app",
 								"dashboard",
 								"user.php"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "qr_access_list.php",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "adc554c347143394f7381214e05a0dd22d9fdd731d59b806150449b955b92f54",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost/order_app/dashboard/qr_access_list.php",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"path": [
-								"order_app",
-								"dashboard",
-								"qr_access_list.php"
 							]
 						}
 					},

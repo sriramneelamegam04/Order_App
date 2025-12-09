@@ -8,6 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] === "OPTIONS") {
     http_response_code(200);
     exit;
 }
+
 require '../config/db.php';
 require '../config/crypto.php'; 
 require_once __DIR__ . '/../payments/crypto_helpers.php';
@@ -19,11 +20,21 @@ if ($_SERVER['REQUEST_METHOD'] !== "POST") {
     exit;
 }
 
-
 $data = json_decode(file_get_contents("php://input"), true);
+
 $qr_slug        = $data['qr_slug'] ?? null;
 $session_id     = $data['session_id'] ?? null;
 $payment_method = $data['payment_method'] ?? 'COD';
+
+// NEW FIELDS
+$order_type       = $data['order_type'] ?? "indoor";  // indoor / outdoor
+$delivery_address = $data['delivery_address'] ?? null;
+
+// Outdoor requires address
+if ($order_type === "outdoor" && (!$delivery_address || trim($delivery_address) == "")) {
+    echo json_encode(["success"=>false,"msg"=>"Delivery address required for outdoor orders"]);
+    exit;
+}
 
 if(!$qr_slug || !$session_id){
     echo json_encode(["success"=>false,"msg"=>"qr_slug and session_id required"]);
@@ -45,7 +56,8 @@ $qr_id    = $qr['qr_id'];
 
 // 🔹 get pending order created at access.php
 $stmt = $conn->prepare("SELECT order_id, customer_name, customer_mobile FROM orders 
-                        WHERE qr_id=? AND status='pending' ORDER BY order_id DESC LIMIT 1");
+                        WHERE qr_id=? AND status='pending' 
+                        ORDER BY order_id DESC LIMIT 1");
 $stmt->bind_param("i", $qr_id);
 $stmt->execute();
 $res = $stmt->get_result();
@@ -76,7 +88,9 @@ $stmt->bind_param("i", $cart_id);
 $stmt->execute();
 $res = $stmt->get_result();
 
-$items=[]; $total=0;
+$items=[]; 
+$total=0;
+
 while($row=$res->fetch_assoc()){
     $items[]=$row;
     $total += $row['subtotal'];
@@ -87,9 +101,18 @@ if(empty($items)){
     exit;
 }
 
-// 🔹 update order total & payment method
-$stmt = $conn->prepare("UPDATE orders SET total=?, payment_method=? WHERE order_id=?");
-$stmt->bind_param("dsi", $total, $payment_method, $order_id);
+// 🔹 update order (now includes order_type + delivery_address)
+$stmt = $conn->prepare("UPDATE orders 
+    SET total=?, payment_method=?, order_type=?, delivery_address=?
+    WHERE order_id=?");
+
+$stmt->bind_param("dsssi", 
+    $total, 
+    $payment_method,
+    $order_type,
+    $delivery_address,
+    $order_id
+);
 $stmt->execute();
 
 // 🔹 insert order items
@@ -102,13 +125,15 @@ foreach($items as $it){
 // 🔹 clear cart
 $conn->query("DELETE FROM cart_items WHERE cart_id=$cart_id");
 
-// 🔹 payment handling
+// 🔹 COD handling
 if($payment_method == "COD"){
     echo json_encode([
         "success"=>true,
         "order_id"=>$order_id,
         "total"=>$total,
         "payment_method"=>"COD",
+        "order_type"=>$order_type,
+        "delivery_address"=>$delivery_address,
         "customer_name"=>$order['customer_name'],
         "customer_mobile"=>$order['customer_mobile']
     ]);
@@ -116,16 +141,19 @@ if($payment_method == "COD"){
 }
 
 // 🔹 handle UPI / Razorpay
-$stmt = $conn->prepare("SELECT encrypted_key, encrypted_secret, iv, payments_enabled FROM payment_credentials WHERE user_id=? LIMIT 1");
+$stmt = $conn->prepare("SELECT encrypted_key, encrypted_secret, iv, payments_enabled 
+                        FROM payment_credentials WHERE user_id=? LIMIT 1");
 $stmt->bind_param("i",$owner_id);
 $stmt->execute();
 $res = $stmt->get_result();
+
 if($res->num_rows==0){
     echo json_encode(["success"=>false,"msg"=>"Owner has not enabled UPI"]);
     exit;
 }
 
 $cred = $res->fetch_assoc();
+
 if(!$cred['payments_enabled']){
     echo json_encode(["success"=>false,"msg"=>"Owner has disabled payments"]);
     exit;
@@ -142,21 +170,22 @@ if(!$razorpay_key_id || !$razorpay_secret){
     exit;
 }
 
-
 // 🔹 create Razorpay order ID
 $razorpay_order_id = "order_".uniqid();
 $stmt = $conn->prepare("UPDATE orders SET razorpay_order_id=? WHERE order_id=?");
 $stmt->bind_param("si",$razorpay_order_id,$order_id);
 $stmt->execute();
 
-// 🔹 respond to customer
+// 🔹 send response
 echo json_encode([
     "success"=>true,
     "order_id"=>$order_id,
     "total"=>$total,
     "payment_method"=>"UPI",
     "razorpay_order_id"=>$razorpay_order_id,
-    "razorpay_key"=>$razorpay_key_id, // this is safe if it's the **publishable key**, not secret key
+    "razorpay_key"=>$razorpay_key_id,
+    "order_type"=>$order_type,
+    "delivery_address"=>$delivery_address,
     "customer_name"=>$order['customer_name'],
     "customer_mobile"=>$order['customer_mobile']
 ]);

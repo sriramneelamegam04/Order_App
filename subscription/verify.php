@@ -27,7 +27,7 @@ if (!$user) {
     echo json_encode(["success" => false, "msg" => "Unauthorized"]);
     exit;
 }
-$user_id = $user['user_id'];
+
 
 // ✅ Input validation
 $input = json_decode(file_get_contents("php://input"), true);

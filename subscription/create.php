@@ -26,7 +26,7 @@ if (!$user) {
     echo json_encode(["success" => false, "msg" => "Unauthorized"]);
     exit;
 }
-$user_id = $user['user_id'];
+
 
 // --- Check if already active ---
 $stmt = $conn->prepare("SELECT * FROM subscriptions WHERE user_id=? AND status='active'");

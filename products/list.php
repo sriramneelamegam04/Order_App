@@ -3,9 +3,6 @@ require __DIR__ . '/../config/db.php';
 require __DIR__ . '/../auth/middleware.php';
 
 header("Content-Type: application/json");
-header("Access-Control-Allow-Origin: http://localhost:3000");
-header("Access-Control-Allow-Methods: GET, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type, Authorization");
 
 // --- Preflight check ---
 if ($_SERVER['REQUEST_METHOD'] === "OPTIONS") {
@@ -41,15 +38,19 @@ $limit  = isset($_GET['limit']) ? max(1, (int)$_GET['limit']) : 10;
 $offset = ($page - 1) * $limit;
 
 // --- Count total ---
-$countQuery = "SELECT COUNT(*) as total FROM products WHERE user_id=? AND business_type_id=?";
+$countQuery = "
+    SELECT COUNT(*) as total 
+    FROM products 
+    WHERE user_id=? AND business_type_id=?";
 $params = [$user_id, $business_type_id];
 $types  = "ii";
 
 if ($search) {
-    $countQuery .= " AND name LIKE ?";
+    $countQuery .= " AND products.name LIKE ?";
     $params[] = "%$search%";
     $types   .= "s";
 }
+
 $stmt = $conn->prepare($countQuery);
 $stmt->bind_param($types, ...$params);
 $stmt->execute();
@@ -57,18 +58,26 @@ $totalRes = $stmt->get_result()->fetch_assoc();
 $total = $totalRes['total'] ?? 0;
 $stmt->close();
 
-// --- Fetch products ---
-$query = "SELECT * FROM products WHERE user_id=? AND business_type_id=?";
+// --- Fetch products with category + subcategory names ---
+$query = "
+    SELECT 
+        p.*,
+        c.name AS category_name,
+        s.name AS subcategory_name
+    FROM products p
+    LEFT JOIN categories c ON p.category_id = c.category_id
+    LEFT JOIN subcategories s ON p.subcategory_id = s.subcategory_id
+    WHERE p.user_id=? AND p.business_type_id=?";
 $params = [$user_id, $business_type_id];
 $types  = "ii";
 
 if ($search) {
-    $query .= " AND name LIKE ?";
+    $query .= " AND p.name LIKE ?";
     $params[] = "%$search%";
     $types   .= "s";
 }
 
-$query .= " ORDER BY created_at DESC LIMIT ? OFFSET ?";
+$query .= " ORDER BY p.created_at DESC LIMIT ? OFFSET ?";
 $params[] = $limit;
 $params[] = $offset;
 $types   .= "ii";
@@ -80,8 +89,17 @@ $result = $stmt->get_result();
 
 $products = [];
 while ($row = $result->fetch_assoc()) {
+
+    // Replace IDs with names
+    $row['category'] = $row['category_name'] ?? null;
+    $row['subcategory'] = $row['subcategory_name'] ?? null;
+
+    // Remove raw id fields (optional)
+    unset($row['category_id'], $row['subcategory_id'], $row['category_name'], $row['subcategory_name']);
+
     $products[] = $row;
 }
+
 $stmt->close();
 
 echo json_encode([

@@ -27,7 +27,7 @@ if (!$user) {
     echo json_encode(["success" => false, "msg" => "Unauthorized"]);
     exit;
 }
-$user_id = $user['user_id'];
+
 
 // --- Fetch latest subscription ---
 $stmt = $conn->prepare("

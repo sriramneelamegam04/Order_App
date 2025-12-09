@@ -26,7 +26,7 @@ if (!$user) {
     echo json_encode(["success" => false, "msg" => "Unauthorized"]);
     exit;
 }
-$user_id = $user['user_id'];
+
 
 // --- CHECK IF USER ALREADY SELECTED A TEMPLATE ---
 $stmt = $conn->prepare("SELECT selected_template_id FROM users WHERE user_id=?");

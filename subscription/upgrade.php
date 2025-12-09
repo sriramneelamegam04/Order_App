@@ -27,7 +27,7 @@ if (!$user) {
     echo json_encode(["success" => false, "msg" => "Unauthorized"]);
     exit;
 }
-$user_id = $user['user_id'];
+
 
 // --- Razorpay config – replace with your platform credentials
 $razorpayKeyId = "rzp_test_xxxxx";
